@@ -7,9 +7,11 @@
 
 bool ParseNumber(char *s, char **end, int radix, int *intValue);
 char *GetFileExtension(char *path);
-char *GetFileExtensionAfterDot(char *path);
+void ExpectFileExtension(char *path, char *expectedExtension);
+void AddFileExtension(char *path, char *extension);
+void RemoveFileExtension(char *path);
+void ChangeFileExtension(char *path, char *extension);
 unsigned char *ReadWholeFile(char *path, int *size);
-unsigned char *ReadWholeFileZeroPadded(char *path, int *size, int padAmount);
 void WriteWholeFile(char *path, void *buffer, int bufferSize);
 
 #endif // UTIL_H

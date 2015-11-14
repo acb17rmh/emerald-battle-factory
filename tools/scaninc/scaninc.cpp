@@ -1,186 +1,305 @@
-// Copyright(c) 2015-2017 YamaArashi
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 #include <cstdio>
 #include <cstdlib>
-#include <list>
-#include <queue>
+#include <stack>
 #include <set>
 #include <string>
-#include <iostream>
-#include <tuple>
-#include <fstream>
-#include "scaninc.h"
-#include "source_file.h"
 
-bool CanOpenFile(std::string path)
+#ifdef _MSC_VER
+
+#define FATAL_INPUT_ERROR(format, ...)                                        \
+do {                                                                          \
+	fprintf(stderr, "%s:%d " format, m_path.c_str(), m_lineNum, __VA_ARGS__); \
+	exit(1);                                                                  \
+} while (0)
+
+#define FATAL_ERROR(format, ...)          \
+do {                                      \
+	fprintf(stderr, format, __VA_ARGS__); \
+	exit(1);                              \
+} while (0)
+
+#else
+
+#define FATAL_INPUT_ERROR(format, ...)                                          \
+do {                                                                            \
+	fprintf(stderr, "%s:%d " format, m_path.c_str(), m_lineNum, ##__VA_ARGS__); \
+	exit(1);                                                                    \
+} while (0)
+
+#define FATAL_ERROR(format, ...)            \
+do {                                        \
+	fprintf(stderr, format, ##__VA_ARGS__); \
+	exit(1);                                \
+} while (0)
+
+#endif // _MSC_VER
+
+#define SCANINC_MAX_PATH 255
+
+enum class IncDirectiveType {
+	None,
+	Include,
+	Incbin
+};
+
+class AsmFile
 {
-    FILE *fp = std::fopen(path.c_str(), "rb");
+public:
+	AsmFile(std::string path);
+	~AsmFile();
+	IncDirectiveType ReadUntilIncDirective(std::string &path);
 
-    if (fp == NULL)
-        return false;
+private:
+	char *m_buffer;
+	int m_pos;
+	int m_size;
+	int m_lineNum;
+	std::string m_path;
 
-    std::fclose(fp);
-    return true;
+	int GetChar()
+	{
+		if (m_pos >= m_size)
+			return -1;
+
+		int c = m_buffer[m_pos++];
+
+		if (c == '\r') {
+			if (m_pos < m_size && m_buffer[m_pos++] == '\n') {
+				m_lineNum++;
+				return '\n';
+			} else {
+				FATAL_INPUT_ERROR("CR line endings are not supported\n");
+			}
+		}
+
+		if (c == '\n')
+			m_lineNum++;
+
+		return c;
+	}
+
+	// No newline translation because it's not needed for any use of this function.
+	int PeekChar()
+	{
+		if (m_pos >= m_size)
+			return -1;
+
+		return m_buffer[m_pos];
+	}
+
+	void SkipTabsAndSpaces()
+	{
+		while (m_pos < m_size && (m_buffer[m_pos] == '\t' || m_buffer[m_pos] == ' '))
+			m_pos++;
+	}
+
+	bool MatchIncDirective(std::string directiveName, std::string &path)
+	{
+		int length = directiveName.length();
+		int i;
+
+		for (i = 0; i < length && m_pos + i < m_size; i++)
+			if (directiveName[i] != m_buffer[m_pos + i])
+				return false;
+
+		if (i < length)
+			return false;
+
+		m_pos += length;
+
+		SkipTabsAndSpaces();
+
+		if (GetChar() != '"')
+			FATAL_INPUT_ERROR("no path after \".%s\" directive\n", directiveName.c_str());
+
+		path = ReadPath();
+
+		return true;
+	}
+	
+	std::string ReadPath();
+	void SkipEndOfLineComment();
+	void SkipMultiLineComment();
+	void SkipString();
+};
+
+AsmFile::AsmFile(std::string path)
+{
+	m_path = path;
+
+	FILE *fp = fopen(path.c_str(), "rb");
+
+	if (fp == NULL)
+		FATAL_ERROR("Failed to open \"%s\" for reading.\n", path.c_str());
+
+	fseek(fp, 0, SEEK_END);
+
+	m_size = ftell(fp);
+
+	m_buffer = new char[m_size];
+
+	rewind(fp);
+
+	if (fread(m_buffer, m_size, 1, fp) != 1)
+		FATAL_ERROR("Failed to read \"%s\".\n", path.c_str());
+
+	fclose(fp);
+
+	m_pos = 0;
+	m_lineNum = 1;
 }
 
-const char *const USAGE = "Usage: scaninc [-I INCLUDE_PATH] [-M DEPENDENCY_OUT_PATH] FILE_PATH\n";
+AsmFile::~AsmFile()
+{
+	delete[] m_buffer;
+}
+
+IncDirectiveType AsmFile::ReadUntilIncDirective(std::string &path)
+{
+	// At the beginning of each loop iteration, the current file position
+	// should be at the start of a line or at the end of the file.
+	for (;;) {
+		SkipTabsAndSpaces();
+
+		IncDirectiveType incDirectiveType = IncDirectiveType::None;
+
+		if (PeekChar() == '.') {
+			m_pos++;
+
+			if (MatchIncDirective("incbin", path))
+				incDirectiveType = IncDirectiveType::Incbin;
+			else if (MatchIncDirective("include", path))
+				incDirectiveType = IncDirectiveType::Include;
+		}
+
+		for (;;) {
+			int c = GetChar();
+
+			if (c == -1)
+				return incDirectiveType;
+
+			if (c == ';') {
+				SkipEndOfLineComment();
+				break;
+			} else if (c == '/' && PeekChar() == '*') {
+				m_pos++;
+				SkipMultiLineComment();
+			} else if (c == '"') {
+				SkipString();
+			} else if (c == '\n') {
+				break;
+			}
+		}
+
+		if (incDirectiveType != IncDirectiveType::None)
+			return incDirectiveType;
+	}
+}
+
+std::string AsmFile::ReadPath()
+{
+	int length = 0;
+	int startPos = m_pos;
+
+	for (;;) {
+		int c = GetChar();
+
+		if (c == '"')
+			break;
+
+		if (c == -1)
+			FATAL_INPUT_ERROR("unexpected EOF in include string\n");
+
+		if (c == 0)
+			FATAL_INPUT_ERROR("unexpected NUL character in include string\n");
+
+		if (c == '\n')
+			FATAL_INPUT_ERROR("unexpected end of line character in include string\n");
+
+		if (c == '\\') {
+			c = GetChar();
+
+			if (c != '"')
+				FATAL_INPUT_ERROR("unknown escape \"\\%c\" in include string\n", c);
+		}
+
+		length++;
+
+		if (length > SCANINC_MAX_PATH)
+			FATAL_INPUT_ERROR("path is too long");
+	}
+
+	return std::string(m_buffer, startPos, length);
+}
+
+void AsmFile::SkipEndOfLineComment()
+{
+	int c;
+
+	do {
+		c = GetChar();
+	} while (c != -1 && c != '\n');
+}
+
+void AsmFile::SkipMultiLineComment()
+{
+	for (;;) {
+		int c = GetChar();
+
+		if (c == '*') {
+			if (PeekChar() == '/') {
+				m_pos++;
+				return;
+			}
+		} else if (c == -1) {
+			return;
+		}
+	}
+}
+
+void AsmFile::SkipString()
+{
+	for (;;) {
+		int c = GetChar();
+
+		if (c == '"')
+			break;
+
+		if (c == -1)
+			FATAL_INPUT_ERROR("unexpected EOF in string\n");
+
+		if (c == '\\') {
+			c = GetChar();
+		}
+	}
+}
 
 int main(int argc, char **argv)
 {
-    std::queue<std::string> filesToProcess;
-    std::set<std::string> dependencies;
-    std::set<std::string> dependencies_includes;
+	if (argc < 2)
+		FATAL_ERROR("Usage: scaninc ASM_FILE_PATH\n");
 
-    std::vector<std::string> includeDirs;
+	std::stack<std::string> filesToProcess;
+	std::set<std::string> dependencies;
 
-    bool makeformat = false;
-    std::string make_outfile;
+	filesToProcess.push(std::string(argv[1]));
 
-    argc--;
-    argv++;
+	while (!filesToProcess.empty()) {
+		AsmFile file(filesToProcess.top());
 
-    while (argc > 1)
-    {
-        std::string arg(argv[0]);
-        if (arg.substr(0, 2) == "-I")
-        {
-            std::string includeDir = arg.substr(2);
-            if (includeDir.empty())
-            {
-                argc--;
-                argv++;
-                includeDir = std::string(argv[0]);
-            }
-            if (!includeDir.empty() && includeDir.back() != '/')
-            {
-                includeDir += '/';
-            }
-            includeDirs.push_back(includeDir);
-        }
-        else if(arg.substr(0, 2) == "-M")
-        {
-            makeformat = true;
-            argc--;
-            argv++;
-            make_outfile = std::string(argv[0]);
-        }
-        else
-        {
-            FATAL_ERROR(USAGE);
-        }
-        argc--;
-        argv++;
-    }
+		filesToProcess.pop();
 
-    if (argc != 1) {
-        FATAL_ERROR(USAGE);
-    }
+		IncDirectiveType incDirectiveType;
+		std::string path;
 
-    std::string initialPath(argv[0]);
+		while ((incDirectiveType = file.ReadUntilIncDirective(path)) != IncDirectiveType::None) {
+			bool inserted = dependencies.insert(path).second;
+			if (inserted && incDirectiveType == IncDirectiveType::Include)
+				filesToProcess.push(path);
+		}
+	}
 
-    filesToProcess.push(initialPath);
-
-    while (!filesToProcess.empty())
-    {
-        std::string filePath = filesToProcess.front();
-        SourceFile file(filePath);
-        filesToProcess.pop();
-
-        includeDirs.push_back(file.GetSrcDir());
-        for (auto incbin : file.GetIncbins())
-        {
-            dependencies.insert(incbin);
-        }
-        for (auto include : file.GetIncludes())
-        {
-            bool exists = false;
-            std::string path("");
-            for (auto includeDir : includeDirs)
-            {
-                path = includeDir + include;
-                if (CanOpenFile(path))
-                {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists && (file.FileType() == SourceFileType::Asm || file.FileType() == SourceFileType::Inc))
-            {
-                path = include;
-                if (CanOpenFile(path))
-                    exists = true;
-            }
-            if (!exists)
-                continue;
-
-            dependencies_includes.insert(path);
-            bool inserted = dependencies.insert(path).second;
-            if (inserted && exists)
-            {
-                filesToProcess.push(path);
-            }
-        }
-        includeDirs.pop_back();
-    }
-
-    if(!makeformat)
-    {
-        for (const std::string &path : dependencies)
-        {
-            std::printf("%s\n", path.c_str());
-        }
-        std::cout << std::endl;
-    }
-    else
-    {
-        // Write out make rules to a file
-        std::ofstream output(make_outfile);
-
-        // Print a make rule for the object file
-        size_t ext_pos = make_outfile.find_last_of(".");
-        auto object_file = make_outfile.substr(0, ext_pos + 1) + "o";
-        output << object_file.c_str() << ":";
-        for (const std::string &path : dependencies)
-        {
-            output << " " << path;
-        }
-        output << '\n';
-
-        // Dependency list rule.
-        // Although these rules are identical, they need to be separate, else make will trigger the rule again after the file is created for the first time.
-        output << make_outfile.c_str() << ":";
-        for (const std::string &path : dependencies_includes)
-        {
-            output << " " << path;
-        }
-        output << '\n';
-
-        // Dummy rules
-        // If a dependency is deleted, make will try to make it, instead of rescanning the dependencies before trying to do that.
-        for (const std::string &path : dependencies)
-        {
-            output << path << ":\n";
-        }
-
-        output.flush();
-        output.close();
-    }
+	for (const std::string &path : dependencies) {
+		printf("%s\n", path.c_str());
+	}
 }

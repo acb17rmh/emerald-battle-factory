@@ -47,13 +47,6 @@ char *GetFileExtension(char *path)
 	while (extension > path && *extension != '.')
 		extension--;
 
-	return extension;
-}
-
-char *GetFileExtensionAfterDot(char *path)
-{
-	char *extension = GetFileExtension(path);
-
 	if (extension == path)
 		return NULL;
 
@@ -63,6 +56,48 @@ char *GetFileExtensionAfterDot(char *path)
 		return NULL;
 
 	return extension;
+}
+
+void ExpectFileExtension(char *path, char *expectedExtension)
+{
+	char *extension = GetFileExtension(path);
+
+	if (extension == NULL)
+		FATAL_ERROR("\"%s\" has no file extension.\n", path);
+
+	if (strcmp(extension, expectedExtension) != 0)
+		FATAL_ERROR("Unexpected file extension \"%s\". Expected \"%s\".\n", extension, expectedExtension);
+}
+
+void AddFileExtension(char *path, char *extension)
+{
+	int pathLength = strlen(path);
+	int extensionLength = strlen(extension);
+
+	if (pathLength + 1 + extensionLength > GBAGFX_MAX_PATH)
+		FATAL_ERROR("\"%s\" is too long a path to add the extension \"%s\".\n", path, extension);
+
+	path[pathLength] = '.';
+	memcpy(path + pathLength + 1, extension, extensionLength);
+	path[pathLength + 1 + extensionLength] = 0;
+}
+
+void RemoveFileExtension(char *path)
+{
+	char *extension = GetFileExtension(path);
+
+	if (extension == NULL)
+		FATAL_ERROR("\"%s\" doesn't have a file extension.\n", path);
+
+	extension--;
+
+	*extension = 0;
+}
+
+void ChangeFileExtension(char *path, char *extension)
+{
+	RemoveFileExtension(path);
+	AddFileExtension(path, extension);
 }
 
 unsigned char *ReadWholeFile(char *path, int *size)
@@ -77,32 +112,6 @@ unsigned char *ReadWholeFile(char *path, int *size)
 	*size = ftell(fp);
 
 	unsigned char *buffer = malloc(*size);
-
-	if (buffer == NULL)
-		FATAL_ERROR("Failed to allocate memory for reading \"%s\".\n", path);
-
-	rewind(fp);
-
-	if (fread(buffer, *size, 1, fp) != 1)
-		FATAL_ERROR("Failed to read \"%s\".\n", path);
-
-	fclose(fp);
-
-	return buffer;
-}
-
-unsigned char *ReadWholeFileZeroPadded(char *path, int *size, int padAmount)
-{
-	FILE *fp = fopen(path, "rb");
-
-	if (fp == NULL)
-		FATAL_ERROR("Failed to open \"%s\" for reading.\n", path);
-
-	fseek(fp, 0, SEEK_END);
-
-	*size = ftell(fp);
-
-	unsigned char *buffer = calloc(*size + padAmount, 1);
 
 	if (buffer == NULL)
 		FATAL_ERROR("Failed to allocate memory for reading \"%s\".\n", path);
