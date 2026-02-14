@@ -11,6 +11,7 @@
 #include "battle_setup.h"
 #include "battle_tv.h"
 #include "cable_club.h"
+#include "event_data.h"
 #include "event_object_movement.h"
 #include "item.h"
 #include "link.h"
@@ -36,6 +37,7 @@
 
 static EWRAM_DATA u8 sLinkSendTaskId = 0;
 static EWRAM_DATA u8 sLinkReceiveTaskId = 0;
+static EWRAM_DATA bool8 sRogueBattleInputStarted = FALSE;
 
 COMMON_DATA void (*gBattlerControllerFuncs[MAX_BATTLERS_COUNT])(u32 battler) = {0};
 COMMON_DATA u8 gBattleControllerData[MAX_BATTLERS_COUNT] = {0}; // Used by the battle controllers to store misc sprite/task IDs for each battler
@@ -3148,6 +3150,55 @@ void BtlController_HandleSwitchInTryShinyAnim(u32 battler)
             gBattlerControllerFuncs[battler] = BtlController_HandleSwitchInShowHealthbox;
         }
     }
+}
+
+u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar)
+{
+    u8 battleSceneOption = VarGet(VAR_BATTLE_SPEED);
+
+    // Hold L to slow down
+    if (JOY_HELD(L_BUTTON))
+        return 1;
+
+    // Reset for intros/new battles until move selection starts.
+    if (!InBattleChoosingMoves() && !InBattleRunningActions())
+        sRogueBattleInputStarted = FALSE;
+
+    // We want to speed up all anims until input selection starts
+    if (InBattleChoosingMoves())
+        sRogueBattleInputStarted = TRUE;
+
+    if (sRogueBattleInputStarted)
+    {
+        // Always run at 1x speed here
+        if (InBattleChoosingMoves())
+            return 1;
+
+        // When battle anims are turned off, it's a bit too hard to read text, so force running at normal speed
+        if (!forHealthbar && battleSceneOption == OPTIONS_BATTLE_SCENE_DISABLED && InBattleRunningActions())
+            return 1;
+    }
+
+    // We don't need to speed up health bar anymore as that passively happens now
+    switch (battleSceneOption)
+    {
+    case OPTIONS_BATTLE_SCENE_1X:
+        return forHealthbar ? 1 : 1;
+    case OPTIONS_BATTLE_SCENE_2X:
+        return forHealthbar ? 1 : 2;
+    case OPTIONS_BATTLE_SCENE_3X:
+        return forHealthbar ? 1 : 3;
+    case OPTIONS_BATTLE_SCENE_4X:
+        return forHealthbar ? 1 : 4;
+    // Print text at a readable speed still
+    case OPTIONS_BATTLE_SCENE_DISABLED:
+        if (sRogueBattleInputStarted)
+            return forHealthbar ? 10 : 1;
+        else
+            return 4;
+    }
+
+    return 1;
 }
 
 void UpdateFriendshipFromXItem(u32 battler)
