@@ -43,8 +43,9 @@ jobs:
         env:
           TEST: 1
         run: |
-          # Keep test parallelism bounded for stable runner throughput.
-          make -j4 check
+          # Build test binary in parallel, then run hydra with a single worker.
+          make -j"$(nproc)" pokeemerald-test.elf
+          make -j1 check
 
   docs_validate:
     if: github.actor != 'allcontributors[bot]'
