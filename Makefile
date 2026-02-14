@@ -110,16 +110,16 @@ ROM := $(ROM_NAME)
 ifeq ($(TESTELF),$(MAKECMDGOALS))
   TEST := 1
 endif
-ifeq ($(TEST), 0)
-  OBJ_DIR := $(OBJ_DIR_NAME)
-else
+ifeq ($(TEST), 1)
   OBJ_DIR := $(OBJ_DIR_NAME_TEST)
-endif
-ifeq ($(DEBUG),1)
-  OBJ_DIR := $(OBJ_DIR_NAME_DEBUG)
-endif
-ifeq ($(RELEASE),1)
-  OBJ_DIR := $(OBJ_DIR_NAME_RELEASE)
+else
+  OBJ_DIR := $(OBJ_DIR_NAME)
+  ifeq ($(DEBUG),1)
+    OBJ_DIR := $(OBJ_DIR_NAME_DEBUG)
+  endif
+  ifeq ($(RELEASE),1)
+    OBJ_DIR := $(OBJ_DIR_NAME_RELEASE)
+  endif
 endif
 ELF := $(ROM:.gba=.elf)
 MAP := $(ROM:.gba=.map)
