@@ -31,7 +31,7 @@ EWRAM_DATA struct GenChanges *gConfigChangesTestOverride = NULL;
 
 // Gets the value of a volatile status flag for a certain battler
 // Primarily used for the debug menu and scripts. Outside of it explicit references are preferred
-u32 GetConfigInternal(enum ConfigTag _genConfig)
+ARM_FUNC u32 GetConfigInternal(enum ConfigTag _genConfig)
 {
 #if TESTING
     if (gConfigChangesTestOverride == NULL)
@@ -64,7 +64,7 @@ u32 GetConfigInternal(enum ConfigTag _genConfig)
 }
 
 #if TESTING
-u32 GetClampedValue(enum ConfigTag _genConfig, u32 newValue)
+ARM_FUNC u32 GetClampedValue(enum ConfigTag _genConfig, u32 newValue)
 {
     u32 clampedValue = 0;
     switch(_genConfig)
@@ -77,7 +77,7 @@ u32 GetClampedValue(enum ConfigTag _genConfig, u32 newValue)
 }
 #endif
 
-void SetConfig(enum ConfigTag _genConfig, u32 _value)
+ARM_FUNC void SetConfig(enum ConfigTag _genConfig, u32 _value)
 {
 #if TESTING
     // Clamping is done here instead of the switch due to an internal compiler error!
