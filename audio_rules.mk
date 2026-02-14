@@ -29,8 +29,16 @@ $(CRY_BIN_DIR)/uncomp_%.bin: $(CRY_SUBDIR)/uncomp_%.aif
 	$(AIF) $< $@
 
 # Uncompressed sounds
-$(SOUND_BIN_DIR)/%.bin: sound/%.wav
-	$(WAV2AGB) -b $< $@
+# Prefer .wav when present, but fall back to .aif for legacy sample packs.
+$(SOUND_BIN_DIR)/%.bin:
+	@if [ -f sound/$*.wav ]; then \
+		$(WAV2AGB) -b sound/$*.wav $@; \
+	elif [ -f sound/$*.aif ]; then \
+		$(AIF) sound/$*.aif $@; \
+	else \
+		echo "Missing audio source: sound/$*.wav or sound/$*.aif"; \
+		exit 1; \
+	fi
 
 # For each line in midi.cfg, we do some trickery to convert it into a make rule for the `.mid` file described on the line
 # Data following the colon in said file corresponds to arguments passed into mid2agb
