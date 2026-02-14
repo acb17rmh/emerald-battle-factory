@@ -9,7 +9,6 @@
 #include "bg.h"
 #include "data.h"
 #include "decompress.h"
-#include "event_data.h"
 #include "gpu_regs.h"
 #include "graphics.h"
 #include "link.h"
@@ -20,6 +19,7 @@
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"
+#include "test_runner.h"
 #include "text_window.h"
 #include "trig.h"
 #include "window.h"
@@ -651,12 +651,14 @@ static u8 GetBattleEnvironmentOverride(void)
 {
     u8 battleScene = GetCurrentMapBattleScene();
 
-    if ((gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_TRAINER_HILL)) && !(gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK))
+    if (TestRunner_Battle_GetForcedEnvironment()
+     && gBattleEnvironmentInfo[gBattleEnvironment].background.tilemap
+     && gBattleEnvironmentInfo[gBattleEnvironment].background.tileset)
+    {
         return gBattleEnvironment;
-
-    if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
+    }
+    else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
         return BATTLE_ENVIRONMENT_FRONTIER;
-
     else if (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY)
     {
         switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL))
@@ -1027,7 +1029,13 @@ void DrawBattleEntryBackground(void)
     }
     else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER))
     {
-        if (!(gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) || gPartnerTrainerId > TRAINER_PARTNER(PARTNER_NONE))
+        if (TestRunner_Battle_GetForcedEnvironment()
+         && gBattleEnvironmentInfo[gBattleEnvironment].background.tilemap
+         && gBattleEnvironmentInfo[gBattleEnvironment].background.tileset)
+        {
+            LoadBattleEnvironmentEntryGfx(gBattleEnvironment);
+        }
+        else if (!(gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) || gPartnerTrainerId > TRAINER_PARTNER(PARTNER_NONE))
         {
             LoadBattleEnvironmentEntryGfx(BATTLE_ENVIRONMENT_BUILDING);
         }
