@@ -2801,7 +2801,7 @@ static void SpriteCB_FreeOpponentSprite(struct Sprite *sprite)
 
 #undef sBattlerId
 
-void BtlController_HandleDrawPartyStatusSummary(u32 battler, u32 side, bool32 considerDelay)
+void BtlController_HandleDrawPartyStatusSummary(u32 battler, enum BattleSide side, bool32 considerDelay)
 {
     if (gBattleResources->bufferA[battler][1] != 0 && IsOnPlayerSide(battler))
     {
@@ -3081,17 +3081,22 @@ void BtlController_HandleSwitchInTryShinyAnim(u32 battler)
 
 u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar)
 {
-    u8 battleSceneOption = VarGet(B_BATTLE_SPEED); // Originally GetBattleSceneOption() with a saveblock stored value;
+    static bool32 sHasBattleInputStarted = FALSE;
+    u8 battleSceneOption = VarGet(VAR_BATTLE_SPEED); // Originally GetBattleSceneOption() with a saveblock stored value.
 
     // Hold L to slow down
     if(JOY_HELD(L_BUTTON))
         return 1;
 
+    // Reset on a new battle before any command input begins.
+    if (gBattleResults.battleTurnCounter == 0 && !InBattleChoosingMoves())
+        sHasBattleInputStarted = FALSE;
+
     // We want to speed up all anims until input selection starts
     if(InBattleChoosingMoves())
-        gBattleStruct->hasBattleInputStarted = TRUE;
+        sHasBattleInputStarted = TRUE;
 
-    if(gBattleStruct->hasBattleInputStarted)
+    if(sHasBattleInputStarted)
     {
         // Always run at 1x speed here
         if(InBattleChoosingMoves())
@@ -3119,11 +3124,28 @@ u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar)
 
     // Print text at a readable speed still
     case OPTIONS_BATTLE_SCENE_DISABLED:
-        if(gBattleStruct->hasBattleInputStarted)
+        if(sHasBattleInputStarted)
             return forHealthbar ? 10 : 1;
         else
             return 4;
     }
 
     return 1;
+}
+
+bool32 ShouldBattleRestrictionsApply(u32 battler)
+{
+    return IsControllerPlayer(battler);
+}
+
+void FreeShinyStars(void)
+{
+    for (u32 battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (gBattleSpritesDataPtr->healthBoxesData[battler].triedShinyMonAnim)
+            return;
+    }
+
+    FreeSpriteTilesByTag(ANIM_TAG_GOLD_STARS);
+    FreeSpritePaletteByTag(ANIM_TAG_GOLD_STARS);
 }
