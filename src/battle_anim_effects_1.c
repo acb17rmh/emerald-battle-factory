@@ -6887,7 +6887,7 @@ static void TrySwapWishBattlerIds(u32 battlerAtk, u32 battlerPartner)
         SWAP(gWishFutureKnock.wishPartyId[battlerAtk], gWishFutureKnock.wishPartyId[battlerPartner], temp);
 }
 
-static void TrySwapAttractBattlerIds(u32 battlerAtk, u32 battlerPartner)
+static void UNUSED TrySwapAttractBattlerIds(u32 battlerAtk, u32 battlerPartner)
 {
     u32 attractedTo;
 

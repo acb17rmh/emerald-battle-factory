@@ -501,7 +501,6 @@ static void GenerateInitialRentalMons(void)
     u8 rentalRank = GetNumPastRentalsRank(battleMode, lvlMode);
     u16 monId;
     u16 species[PARTY_SIZE];
-    u16 monIds[PARTY_SIZE];
     u16 heldItems[PARTY_SIZE];
 
     DebugPrintf("GenerateInitialRentalMons");
@@ -512,7 +511,6 @@ static void GenerateInitialRentalMons(void)
     for (i = 0; i < PARTY_SIZE; i++)
     {
         species[i] = SPECIES_NONE;
-        monIds[i] = 0;
         heldItems[i] = ITEM_NONE;
     }
 
@@ -574,7 +572,6 @@ static void GenerateInitialRentalMons(void)
         gSaveBlock2Ptr->frontier.rentalMons[i].monId = monId;
         species[i] = thisSpecies;
         heldItems[i] = item;
-        monIds[i] = monId;
         DebugPrintf("✅ Selected monId %d", monId);
         i++;
     }
