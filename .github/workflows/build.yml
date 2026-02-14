@@ -11,6 +11,7 @@ jobs:
   build:
     if: github.actor != 'allcontributors[bot]'
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     env:
       GAME_VERSION: EMERALD
       GAME_REVISION: 0
@@ -30,19 +31,19 @@ jobs:
       - name: ROM
         env:
           COMPARE: 0
-        run: make -j${nproc} -O all
+        run: make -j"$(nproc)" -O all
 
       - name: Release
         run: |
           make tidy
-          make -j${nproc} release
+          make -j"$(nproc)" release
         # make tidy to purge previous build
 
       - name: Test
         env:
           TEST: 1
         run: |
-          make -j${nproc} check
+          make -j"$(nproc)" check
 
   docs_validate:
     if: github.actor != 'allcontributors[bot]'
@@ -62,4 +63,3 @@ jobs:
     steps:
       - name: Automatically pass for allcontributors
         run: echo "CI automatically passes for allcontributors" && exit 0
-
