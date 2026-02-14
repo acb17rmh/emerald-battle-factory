@@ -43,7 +43,8 @@ jobs:
         env:
           TEST: 1
         run: |
-          make -j"$(nproc)" check
+          # Keep test parallelism bounded for stable runner throughput.
+          make -j4 check
 
   docs_validate:
     if: github.actor != 'allcontributors[bot]'
