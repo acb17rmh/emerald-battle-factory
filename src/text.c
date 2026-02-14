@@ -11,6 +11,7 @@
 #include "blit.h"
 #include "menu.h"
 #include "dynamic_placeholder_text_util.h"
+#include "event_data.h"
 #include "fonts.h"
 
 static u16 RenderText(struct TextPrinter *);
@@ -294,11 +295,70 @@ static const u8 sMenuCursorDimensions[][2] =
     [FONT_SHORT_NARROWER] = { 8,  14 },
 };
 
+// These arrays avoid hardcoded speed values throughout text rendering.
+static const u8 sTextSpeedFrameDelays[] =
+{
+    [OPTIONS_TEXT_SPEED_SLOW]    = 8,
+    [OPTIONS_TEXT_SPEED_MID]     = 4,
+    [OPTIONS_TEXT_SPEED_FAST]    = 1,
+    [OPTIONS_TEXT_SPEED_INSTANT] = 1,
+};
+
+static const u8 sTextSpeedModifiers[] =
+{
+    [OPTIONS_TEXT_SPEED_SLOW]    = TEXT_SPEED_SLOW_MODIFIER,
+    [OPTIONS_TEXT_SPEED_MID]     = TEXT_SPEED_MEDIUM_MODIFIER,
+    [OPTIONS_TEXT_SPEED_FAST]    = TEXT_SPEED_FAST_MODIFIER,
+    [OPTIONS_TEXT_SPEED_INSTANT] = TEXT_SPEED_INSTANT_MODIFIER,
+};
+
+static const u8 sTextScrollSpeeds[] =
+{
+    [OPTIONS_TEXT_SPEED_SLOW]    = 1,
+    [OPTIONS_TEXT_SPEED_MID]     = 2,
+    [OPTIONS_TEXT_SPEED_FAST]    = 4,
+    [OPTIONS_TEXT_SPEED_INSTANT] = 6,
+};
+
 static const u16 sFontBoldJapaneseGlyphs[] = INCBIN_U16("graphics/fonts/bold.hwjpnfont");
 
 static void SetFontsPointer(const struct FontInfo *fonts)
 {
     gFonts = fonts;
+}
+
+u32 GetPlayerTextSpeed(void)
+{
+    if (gTextFlags.forceMidTextSpeed)
+        return OPTIONS_TEXT_SPEED_MID;
+
+    if (gSaveBlock2Ptr->optionsTextSpeed > OPTIONS_TEXT_SPEED_INSTANT)
+        gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
+
+    if (FlagGet(FLAG_TEXT_SPEED_INSTANT) || TEXT_SPEED_INSTANT)
+        return OPTIONS_TEXT_SPEED_INSTANT;
+
+    return gSaveBlock2Ptr->optionsTextSpeed;
+}
+
+u32 GetPlayerTextSpeedDelay(void)
+{
+    return sTextSpeedFrameDelays[GetPlayerTextSpeed()];
+}
+
+u32 GetPlayerTextSpeedModifier(void)
+{
+    return sTextSpeedModifiers[GetPlayerTextSpeed()];
+}
+
+u32 GetPlayerTextScrollSpeed(void)
+{
+    return sTextScrollSpeeds[GetPlayerTextSpeed()];
+}
+
+bool32 IsPlayerTextSpeedInstant(void)
+{
+    return GetPlayerTextSpeed() == OPTIONS_TEXT_SPEED_INSTANT;
 }
 
 void DeactivateAllTextPrinters(void)
@@ -891,7 +951,7 @@ void TextPrinterInitDownArrowCounters(struct TextPrinter *textPrinter)
     else
     {
         subStruct->downArrowYPosIdx = 0;
-        subStruct->downArrowDelay = 0;
+        subStruct->utilityCounter = 0;
     }
 }
 
@@ -902,9 +962,9 @@ void TextPrinterDrawDownArrow(struct TextPrinter *textPrinter)
 
     if (gTextFlags.autoScroll == 0)
     {
-        if (subStruct->downArrowDelay != 0)
+        if (subStruct->utilityCounter != 0)
         {
-            subStruct->downArrowDelay--;
+            subStruct->utilityCounter--;
         }
         else
         {
@@ -940,7 +1000,7 @@ void TextPrinterDrawDownArrow(struct TextPrinter *textPrinter)
                 16);
             CopyWindowToVram(textPrinter->printerTemplate.windowId, COPYWIN_GFX);
 
-            subStruct->downArrowDelay = 8;
+            subStruct->utilityCounter = 8 * GetPlayerTextSpeedModifier();
             subStruct->downArrowYPosIdx++;
         }
     }
