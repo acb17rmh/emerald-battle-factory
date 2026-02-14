@@ -1423,9 +1423,8 @@
 	callnative BS_TryRevertWeatherForm
 	.endm
 
-	.macro trysetoctolock battler:req, failInstr:req
+	.macro trysetoctolock failInstr:req
 	callnative BS_TrySetOctolock
-	.byte \battler
 	.4byte \failInstr
 	.endm
 
