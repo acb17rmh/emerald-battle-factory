@@ -5996,54 +5996,54 @@ const u16 gFrontierFactoryPool_GEN9ZU[FRONTIER_FACTORY_POOL_GEN9ZU_COUNT] = {
     FRONTIER_MON_GEN9ZU_DIPPLIN_GROWTH_1_1,
 };
 
-bool8 ShouldExcludeMon(u16 monId);
+static bool8 ShouldExcludeMon(u16 monId);
 
-static void CopyRandomOnePerSpecies(u16 *dest, u16 *destCount, const u16 *src, u16 srcCount)
+static void AppendOneSetPerSpecies(u16 *dest, u16 *destCount, const u16 *src, u16 srcCount)
 {
-    u16 seenSpecies[NUM_SPECIES] = {0};  // maps species ID to monId
-    u16 monId;
-    u16 species;
+    bool8 seenSpecies[NUM_SPECIES] = {FALSE};
+    u16 i;
 
-    for (int i = 0; i < srcCount; i++)
+    // Mark species already present in the destination so multiple source pools can be appended safely.
+    for (i = 0; i < *destCount; i++)
     {
-        monId = src[i];
-        species = gBattleFrontierMons[monId].species;
+        u16 existingSpecies = gBattleFrontierMons[dest[i]].species;
 
-        if (ShouldExcludeMon(monId)) {
-            continue; // skip this set if it should be filtered out
-        }
-
-        // If species not seen yet, record it
-        if (seenSpecies[species] == 0)
-            seenSpecies[species] = monId;
+        if (existingSpecies < NUM_SPECIES)
+            seenSpecies[existingSpecies] = TRUE;
     }
 
-    *destCount = 0;
-    for (int s = 1; s < NUM_SPECIES; s++) // start from 1 to skip SPECIES_NONE
+    for (i = 0; i < srcCount; i++)
     {
-        if (seenSpecies[s] != 0)
+        u16 monId = src[i];
+        u16 species = gBattleFrontierMons[monId].species;
+
+        if (species == SPECIES_NONE || species >= NUM_SPECIES)
+            continue;
+        if (seenSpecies[species])
+            continue;
+        if (ShouldExcludeMon(monId))
+            continue;
+
+        if (*destCount >= FACTORY_RANK_POOL_MAX_SIZE)
         {
-            if (*destCount < FACTORY_RANK_POOL_MAX_SIZE)
-                dest[(*destCount)++] = seenSpecies[s];
-            else
-            {
-                DebugPrintf("‼️ Final rank pool overflow — more than %d unique species", FACTORY_RANK_POOL_MAX_SIZE);
-                break;
-            }
+            DebugPrintf("Final rank pool overflow (max %d species)", FACTORY_RANK_POOL_MAX_SIZE);
+            break;
         }
-    }
 
-    DebugPrintf("✅ Built rank pool: %d unique species", *destCount);
+        dest[(*destCount)++] = monId;
+        seenSpecies[species] = TRUE;
+    }
 }
 
-bool8 ShouldExcludeMon(u16 monId)
+static bool8 ShouldExcludeMon(u16 monId)
 {
     const struct TrainerMon *mon = &gBattleFrontierMons[monId];
+    int i;
 
     // Filter 1: Tera Blast not allowed if Tera disabled
     if (!FlagGet(FLAG_BATTLE_FACTORY_ALLOW_TERASTALLISATION))
     {
-        for (int i = 0; i < MAX_MON_MOVES; i++)
+        for (i = 0; i < MAX_MON_MOVES; i++)
         {
             if (mon->moves[i] == MOVE_TERA_BLAST)
                 return TRUE; // Exclude this mon
@@ -6051,26 +6051,16 @@ bool8 ShouldExcludeMon(u16 monId)
     }
 
     // Filter 2: Mega Stones not allowed if Mega Evolution disabled
-    if (!FlagGet(FLAG_BATTLE_FACTORY_ALLOW_MEGA_EVOLUTION))
-    {
-        for (int i = 0; i < MAX_MON_MOVES; i++)
-        {
-            // If item is a mega stone (between min and max held item index)
-            if (mon->heldItem >= ITEM_VENUSAURITE && mon->heldItem <= ITEM_DIANCITE)
-                return TRUE; // Exclude this mon
-        }
-    }
+    if (!FlagGet(FLAG_BATTLE_FACTORY_ALLOW_MEGA_EVOLUTION)
+     && mon->heldItem >= ITEM_VENUSAURITE
+     && mon->heldItem <= ITEM_DIANCITE)
+        return TRUE;
 
-    // Filter 2: Z-Crystals not allowed if Z-Moves disabled
-    if (!FlagGet(FLAG_BATTLE_FACTORY_ALLOW_Z_MOVES))
-    {
-        for (int i = 0; i < MAX_MON_MOVES; i++)
-        {
-            // If item is a Z-Crystal (between min and max Z-Crystal index)
-            if (mon->heldItem >= ITEM_NORMALIUM_Z && mon->heldItem <= ITEM_ULTRANECROZIUM_Z)
-                return TRUE; // Exclude this mon
-        }
-    }
+    // Filter 3: Z-Crystals not allowed if Z-Moves disabled
+    if (!FlagGet(FLAG_BATTLE_FACTORY_ALLOW_Z_MOVES)
+     && mon->heldItem >= ITEM_NORMALIUM_Z
+     && mon->heldItem <= ITEM_ULTRANECROZIUM_Z)
+        return TRUE;
 
     return FALSE; // Include this mon
 }
@@ -6081,24 +6071,28 @@ void InitFactoryRankPools(void)
     gFactoryPoolRank3Count = gFactoryPoolRank4Count = 0;
 
     // Rank 1: PU + ZU + NU
-    CopyRandomOnePerSpecies(sFactoryPoolRank1, &gFactoryPoolRank1Count, gFrontierFactoryPool_GEN9PU, FRONTIER_FACTORY_POOL_GEN9PU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank1, &gFactoryPoolRank1Count, gFrontierFactoryPool_GEN9ZU, FRONTIER_FACTORY_POOL_GEN9ZU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank1, &gFactoryPoolRank1Count, gFrontierFactoryPool_GEN9NU, FRONTIER_FACTORY_POOL_GEN9NU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank1, &gFactoryPoolRank1Count, gFrontierFactoryPool_GEN9PU, FRONTIER_FACTORY_POOL_GEN9PU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank1, &gFactoryPoolRank1Count, gFrontierFactoryPool_GEN9ZU, FRONTIER_FACTORY_POOL_GEN9ZU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank1, &gFactoryPoolRank1Count, gFrontierFactoryPool_GEN9NU, FRONTIER_FACTORY_POOL_GEN9NU_COUNT);
+    DebugPrintf("Built rank 1 pool: %d unique species", gFactoryPoolRank1Count);
 
     // Rank 2: NU + RU + National Dex RU
-    CopyRandomOnePerSpecies(sFactoryPoolRank2, &gFactoryPoolRank2Count, gFrontierFactoryPool_GEN9NU, FRONTIER_FACTORY_POOL_GEN9NU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank2, &gFactoryPoolRank2Count, gFrontierFactoryPool_GEN9RU, FRONTIER_FACTORY_POOL_GEN9RU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank2, &gFactoryPoolRank2Count, gFrontierFactoryPool_GEN9NATIONALDEXRU, FRONTIER_FACTORY_POOL_GEN9NATIONALDEXRU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank2, &gFactoryPoolRank2Count, gFrontierFactoryPool_GEN9NU, FRONTIER_FACTORY_POOL_GEN9NU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank2, &gFactoryPoolRank2Count, gFrontierFactoryPool_GEN9RU, FRONTIER_FACTORY_POOL_GEN9RU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank2, &gFactoryPoolRank2Count, gFrontierFactoryPool_GEN9NATIONALDEXRU, FRONTIER_FACTORY_POOL_GEN9NATIONALDEXRU_COUNT);
+    DebugPrintf("Built rank 2 pool: %d unique species", gFactoryPoolRank2Count);
 
     // Rank 3: RU + UU + National Dex UU
-    CopyRandomOnePerSpecies(sFactoryPoolRank3, &gFactoryPoolRank3Count, gFrontierFactoryPool_GEN9RU, FRONTIER_FACTORY_POOL_GEN9RU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank3, &gFactoryPoolRank3Count, gFrontierFactoryPool_GEN9UU, FRONTIER_FACTORY_POOL_GEN9UU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank3, &gFactoryPoolRank3Count, gFrontierFactoryPool_GEN9NATIONALDEXUU, FRONTIER_FACTORY_POOL_GEN9NATIONALDEXUU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank3, &gFactoryPoolRank3Count, gFrontierFactoryPool_GEN9RU, FRONTIER_FACTORY_POOL_GEN9RU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank3, &gFactoryPoolRank3Count, gFrontierFactoryPool_GEN9UU, FRONTIER_FACTORY_POOL_GEN9UU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank3, &gFactoryPoolRank3Count, gFrontierFactoryPool_GEN9NATIONALDEXUU, FRONTIER_FACTORY_POOL_GEN9NATIONALDEXUU_COUNT);
+    DebugPrintf("Built rank 3 pool: %d unique species", gFactoryPoolRank3Count);
 
     // Rank 4: UU + OU + National Dex OU
-    CopyRandomOnePerSpecies(sFactoryPoolRank4, &gFactoryPoolRank4Count, gFrontierFactoryPool_GEN9UU, FRONTIER_FACTORY_POOL_GEN9UU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank4, &gFactoryPoolRank4Count, gFrontierFactoryPool_GEN9OU, FRONTIER_FACTORY_POOL_GEN9OU_COUNT);
-    CopyRandomOnePerSpecies(sFactoryPoolRank4, &gFactoryPoolRank4Count, gFrontierFactoryPool_GEN9NATIONALDEX, FRONTIER_FACTORY_POOL_GEN9NATIONALDEX_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank4, &gFactoryPoolRank4Count, gFrontierFactoryPool_GEN9UU, FRONTIER_FACTORY_POOL_GEN9UU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank4, &gFactoryPoolRank4Count, gFrontierFactoryPool_GEN9OU, FRONTIER_FACTORY_POOL_GEN9OU_COUNT);
+    AppendOneSetPerSpecies(sFactoryPoolRank4, &gFactoryPoolRank4Count, gFrontierFactoryPool_GEN9NATIONALDEX, FRONTIER_FACTORY_POOL_GEN9NATIONALDEX_COUNT);
+    DebugPrintf("Built rank 4 pool: %d unique species", gFactoryPoolRank4Count);
 }
 
 // END_GENERATED_FACTORY_POOLS
