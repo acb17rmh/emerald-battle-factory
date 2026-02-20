@@ -250,6 +250,9 @@ static void SetUsefulFlags(void) {
     FlagSet(FLAG_SYS_POKEDEX_GET);
     FlagSet(FLAG_RECEIVED_POKEDEX_FROM_BIRCH);
 
+    // Frontier Pass
+    FlagSet(FLAG_SYS_FRONTIER_PASS);
+
     // Pokemon
     FlagSet(FLAG_SYS_POKEMON_GET);
 

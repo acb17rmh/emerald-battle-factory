@@ -40,6 +40,7 @@
 #include "constants/items.h"
 #include "constants/songs.h"
 #include "constants/event_objects.h"
+#include "constants/flags.h"
 #include "party_menu.h"
 #include "list_menu.h"
 
@@ -104,6 +105,18 @@ static void PrintBannedSpeciesName(u8 windowId, u32 itemId, u8 y);
 static void Task_BannedSpeciesWindowInput(u8 taskId);
 static u16 GetActiveFrontierBrainTrainerId(s32 facility);
 static u8 GetActiveFrontierBrainObjEventGfx(s32 facility);
+static bool8 IsFactoryBossCadenceContext(void);
+static bool8 IsFactoryBossCadenceMilestone(u16 winStreakNoModifier);
+static bool8 AreAllFactoryTier1BossesCleared(void);
+static u8 GetNextFactoryTier1BossId(void);
+
+static const u8 sFactoryBossTier1Rotation[] =
+{
+    FACTORY_BOSS_STEVEN,
+    FACTORY_BOSS_WALLY,
+    FACTORY_BOSS_NORMAN,
+    FACTORY_BOSS_RED,
+};
 
 static u16 GetActiveFrontierBrainTrainerId(s32 facility)
 {
@@ -1758,6 +1771,17 @@ u8 GetFrontierBrainStatus(void)
         return FRONTIER_BRAIN_NOT_READY;
 
     symbolsCount = GetPlayerSymbolCountForFacility(facility);
+
+    // One-shot debug override: force the next Factory brain encounter to be Noland.
+    if (facility == FRONTIER_FACILITY_FACTORY
+     && FlagGet(FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND))
+    {
+        if (symbolsCount == 0)
+            return FRONTIER_BRAIN_STREAK;
+        else
+            return FRONTIER_BRAIN_GOLD;
+    }
+
     switch (symbolsCount)
     {
     // Missing a symbol
@@ -1781,7 +1805,92 @@ u8 GetFrontierBrainStatus(void)
         break;
     }
 
+    if (IsFactoryBossCadenceContext())
+    {
+        // Any explicit active boss (debug/manual/progression) should force a brain encounter flow.
+        if (VarGet(VAR_FACTORY_ACTIVE_BOSS) != FACTORY_BOSS_NONE)
+            return FRONTIER_BRAIN_STREAK;
+
+        // Progression cadence only gates/overrides the "one symbol" phase.
+        if (symbolsCount == 1 && VarGet(VAR_FACTORY_BOSS_UNLOCK_STATE) != 0)
+        {
+            if (!IsFactoryBossCadenceMilestone(winStreakNoModifier))
+                return FRONTIER_BRAIN_NOT_READY;
+
+            if (!AreAllFactoryTier1BossesCleared())
+                return FRONTIER_BRAIN_STREAK;
+
+            // Once Tier 1 bosses are cleared, allow Noland Gold at the next cadence slot.
+            return FRONTIER_BRAIN_GOLD;
+        }
+    }
+
     return status;
+}
+
+static bool8 IsFactoryBossCadenceContext(void)
+{
+    if (VarGet(VAR_FRONTIER_FACILITY) != FRONTIER_FACILITY_FACTORY)
+        return FALSE;
+    if (VarGet(VAR_FRONTIER_BATTLE_MODE) != FRONTIER_MODE_SINGLES)
+        return FALSE;
+    if (FlagGet(FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE))
+        return FALSE;
+    return TRUE;
+}
+
+static bool8 IsFactoryBossCadenceMilestone(u16 winStreakNoModifier)
+{
+    const u8 *streakAppearances = gFrontierBrainInfo[FRONTIER_FACILITY_FACTORY].streakAppearances;
+    const u16 pendingWin = winStreakNoModifier + streakAppearances[3];
+    const u16 goldThreshold = streakAppearances[1];
+    const u16 repeatInterval = streakAppearances[2];
+
+    if (pendingWin < goldThreshold || repeatInterval == 0)
+        return FALSE;
+
+    return ((pendingWin - goldThreshold) % repeatInterval) == 0;
+}
+
+static bool8 AreAllFactoryTier1BossesCleared(void)
+{
+    u16 clearedMask = VarGet(VAR_FACTORY_BOSS_CLEARED_MASK);
+    u8 i;
+
+    for (i = 0; i < ARRAY_COUNT(sFactoryBossTier1Rotation); i++)
+    {
+        u8 bossId = sFactoryBossTier1Rotation[i];
+
+        if (GetFactoryBossProfile(bossId) == NULL)
+            continue;
+
+        if ((clearedMask & (1u << (bossId - 1))) == 0)
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+static u8 GetNextFactoryTier1BossId(void)
+{
+    u16 clearedMask = VarGet(VAR_FACTORY_BOSS_CLEARED_MASK);
+    u8 i;
+    u8 start = VarGet(VAR_FACTORY_BOSS_ROTATION_INDEX) % ARRAY_COUNT(sFactoryBossTier1Rotation);
+
+    for (i = 0; i < ARRAY_COUNT(sFactoryBossTier1Rotation); i++)
+    {
+        u8 idx = (start + i) % ARRAY_COUNT(sFactoryBossTier1Rotation);
+        u8 bossId = sFactoryBossTier1Rotation[idx];
+
+        if (GetFactoryBossProfile(bossId) == NULL)
+            continue;
+        if ((clearedMask & (1u << (bossId - 1))) != 0)
+            continue;
+
+        return bossId;
+    }
+
+    return FACTORY_BOSS_NONE;
 }
 
 void CopyFrontierTrainerText(u8 whichText, u16 trainerId)
@@ -2685,6 +2794,53 @@ bool8 IsFactoryDebugStevenBossEnabled(void)
     return (GetActiveFactoryBossId() == FACTORY_BOSS_STEVEN);
 }
 
+void PrepareFactoryBossForNextBattle(void)
+{
+    if (FlagGet(FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND))
+    {
+        VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_NONE);
+        return;
+    }
+
+    if (VarGet(VAR_FACTORY_ACTIVE_BOSS) != FACTORY_BOSS_NONE)
+        return;
+
+    if (!IsFactoryBossCadenceContext()
+     || VarGet(VAR_FACTORY_BOSS_UNLOCK_STATE) == 0
+     || GetPlayerSymbolCountForFacility(FRONTIER_FACILITY_FACTORY) == 0
+     || AreAllFactoryTier1BossesCleared()
+     || !IsFactoryBossCadenceMilestone(GetCurrentFacilityWinStreak()))
+    {
+        VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_NONE);
+        return;
+    }
+
+    VarSet(VAR_FACTORY_ACTIVE_BOSS, GetNextFactoryTier1BossId());
+}
+
+void RecordFactoryBossDefeat(void)
+{
+    u8 i;
+    u8 bossId = GetActiveFactoryBossId();
+    u16 clearedMask;
+
+    if (bossId == FACTORY_BOSS_NONE || bossId >= FACTORY_BOSS_COUNT)
+        return;
+
+    clearedMask = VarGet(VAR_FACTORY_BOSS_CLEARED_MASK);
+    clearedMask |= (1u << (bossId - 1));
+    VarSet(VAR_FACTORY_BOSS_CLEARED_MASK, clearedMask);
+
+    for (i = 0; i < ARRAY_COUNT(sFactoryBossTier1Rotation); i++)
+    {
+        if (sFactoryBossTier1Rotation[i] != bossId)
+            continue;
+
+        VarSet(VAR_FACTORY_BOSS_ROTATION_INDEX, (i + 1) % ARRAY_COUNT(sFactoryBossTier1Rotation));
+        break;
+    }
+}
+
 u16 GetFrontierBrainMonMove(u8 monId, u8 moveSlotId)
 {
     s32 facility = VarGet(VAR_FRONTIER_FACILITY);
@@ -2739,6 +2895,7 @@ static const u8 sText_DefaultFactoryBossStart[] = COMPOUND_STRING(
 static const u8 sText_DefaultFactoryBossPostWin[] = COMPOUND_STRING(
     "Well done.\n"
     "That was an excellent battle.");
+static const u8 sText_FactoryBossName_None[] = COMPOUND_STRING("No one");
 
 void BufferFactoryBossCallText(void)
 {
@@ -2789,6 +2946,28 @@ void PlayFactoryBossPreBattleRoomBgmIfSet(void)
 
     if (bossProfile->preBattleRoomBgm != GetCurrentMapMusic())
         PlayNewMapMusic(bossProfile->preBattleRoomBgm);
+}
+
+void GetNextFactoryBossIdForScout(void)
+{
+    if (VarGet(VAR_FACTORY_BOSS_UNLOCK_STATE) == 0
+     || AreAllFactoryTier1BossesCleared())
+    {
+        gSpecialVar_Result = FACTORY_BOSS_NONE;
+        return;
+    }
+
+    gSpecialVar_Result = GetNextFactoryTier1BossId();
+}
+
+void BufferFactoryBossNameFromVar(void)
+{
+    const struct FactoryBossProfile *bossProfile = GetFactoryBossProfile(VarGet(VAR_0x8004));
+
+    if (bossProfile != NULL && bossProfile->debugMenuName != NULL)
+        StringCopy(gStringVar1, bossProfile->debugMenuName);
+    else
+        StringCopy(gStringVar1, sText_FactoryBossName_None);
 }
 
 // Called for intro speech as well despite the fact that its handled in the map scripts files instead

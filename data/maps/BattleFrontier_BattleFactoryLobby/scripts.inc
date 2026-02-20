@@ -2905,6 +2905,44 @@ BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints::
 	return
 
 
+BattleFrontier_BattleFactoryLobby_EventScript_BossScout::
+# 1299 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	lock
+# 1300 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	faceplayer
+# 1301 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	compare VAR_FACTORY_BOSS_UNLOCK_STATE, 0
+	goto_if_eq BattleFrontier_BattleFactoryLobby_EventScript_BossScout_2
+# 1306 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	special GetNextFactoryBossIdForScout
+# 1307 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	compare VAR_RESULT, 0
+	goto_if_eq BattleFrontier_BattleFactoryLobby_EventScript_BossScout_5
+# 1312 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setorcopyvar VAR_0x8004, VAR_RESULT
+# 1313 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	special BufferFactoryBossNameFromVar
+# 1314 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_2
+# 1315 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	release
+	end
+
+BattleFrontier_BattleFactoryLobby_EventScript_BossScout_2:
+# 1302 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_0
+# 1303 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	release
+	end
+
+BattleFrontier_BattleFactoryLobby_EventScript_BossScout_5:
+# 1308 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_1
+# 1309 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	release
+	end
+
+
 BattleFrontier_BattleFactoryLobby_Noland_Text_0:
 # 623 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Hey, {PLAYER}. Can't handle the heat?\n"
@@ -3481,3 +3519,23 @@ BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints_Text_0:
 	.string "POKéMON in your party to keep forever,\l"
 	.string "for use in other BATTLE FRONTIER\l"
 	.string "facilities.$"
+
+BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_0:
+# 1302 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "No special challengers are scheduled\n"
+	.string "yet.\p"
+	.string "Beat NOLAND once and I'll start\n"
+	.string "tracking who's coming next.$"
+
+BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_1:
+# 1308 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "You've already beaten the current\n"
+	.string "special challenger lineup.\p"
+	.string "If new contenders show up, I'll let you\n"
+	.string "know right away.$"
+
+BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_2:
+# 1314 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Breaking news! {STR_VAR_1} is the\n"
+	.string "next major challenger headed to the\l"
+	.string "BATTLE FACTORY.$"

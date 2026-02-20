@@ -59,6 +59,14 @@ u8 GetFactoryRewardBossId(u8 activeBossId, u8 lastGeneratedBossId)
     return bossId;
 }
 
+bool8 HasFactoryRewardForBossId(u8 bossId)
+{
+    if (bossId >= FACTORY_BOSS_COUNT)
+        return FALSE;
+
+    return (sFactoryBossRewardMonBuilds[bossId] != NULL);
+}
+
 bool8 IsFactoryRewardMonValid(struct Pokemon *mon, u8 activeBossId)
 {
     bool8 isBadEgg = GetMonData(mon, MON_DATA_SANITY_IS_BAD_EGG);
@@ -68,7 +76,6 @@ bool8 IsFactoryRewardMonValid(struct Pokemon *mon, u8 activeBossId)
         return TRUE;
 
     DebugPrintfLevel(MGBA_LOG_FATAL, "Factory reward mon failed sanity check (bossId=%d badEgg=%d hasSpecies=%d)", activeBossId, isBadEgg, hasSpecies);
-    AGB_ASSERT(FALSE);
     return FALSE;
 }
 

@@ -1294,3 +1294,24 @@ script BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints {
                    forever, for use in other BATTLE FRONTIER facilities."))
     factory_selectrewardmon
 }
+
+script BattleFrontier_BattleFactoryLobby_EventScript_BossScout {
+    lock
+    faceplayer
+    if(var(VAR_FACTORY_BOSS_UNLOCK_STATE) == 0) {
+        msgbox(format("No special challengers are scheduled yet.\pBeat NOLAND once and I'll start tracking who's coming next."))
+        release
+        end
+    }
+    special(GetNextFactoryBossIdForScout)
+    if(var(VAR_RESULT) == 0) {
+        msgbox(format("You've already beaten the current special challenger lineup.\pIf new contenders show up, I'll let you know right away."))
+        release
+        end
+    }
+    setorcopyvar(VAR_0x8004, VAR_RESULT)
+    special(BufferFactoryBossNameFromVar)
+    msgbox(format("Breaking news! {STR_VAR_1} is the next major challenger headed to the BATTLE FACTORY."))
+    release
+    end
+}
