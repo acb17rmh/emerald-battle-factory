@@ -32,7 +32,6 @@ void BufferFactoryBossBattleStartText(void);
 void BufferFactoryBossBattlePostWinText(void);
 void PlayFactoryBossPreBattleRoomBgmIfSet(void);
 void GetNextFactoryBossIdForScout(void);
-void GetFactorySymbolCount(void);
 void BufferFactoryBossNameFromVar(void);
 void PrepareFactoryBossForNextBattle(void);
 void RecordFactoryBossDefeat(void);

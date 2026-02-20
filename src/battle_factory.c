@@ -74,9 +74,7 @@ static void GetOpponentFrontierClass();
 void GetOpponentFrontierClassInternal(u8 trainerId);
 static void SelectRewardMonFromParty();
 static void GiveRewardMonFromParty();
-static void CB2_SelectReward();
 static void CB2_GiveReward();
-static bool8 TryFallbackRewardMonFromParty(struct Pokemon *outMon);
 static bool8 CanUseFactoryBrainMonId(u16 monId, s32 partyCount, const u16 *species, const u16 *heldItems);
 
 // Number of moves needed on the team to be considered using a certain battle style
@@ -278,6 +276,8 @@ static void InitFactoryChallenge(void) {
     TRAINER_BATTLE_PARAM.opponentA = 0;
     sLastGeneratedFactoryBossId = FACTORY_BOSS_NONE;
     sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+    ZeroMonData(&sFactoryRewardBuffer);
+    VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
     SetFactoryDebugStevenBossEnabled(FALSE);
 }
 
@@ -1073,6 +1073,16 @@ void DebugAction_TriggerFactoryBoss(u8 bossId)
     BattleDebug_WonBattle();
 }
 
+void SetPendingFactoryRewardBossFromActive(void)
+{
+    u8 bossId = GetActiveFactoryBossId();
+
+    if (HasFactoryRewardForBossId(bossId))
+        sPendingFactoryRewardBossId = bossId;
+    else
+        sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+}
+
 void MarkAllFactorySpeciesAsSeen(void)
 {
     for (int i = NUM_ORIGINAL_FRONTIER_MONS; i < NUM_FRONTIER_MONS; i++)
@@ -1247,44 +1257,53 @@ void GetOpponentFrontierClassInternal(u8 trainerId)
 
 static void SelectRewardMonFromParty(void)
 {
-    u8 rewardBossId = FACTORY_BOSS_NONE;
+    u8 resolvedBossId = FACTORY_BOSS_NONE;
 
     DebugPrintf("SelectRewardMonFromParty: activeBoss=%d lastBoss=%d pendingBoss=%d",
                 GetActiveFactoryBossId(),
                 sLastGeneratedFactoryBossId,
                 sPendingFactoryRewardBossId);
 
-    if (TryBuildFactoryRewardFromBoss(GetActiveFactoryBossId(),
-                                      sLastGeneratedFactoryBossId,
-                                      gSaveBlock2Ptr->frontier.lvlMode,
-                                      &sFactoryRewardBuffer,
-                                      &rewardBossId))
+    resolvedBossId = sPendingFactoryRewardBossId;
+    if (resolvedBossId == FACTORY_BOSS_NONE)
+        resolvedBossId = VarGet(VAR_FACTORY_LAST_DEFEATED_BOSS);
+    if (resolvedBossId == FACTORY_BOSS_NONE)
+        resolvedBossId = GetFactoryRewardBossId(GetActiveFactoryBossId(), sLastGeneratedFactoryBossId);
+    if (!HasFactoryRewardForBossId(resolvedBossId))
     {
-        if (!IsFactoryRewardMonValid(&sFactoryRewardBuffer, rewardBossId))
-        {
-            DebugPrintfLevel(MGBA_LOG_FATAL,
-                             "Boss reward build invalid during selection (bossId=%d), falling back to rental selection",
-                             rewardBossId);
-            sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
-        }
-        else
-        {
-        sPendingFactoryRewardBossId = rewardBossId;
-        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript);
+        DebugPrintfLevel(MGBA_LOG_WARN, "No reward defined for bossId=%d; skipping reward grant", resolvedBossId);
+        sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+        VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
+        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         return;
-        }
     }
 
-    sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+    if (!BuildFactoryBossRewardMon(resolvedBossId,
+                                   gSaveBlock2Ptr->frontier.lvlMode,
+                                   &sFactoryRewardBuffer))
+    {
+        DebugPrintfLevel(MGBA_LOG_WARN, "Failed to build reward for bossId=%d; skipping reward grant", resolvedBossId);
+        sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+        VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
+        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+        return;
+    }
 
-    // gFactoryRewardMode = TRUE;
-    // DoBattleFactorySelectScreen();
-    gStarterSelectionOverride = gPlayerParty;
-    gStarterSelectionOverrideCount = FRONTIER_PARTY_SIZE;
+    if (!IsFactoryRewardMonValid(&sFactoryRewardBuffer, resolvedBossId))
+    {
+        DebugPrintfLevel(MGBA_LOG_WARN, "Built invalid reward for bossId=%d; skipping reward grant", resolvedBossId);
+        sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+        VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
+        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+        return;
+    }
 
-    SetMainCallback2(CB2_ChooseStarter);
-    gMain.savedCallback = CB2_SelectReward;
+    sPendingFactoryRewardBossId = resolvedBossId;
+    ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript);
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
 static void GiveRewardMonFromParty(void)
@@ -1293,70 +1312,46 @@ static void GiveRewardMonFromParty(void)
     gMain.savedCallback = CB2_GiveReward;
 }
 
-static void CB2_SelectReward(void)
-{
-    u8 selected = gSpecialVar_Result;
-    DebugPrintf("Selected reward %d", selected);
-
-    for (int i = 0; i < FRONTIER_PARTY_SIZE; i++)
-    {
-        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
-        DebugPrintf("Slot %d: species=%d", i, species);
-    }
-
-    if (selected >= FRONTIER_PARTY_SIZE)
-        selected = 0;
-
-    CopyMon(&sFactoryRewardBuffer, &gPlayerParty[selected], sizeof(struct Pokemon));
-
-    gStarterSelectionOverride = NULL;
-    gStarterSelectionOverrideCount = 0;
-
-    ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript);
-    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-}
-
 static void CB2_GiveReward(void)
 {
-    bool8 rebuiltBossReward = FALSE;
-    u8 rebuiltPendingBossId = sPendingFactoryRewardBossId;
-
-    rebuiltBossReward = TryRebuildFactoryRewardForGrant(GetActiveFactoryBossId(),
-                                                        sLastGeneratedFactoryBossId,
-                                                        sPendingFactoryRewardBossId,
-                                                        gSaveBlock2Ptr->frontier.lvlMode,
-                                                        &sFactoryRewardBuffer,
-                                                        &rebuiltPendingBossId,
-                                                        NULL);
-    if (!rebuiltBossReward && sPendingFactoryRewardBossId != FACTORY_BOSS_NONE)
+    if (sPendingFactoryRewardBossId == FACTORY_BOSS_NONE)
     {
-        DebugPrintfLevel(MGBA_LOG_FATAL, "Failed to rebuild pending boss reward (bossId=%d), falling back", sPendingFactoryRewardBossId);
+        VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
+        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+        return;
     }
-    sPendingFactoryRewardBossId = rebuiltPendingBossId;
 
-    if (!IsFactoryRewardMonValid(&sFactoryRewardBuffer, GetActiveFactoryBossId()))
+    if (!BuildFactoryBossRewardMon(sPendingFactoryRewardBossId,
+                                   gSaveBlock2Ptr->frontier.lvlMode,
+                                   &sFactoryRewardBuffer))
     {
-        DebugPrintfLevel(MGBA_LOG_FATAL,
-                         "Reward mon invalid after rebuild check (activeBoss=%d lastBoss=%d pendingBoss=%d rebuilt=%d), attempting fallback",
+        DebugPrintfLevel(MGBA_LOG_WARN, "Failed to rebuild pending boss reward (bossId=%d)", sPendingFactoryRewardBossId);
+        sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+        VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
+        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+        return;
+    }
+
+    if (!IsFactoryRewardMonValid(&sFactoryRewardBuffer, sPendingFactoryRewardBossId))
+    {
+        DebugPrintfLevel(MGBA_LOG_WARN,
+                         "Reward mon invalid before grant (activeBoss=%d lastBoss=%d pendingBoss=%d)",
                          GetActiveFactoryBossId(),
                          sLastGeneratedFactoryBossId,
-                         sPendingFactoryRewardBossId,
-                         rebuiltBossReward);
-
-        if (!TryFallbackRewardMonFromParty(&sFactoryRewardBuffer)
-         || !IsFactoryRewardMonValid(&sFactoryRewardBuffer, GetActiveFactoryBossId()))
-        {
-            DebugPrintfLevel(MGBA_LOG_FATAL, "Failed to construct fallback reward mon; skipping reward grant");
-            sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
-            ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
-            SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-            return;
-        }
+                         sPendingFactoryRewardBossId);
+        sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+        VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
+        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
+        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+        return;
     }
 
     u8 result = GiveMonToPlayer(&sFactoryRewardBuffer);
     DebugPrintf("GiveMonToPlayer: %d", result);
     sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+    VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
 
     u16 species = GetMonData(&sFactoryRewardBuffer, MON_DATA_SPECIES);
     u16 nationalDexNum = SpeciesToNationalPokedexNum(species);
@@ -1368,23 +1363,4 @@ static void CB2_GiveReward(void)
 
     ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-}
-
-static bool8 TryFallbackRewardMonFromParty(struct Pokemon *outMon)
-{
-    s32 i;
-
-    for (i = 0; i < PARTY_SIZE; i++)
-    {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_BAD_EGG))
-            continue;
-        if (!GetMonData(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES))
-            continue;
-
-        CopyMon(outMon, &gPlayerParty[i], sizeof(struct Pokemon));
-        DebugPrintfLevel(MGBA_LOG_WARN, "Using fallback reward from player party slot %d", i);
-        return TRUE;
-    }
-
-    return FALSE;
 }

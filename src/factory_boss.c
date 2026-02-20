@@ -35,10 +35,6 @@ u8 GetActiveFactoryBossId(void)
     if (bossId < FACTORY_BOSS_COUNT)
         return bossId;
 
-    // Compatibility fallback while older code/scripts may still only toggle the flag.
-    if (FlagGet(FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS))
-        return FACTORY_BOSS_STEVEN;
-
     return FACTORY_BOSS_NONE;
 }
 

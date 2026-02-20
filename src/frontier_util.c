@@ -2951,7 +2951,6 @@ void PlayFactoryBossPreBattleRoomBgmIfSet(void)
 void GetNextFactoryBossIdForScout(void)
 {
     if (VarGet(VAR_FACTORY_BOSS_UNLOCK_STATE) == 0
-     || !FlagGet(FLAG_SYS_FACTORY_SILVER)
      || AreAllFactoryTier1BossesCleared())
     {
         gSpecialVar_Result = FACTORY_BOSS_NONE;
@@ -2959,11 +2958,6 @@ void GetNextFactoryBossIdForScout(void)
     }
 
     gSpecialVar_Result = GetNextFactoryTier1BossId();
-}
-
-void GetFactorySymbolCount(void)
-{
-    gSpecialVar_Result = GetPlayerSymbolCountForFacility(FRONTIER_FACILITY_FACTORY);
 }
 
 void BufferFactoryBossNameFromVar(void)

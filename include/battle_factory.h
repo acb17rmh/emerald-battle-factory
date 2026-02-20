@@ -18,5 +18,6 @@ void DebugAction_TriggerStevenBattle(void);
 void DebugAction_TriggerFactoryBoss(u8 bossId);
 void MarkAllFactorySpeciesAsSeen(void);
 void MarkFactoryWinningPartyAsCaught(void);
+void SetPendingFactoryRewardBossFromActive(void);
 
 #endif // GUARD_BATTLE_FACTORY_H

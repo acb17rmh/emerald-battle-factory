@@ -272,7 +272,7 @@
 #define VAR_FACTORY_BOSS_UNLOCK_STATE                    0x40FC // 0 = locked, 1 = unlocked after first Silver Noland win
 #define VAR_FACTORY_BOSS_CLEARED_MASK                    0x40FD // Bitmask for cleared Factory bosses in progression order
 #define VAR_FACTORY_BOSS_ROTATION_INDEX                  0x40FE // Next Factory boss index in rotation
-#define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
+#define VAR_FACTORY_LAST_DEFEATED_BOSS                   0x40FF // Last defeated Factory boss id for reward resolution
 
 #define VARS_END                                         0x40FF
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)
