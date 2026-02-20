@@ -61,6 +61,7 @@ BattleFrontier_BattleFactoryPreBattleRoom_EventScript_ReturnToRoomFromBattle::
 	playfanfare MUS_HEAL
 	waitfanfare
 	special HealPlayerParty
+	special PrepareFactoryBossForNextBattle
 	frontier_getbrainstatus
 	goto_if_eq VAR_RESULT, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskReadyForRegularOpponent
 	playse SE_POKENAV_CALL

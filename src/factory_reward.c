@@ -68,7 +68,6 @@ bool8 IsFactoryRewardMonValid(struct Pokemon *mon, u8 activeBossId)
         return TRUE;
 
     DebugPrintfLevel(MGBA_LOG_FATAL, "Factory reward mon failed sanity check (bossId=%d badEgg=%d hasSpecies=%d)", activeBossId, isBadEgg, hasSpecies);
-    AGB_ASSERT(FALSE);
     return FALSE;
 }
 

@@ -76,6 +76,7 @@ static void SelectRewardMonFromParty();
 static void GiveRewardMonFromParty();
 static void CB2_SelectReward();
 static void CB2_GiveReward();
+static bool8 TryFallbackRewardMonFromParty(struct Pokemon *outMon);
 static bool8 CanUseFactoryBrainMonId(u16 monId, s32 partyCount, const u16 *species, const u16 *heldItems);
 
 // Number of moves needed on the team to be considered using a certain battle style
@@ -996,7 +997,7 @@ void DebugAction_FactoryWinChallenge(void)
 void DebugAction_TriggerNolandBattle(void)
 {
     u8 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
-    u8 battleMode = VarGet(VAR_FRONTIER_BATTLE_MODE);
+    u8 battleMode;
 
     if (!InBattleFactory())
     {
@@ -1004,9 +1005,17 @@ void DebugAction_TriggerNolandBattle(void)
         return;
     }
 
+    // Force the expected Factory singles context for brain-status checks.
+    VarSet(VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_FACTORY);
+    VarSet(VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES);
+    battleMode = FRONTIER_MODE_SINGLES;
+
     // Queue the run state so the next battle is Noland:
     // after this forced win, streak becomes 20 and battleNum becomes 6.
+    FlagSet(FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND);
     SetFactoryDebugStevenBossEnabled(FALSE);
+    FlagClear(FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE);
+    VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_NONE);
     gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode] = 19;
     gSaveBlock2Ptr->frontier.curChallengeBattleNum = 5;
     gSaveBlock2Ptr->frontier.winStreakActiveFlags |= sWinStreakFlags[battleMode][lvlMode];
@@ -1041,6 +1050,9 @@ void DebugAction_TriggerFactoryBoss(u8 bossId)
         DebugPrintf("Trigger boss ignored (invalid bossId=%d)", bossId);
         return;
     }
+
+    FlagClear(FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND);
+    FlagClear(FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE);
 
     // Queue the run state so the next battle is the Frontier Brain, then skin it as the selected boss.
     VarSet(VAR_FACTORY_ACTIVE_BOSS, bossId);
@@ -1237,16 +1249,31 @@ static void SelectRewardMonFromParty(void)
 {
     u8 rewardBossId = FACTORY_BOSS_NONE;
 
+    DebugPrintf("SelectRewardMonFromParty: activeBoss=%d lastBoss=%d pendingBoss=%d",
+                GetActiveFactoryBossId(),
+                sLastGeneratedFactoryBossId,
+                sPendingFactoryRewardBossId);
+
     if (TryBuildFactoryRewardFromBoss(GetActiveFactoryBossId(),
                                       sLastGeneratedFactoryBossId,
                                       gSaveBlock2Ptr->frontier.lvlMode,
                                       &sFactoryRewardBuffer,
                                       &rewardBossId))
     {
+        if (!IsFactoryRewardMonValid(&sFactoryRewardBuffer, rewardBossId))
+        {
+            DebugPrintfLevel(MGBA_LOG_FATAL,
+                             "Boss reward build invalid during selection (bossId=%d), falling back to rental selection",
+                             rewardBossId);
+            sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+        }
+        else
+        {
         sPendingFactoryRewardBossId = rewardBossId;
         ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript);
         SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         return;
+        }
     }
 
     sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
@@ -1303,22 +1330,28 @@ static void CB2_GiveReward(void)
                                                         NULL);
     if (!rebuiltBossReward && sPendingFactoryRewardBossId != FACTORY_BOSS_NONE)
     {
-        DebugPrintfLevel(MGBA_LOG_FATAL, "Failed to rebuild pending boss reward (bossId=%d)", sPendingFactoryRewardBossId);
-        AGB_ASSERT(FALSE);
+        DebugPrintfLevel(MGBA_LOG_FATAL, "Failed to rebuild pending boss reward (bossId=%d), falling back", sPendingFactoryRewardBossId);
     }
     sPendingFactoryRewardBossId = rebuiltPendingBossId;
 
     if (!IsFactoryRewardMonValid(&sFactoryRewardBuffer, GetActiveFactoryBossId()))
     {
         DebugPrintfLevel(MGBA_LOG_FATAL,
-                         "Reward mon invalid after rebuild check (activeBoss=%d lastBoss=%d pendingBoss=%d rebuilt=%d)",
+                         "Reward mon invalid after rebuild check (activeBoss=%d lastBoss=%d pendingBoss=%d rebuilt=%d), attempting fallback",
                          GetActiveFactoryBossId(),
                          sLastGeneratedFactoryBossId,
                          sPendingFactoryRewardBossId,
                          rebuiltBossReward);
-        ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
-        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-        return;
+
+        if (!TryFallbackRewardMonFromParty(&sFactoryRewardBuffer)
+         || !IsFactoryRewardMonValid(&sFactoryRewardBuffer, GetActiveFactoryBossId()))
+        {
+            DebugPrintfLevel(MGBA_LOG_FATAL, "Failed to construct fallback reward mon; skipping reward grant");
+            sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
+            ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
+            SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+            return;
+        }
     }
 
     u8 result = GiveMonToPlayer(&sFactoryRewardBuffer);
@@ -1335,4 +1368,23 @@ static void CB2_GiveReward(void)
 
     ScriptContext_SetupScript(BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript);
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+
+static bool8 TryFallbackRewardMonFromParty(struct Pokemon *outMon)
+{
+    s32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_BAD_EGG))
+            continue;
+        if (!GetMonData(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES))
+            continue;
+
+        CopyMon(outMon, &gPlayerParty[i], sizeof(struct Pokemon));
+        DebugPrintfLevel(MGBA_LOG_WARN, "Using fallback reward from player party slot %d", i);
+        return TRUE;
+    }
+
+    return FALSE;
 }

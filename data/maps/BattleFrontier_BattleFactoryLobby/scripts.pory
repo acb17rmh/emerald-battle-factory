@@ -6,11 +6,46 @@ BattleFrontier_BattleFactoryLobby_MapScripts::
 
 BattleFrontier_BattleFactoryLobby_OnWarp:
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleFactoryLobby_EventScript_UpdateBossUnlockNpcs
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleFactoryLobby_EventScript_UpdateBossUnlockNpcs
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleFactoryLobby_EventScript_UpdateBossUnlockNpcs
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleFactoryLobby_EventScript_UpdateBossUnlockNpcs
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleFactoryLobby_EventScript_UpdateBossUnlockNpcs
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 255, BattleFrontier_BattleFactoryLobby_EventScript_UpdateBossUnlockNpcs
 	.2byte 0
 
 BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth::
 	setvar VAR_TEMP_1, 1
 	turnobject LOCALID_PLAYER, DIR_NORTH
+	end
+
+BattleFrontier_BattleFactoryLobby_EventScript_UpdateBossUnlockNpcs::
+	special GetFactorySymbolCount
+	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleFactoryLobby_EventScript_EnsureBossUnlockStateAndShow
+	goto_if_ne VAR_FACTORY_BOSS_UNLOCK_STATE, 0, BattleFrontier_BattleFactoryLobby_EventScript_EnsureBossUnlockStateAndShow
+	goto_if_eq VAR_FACTORY_TOTAL_WINS, 0, BattleFrontier_BattleFactoryLobby_EventScript_HideBossUnlockNpcs
+	goto BattleFrontier_BattleFactoryLobby_EventScript_EnsureBossUnlockStateAndShow
+
+BattleFrontier_BattleFactoryLobby_EventScript_EnsureBossUnlockStateAndShow::
+	setflag FLAG_SYS_FRONTIER_PASS
+	goto_if_ne VAR_FACTORY_BOSS_UNLOCK_STATE, 0, BattleFrontier_BattleFactoryLobby_EventScript_ShowBossUnlockNpcs
+	setvar VAR_FACTORY_BOSS_UNLOCK_STATE, 1
+	setvar VAR_FACTORY_BOSS_CLEARED_MASK, 0
+	setvar VAR_FACTORY_BOSS_ROTATION_INDEX, 0
+	goto BattleFrontier_BattleFactoryLobby_EventScript_ShowBossUnlockNpcs
+
+BattleFrontier_BattleFactoryLobby_EventScript_HideBossUnlockNpcs::
+	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND
+	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN
+	hideobjectat LOCALID_FACTORY_NOLAND, MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY
+	hideobjectat LOCALID_FACTORY_BOSS_SCOUT, MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY
+	end
+
+BattleFrontier_BattleFactoryLobby_EventScript_ShowBossUnlockNpcs::
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN
+	showobjectat LOCALID_FACTORY_NOLAND, MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY
+	showobjectat LOCALID_FACTORY_BOSS_SCOUT, MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY
 	end
 
 BattleFrontier_BattleFactoryLobby_OnFrame:
@@ -49,6 +84,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge::
 BattleFrontier_BattleFactoryLobby_EventScript_DefeatedFactoryHead::
 	msgbox BattleFrontier_BattleFactoryLobby_Text_CongratsForDefeatingHead, MSGBOX_DEFAULT
 	waitmessage
+	goto BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints
 
 BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript::
 	msgbox BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints, MSGBOX_DEFAULT
@@ -623,6 +659,37 @@ script BattleFrontier_BattleFactoryLobby_Noland {
     msgbox(format("Hey, {PLAYER}. Can't handle the heat? Or just fancy a new challenge? Let me know and I'll adjust some things for ya."))
     call(BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices)
     goto(BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions)
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_BossScout {
+    lock
+    faceplayer
+    special(GetFactorySymbolCount)
+    if(var(VAR_RESULT) == 0) {
+        if(var(VAR_FACTORY_BOSS_UNLOCK_STATE) == 0) {
+            if(var(VAR_FACTORY_TOTAL_WINS) == 0) {
+        msgbox(format("No big rumors yet, {PLAYER}. Win your first symbol, and I'll keep my ears open."))
+        release
+        end
+            }
+        }
+    }
+	if(var(VAR_FACTORY_BOSS_UNLOCK_STATE) == 0) {
+	    msgbox(format("I've heard whispers, but nothing confirmed yet. Keep pushing your streak!"))
+	    release
+	    end
+	}
+    special(GetNextFactoryBossIdForScout)
+    if(var(VAR_RESULT) == 0) {
+        msgbox(format("Breaking scoop! Looks like you've already cleared the current lineup of special challengers."))
+        release
+        end
+    }
+    copyvar(VAR_0x8004, VAR_RESULT)
+    special(BufferFactoryBossNameFromVar)
+    msgbox(format("Breaking scoop! The next powerful TRAINER expected at the FACTORY is {STR_VAR_1}."))
+    release
+    end
 }
 
 script BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions {
@@ -1293,4 +1360,5 @@ script BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints {
     msgbox(format("As a reward for your display of skill, you will be able to select one of the POKéMON in your party to keep
                    forever, for use in other BATTLE FRONTIER facilities."))
     factory_selectrewardmon
+    end
 }

@@ -53,6 +53,10 @@ void InitEventData(void)
     memset(gSaveBlock1Ptr->flags, 0, sizeof(gSaveBlock1Ptr->flags));
     memset(gSaveBlock1Ptr->vars, 0, sizeof(gSaveBlock1Ptr->vars));
     memset(sSpecialFlags, 0, sizeof(sSpecialFlags));
+
+    // Factory lobby boss NPCs are hidden until first Factory silver symbol unlock.
+    FlagSet(FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND);
+    FlagSet(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN);
 }
 
 void ClearTempFieldEventData(void)

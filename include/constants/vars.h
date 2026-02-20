@@ -269,9 +269,9 @@
 #define VAR_FRONTIER_ENVIRONMENT                         0x40F9 // Custom Frontier / Trainer Hill Battle Environment (Default: 0)
 #define VAR_FACTORY_TOTAL_WINS                           0x40FA // Lifetime Battle Factory wins
 #define VAR_FACTORY_ACTIVE_BOSS                          0x40FB // Active Battle Factory boss override (see FACTORY_BOSS_*)
-#define VAR_UNUSED_0x40FC                                0x40FC // Unused Var
-#define VAR_UNUSED_0x40FD                                0x40FD // Unused Var
-#define VAR_UNUSED_0x40FE                                0x40FE // Unused Var
+#define VAR_FACTORY_BOSS_UNLOCK_STATE                    0x40FC // 0 = locked, 1 = unlocked after first Silver Noland win
+#define VAR_FACTORY_BOSS_CLEARED_MASK                    0x40FD // Bitmask for cleared Factory bosses in progression order
+#define VAR_FACTORY_BOSS_ROTATION_INDEX                  0x40FE // Next Factory boss index in rotation
 #define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
 
 #define VARS_END                                         0x40FF

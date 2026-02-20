@@ -572,3 +572,8 @@ gSpecials::
 	def_special BufferFactoryBossBattleStartText
 	def_special BufferFactoryBossBattlePostWinText
 	def_special PlayFactoryBossPreBattleRoomBgmIfSet
+	def_special GetFactorySymbolCount
+	def_special GetNextFactoryBossIdForScout
+	def_special BufferFactoryBossNameFromVar
+	def_special PrepareFactoryBossForNextBattle
+	def_special RecordFactoryBossDefeat

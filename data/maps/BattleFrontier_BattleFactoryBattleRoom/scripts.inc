@@ -14,10 +14,15 @@ BattleFrontier_BattleFactoryBattleRoom_OnTransition:
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, BattleFrontier_BattleFactoryBattleRoom_EventScript_SetPlayerGfxMale
 	call_if_eq VAR_RESULT, FEMALE, BattleFrontier_BattleFactoryBattleRoom_EventScript_SetPlayerGfxFemale
+	goto_if_set FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND, BattleFrontier_BattleFactoryBattleRoom_EventScript_DebugForceNolandStatus
 	frontier_getbrainstatus
 	copyvar VAR_TEMP_F, VAR_RESULT
 	goto_if_ne VAR_RESULT, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattleFactoryBattleRoom_EventScript_SetUpFactoryHeadObj
 	end
+
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DebugForceNolandStatus::
+	setvar VAR_TEMP_F, FRONTIER_BRAIN_STREAK
+	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_SetUpFactoryHeadObj
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_SetUpFactoryHeadObj::
 	call BattleFrontier_EventScript_SetBrainObjectGfx
@@ -114,6 +119,7 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyWon::
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobby
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNoland::
+	clearflag FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND
 	copyvar VAR_RESULT, VAR_FACTORY_ACTIVE_BOSS
 	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleCustomBoss
 	switch VAR_TEMP_F
@@ -131,6 +137,14 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandSilver::
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyLost
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandSilver::
+	setflag FLAG_SYS_FRONTIER_PASS
+	goto_if_ne VAR_FACTORY_BOSS_UNLOCK_STATE, 0, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandSilver_UnlockDone
+	setvar VAR_FACTORY_BOSS_UNLOCK_STATE, 1
+	setvar VAR_FACTORY_BOSS_CLEARED_MASK, 0
+	setvar VAR_FACTORY_BOSS_ROTATION_INDEX, 0
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandSilver_UnlockDone::
 	frontier_getsymbols
 	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
 	msgbox BattleFrontier_BattleFactoryBattleRoom_Text_NolandLetsSeeFrontierPass, MSGBOX_DEFAULT
@@ -142,6 +156,12 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandSilver::
 	waitmessage
 	waitfanfare
 	frontier_givesymbol
+	setvar VAR_FACTORY_ACTIVE_BOSS, 0
+	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
+	setvar VAR_FACTORY_BOSS_UNLOCK_STATE, 1
+	setvar VAR_FACTORY_BOSS_CLEARED_MASK, 0
+	setvar VAR_FACTORY_BOSS_ROTATION_INDEX, 0
+	msgbox BattleFrontier_BattleFactoryBattleRoom_Text_NewChallengersApproaching, MSGBOX_DEFAULT
 	msgbox BattleFrontier_BattleFactoryBattleRoom_Text_NextTimeNoHoldsBarred, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
 
@@ -157,6 +177,14 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleNolandGold::
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyLost
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandGold::
+	setflag FLAG_SYS_FRONTIER_PASS
+	goto_if_ne VAR_FACTORY_BOSS_UNLOCK_STATE, 0, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandGold_UnlockDone
+	setvar VAR_FACTORY_BOSS_UNLOCK_STATE, 1
+	setvar VAR_FACTORY_BOSS_CLEARED_MASK, 0
+	setvar VAR_FACTORY_BOSS_ROTATION_INDEX, 0
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN
+BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNolandGold_UnlockDone::
 	frontier_getsymbols
 	goto_if_eq VAR_RESULT, 2, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
 	msgbox BattleFrontier_BattleFactoryBattleRoom_Text_OutOfMyLeagueLetsSeePass, MSGBOX_DEFAULT
@@ -191,12 +219,15 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleCustomBossStart::
 	special BufferFactoryBossBattleStartText
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	call BattleFrontier_BattleFactoryBattleRoom_EventScript_DoNolandBattle
+	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedCustomBoss
 	setvar VAR_FACTORY_ACTIVE_BOSS, 0
 	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
-	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedCustomBoss
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyLost
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedCustomBoss::
+	special RecordFactoryBossDefeat
+	setvar VAR_FACTORY_ACTIVE_BOSS, 0
+	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
 	special BufferFactoryBossBattlePostWinText
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
@@ -306,6 +337,13 @@ BattleFrontier_BattleFactoryBattleRoom_Text_NolandLetsSeeFrontierPass:
 BattleFrontier_BattleFactoryBattleRoom_Text_ReceivedKnowledgeSymbol:
 	.string "The Knowledge Symbol was embossed\n"
 	.string "on the FRONTIER PASS!$"
+
+BattleFrontier_BattleFactoryBattleRoom_Text_NewChallengersApproaching:
+	.string "NOLAND: Hey! You've earned this.\p"
+	.string "Word's spreading around the FRONTIER,\n"
+	.string "and some powerful TRAINERS are coming\l"
+	.string "to test you in the FACTORY.\p"
+	.string "Keep sharpening your battle sense!$"
 
 BattleFrontier_BattleFactoryBattleRoom_Text_NextTimeNoHoldsBarred:
 	.string "Heh…\n"
