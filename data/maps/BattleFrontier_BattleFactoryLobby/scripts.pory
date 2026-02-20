@@ -19,10 +19,46 @@ BattleFrontier_BattleFactoryLobby_OnFrame:
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 1, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview
 	.2byte 0
 
 BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus::
 	frontier_getstatus
+	end
+
+BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview::
+	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
+	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
+	lockall
+	addobject LOCALID_FACTORY_BOSS_REPORTER
+	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, Common_Movement_ExclamationMark
+	waitmovement 0
+	playbgm MUS_ENCOUNTER_INTERVIEWER, FALSE
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer
+	waitmovement 0
+	turnobject LOCALID_PLAYER, DIR_EAST
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro, MSGBOX_DEFAULT
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera
+	waitmovement 0
+	turnobject LOCALID_FACTORY_BOSS_REPORTER, DIR_SOUTH
+	turnobject LOCALID_PLAYER, DIR_NORTH
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut, MSGBOX_DEFAULT
+	fadedefaultbgm
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewSignOff, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview
+	waitmovement 0
+	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
+	setflag FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN
+	releaseall
+BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done::
 	end
 
 BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving::
@@ -1310,8 +1346,103 @@ script BattleFrontier_BattleFactoryLobby_EventScript_BossScout {
         end
     }
     setorcopyvar(VAR_0x8004, VAR_RESULT)
-    special(BufferFactoryBossNameFromVar)
-    msgbox(format("Breaking news! {STR_VAR_1} is the next major challenger headed to the BATTLE FACTORY."))
+    switch(var(VAR_0x8004)) {
+        case 1:
+            msgbox(format("Breaking news!\pSTEVEN is in the area, and he's aiming straight for the FACTORY floor."))
+        case 2:
+            msgbox(format("Fresh report!\pWALLY's back, and he says he's ready to show everyone how far he's come."))
+        case 4:
+            msgbox(format("Big headline!\pNORMAN has arrived, and he's looking for a no-holds-barred battle."))
+        case 3:
+            msgbox(format("This is huge...\pRED has been spotted nearby.\nNo words, just battle aura."))
+        default:
+            special(BufferFactoryBossNameFromVar)
+            msgbox(format("Breaking news! {STR_VAR_1} is the next major challenger headed to the BATTLE FACTORY."))
+    }
     release
     end
 }
+
+script BattleFrontier_BattleFactoryLobby_EventScript_BossReporter {
+    msgbox(format("I'm with the FACTORY EXCLUSIVE team.\pTalk to my cameraman partner if you want the latest on incoming top TRAINERS."))
+    end
+}
+
+raw `
+BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer:
+	walk_left
+	walk_left
+	step_end
+
+BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera:
+	walk_down
+	walk_right
+	walk_right
+	walk_up
+	step_end
+
+BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera:
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	face_up
+	step_end
+
+BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview:
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	face_down
+	delay_8
+	set_invisible
+	step_end
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro:
+	.string "REPORTER: Excuse me! Quick interview!\p"
+	.string "You just defeated NOLAND.\n"
+	.string "Please, step over by our camera!$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne:
+	.string "REPORTER: The whole crowd felt that\n"
+	.string "moment.\p"
+	.string "How did you keep your nerve when the\n"
+	.string "last exchange decided everything?$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo:
+	.string "REPORTER: Let's talk strategy.\p"
+	.string "What was your plan once you saw\n"
+	.string "that final matchup?$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree:
+	.string "REPORTER: Last one for viewers at home.\p"
+	.string "In FACTORY battles, what's tougher:\n"
+	.string "planning ahead or adapting on the fly?$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor:
+	.string "CAMERAMAN: Big scoop time!\p"
+	.string "Powerful TRAINERS from far and wide\n"
+	.string "are already en route to the FACTORY.\p"
+	.string "REPORTER: Stay sharp, champ.\n"
+	.string "This story is just getting started!$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut:
+	.string "CAMERAMAN: And... cut! Great take!$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewSignOff:
+	.string "REPORTER: This is your FRONTIER desk,\n"
+	.string "signing off from the BATTLE FACTORY!$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp:
+	.string "REPORTER: Thanks for your time!\p"
+	.string "I've got to rush to another facility\n"
+	.string "for the next big interview.\p"
+	.string "See you on the FRONTIER feed!$"
+`

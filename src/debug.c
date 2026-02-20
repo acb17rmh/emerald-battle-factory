@@ -251,6 +251,7 @@ static void DebugAction_Util_Weather(u8 taskId);
 static void DebugAction_Util_Weather_SelectId(u8 taskId);
 static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
+static void DebugAction_Util_TriggerFactoryScoutIntro(u8 taskId);
 
 static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId);
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId);
@@ -541,6 +542,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Time Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
     { COMPOUND_STRING("Watch credits…"),    DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),       DebugAction_Util_CheatStart },
+    { COMPOUND_STRING("Trigger Scout Intro"), DebugAction_Util_TriggerFactoryScoutIntro },
     { COMPOUND_STRING("Berry Functions…"),  DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
     { COMPOUND_STRING("EWRAM Counters…"),   DebugAction_ExecuteScript, Debug_EventScript_EWRAMCounters },
     { COMPOUND_STRING("Follower NPC…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_FollowerNPCMenu },
@@ -1583,6 +1585,22 @@ static void DebugAction_Util_CheatStart(u8 taskId)
 
     InitTimeBasedEvents();
     Debug_DestroyMenu_Full_Script(taskId, Debug_CheatStart);
+}
+
+static void DebugAction_Util_TriggerFactoryScoutIntro(u8 taskId)
+{
+    VarSet(VAR_FACTORY_BOSS_UNLOCK_STATE, 1);
+    VarSet(VAR_TEMP_CHALLENGE_STATUS, 255);
+    FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND);
+    FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN);
+    FlagClear(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN);
+    SetWarpDestination(MAP_GROUP(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY),
+                       MAP_NUM(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY),
+                       WARP_ID_NONE, 13, 8);
+
+    DoWarp();
+    ResetInitialPlayerAvatarState();
+    Debug_DestroyMenu_Full(taskId);
 }
 
 void BufferExpansionVersion(struct ScriptContext *ctx)
