@@ -1593,10 +1593,11 @@ static void DebugAction_Util_TriggerFactoryScoutIntro(u8 taskId)
     VarSet(VAR_TEMP_CHALLENGE_STATUS, 255);
     FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND);
     FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN);
+    FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER);
     FlagClear(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN);
     SetWarpDestination(MAP_GROUP(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY),
                        MAP_NUM(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY),
-                       WARP_ID_NONE, 13, 8);
+                       WARP_ID_NONE, 4, 8);
 
     DoWarp();
     ResetInitialPlayerAvatarState();

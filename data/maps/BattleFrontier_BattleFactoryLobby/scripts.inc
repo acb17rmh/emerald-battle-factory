@@ -15,207 +15,207 @@ BattleFrontier_BattleFactoryLobby_OnWarp:
 # 8 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth
 # 9 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.2byte 0
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 1, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter
 # 10 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 2, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter
 # 11 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth::
-# 12 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_TEMP_1, 1
-# 13 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	turnobject LOCALID_PLAYER, DIR_NORTH
-# 14 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
-# 15 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 16 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_OnFrame:
-# 17 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus
-# 18 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving
-# 19 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge
-# 20 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge
-# 21 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge
-# 22 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 1, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview
-# 23 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.2byte 0
+# 12 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 13 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth::
+# 14 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setvar VAR_TEMP_1, 1
+# 15 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	turnobject LOCALID_PLAYER, DIR_NORTH
+# 16 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
+# 17 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 18 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter::
+# 19 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide
+# 20 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide
+# 21 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
+# 22 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	addobject LOCALID_FACTORY_BOSS_REPORTER
+# 23 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
 # 24 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 25 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus::
+BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide::
 # 26 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_getstatus
+	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
 # 27 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	end
 # 28 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 29 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview::
+BattleFrontier_BattleFactoryLobby_OnFrame:
 # 30 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus
 # 31 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving
 # 32 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lockall
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge
 # 33 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	addobject LOCALID_FACTORY_BOSS_REPORTER
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge
 # 34 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge
 # 35 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, Common_Movement_ExclamationMark
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 1, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview
 # 36 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmovement 0
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 2, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview
 # 37 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	playbgm MUS_ENCOUNTER_INTERVIEWER, FALSE
+	.2byte 0
 # 38 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer
+
 # 39 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmovement 0
+BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus::
 # 40 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	turnobject LOCALID_PLAYER, DIR_EAST
+	frontier_getstatus
 # 41 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro, MSGBOX_DEFAULT
+	end
 # 42 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera
+
 # 43 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	applymovement LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera
+BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview::
 # 44 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmovement 0
+	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
 # 45 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	turnobject LOCALID_FACTORY_BOSS_REPORTER, DIR_SOUTH
+	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
 # 46 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	turnobject LOCALID_PLAYER, DIR_NORTH
+	lockall
 # 47 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne, MSGBOX_DEFAULT
+	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
 # 48 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo, MSGBOX_DEFAULT
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, Common_Movement_ExclamationMark
 # 49 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree, MSGBOX_DEFAULT
+	waitmovement 0
 # 50 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor, MSGBOX_DEFAULT
+	playbgm MUS_ENCOUNTER_INTERVIEWER, FALSE
 # 51 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut, MSGBOX_DEFAULT
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer
 # 52 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	fadedefaultbgm
+	waitmovement 0
 # 53 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewSignOff, MSGBOX_DEFAULT
+	turnobject LOCALID_PLAYER, DIR_EAST
 # 54 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro, MSGBOX_DEFAULT
 # 55 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	closemessage
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera
 # 56 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera
 # 57 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitmovement 0
 # 58 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
+	turnobject LOCALID_FACTORY_BOSS_REPORTER, DIR_SOUTH
 # 59 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setflag FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN
+	turnobject LOCALID_PLAYER, DIR_NORTH
 # 60 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	releaseall
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne, MSGBOX_DEFAULT
 # 61 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done::
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo, MSGBOX_DEFAULT
 # 62 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree, MSGBOX_DEFAULT
 # 63 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor, MSGBOX_DEFAULT
 # 64 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving::
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut, MSGBOX_DEFAULT
 # 65 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lockall
+	fadedefaultbgm
 # 66 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp, MSGBOX_DEFAULT
 # 67 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	closemessage
 # 68 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_setswapped
+	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview
 # 69 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_set FACTORY_DATA_WIN_STREAK_SWAPS, 0
+	waitmovement 0
 # 70 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_set FACTORY_DATA_WIN_STREAK, 0
+	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
 # 71 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, FALSE
+	msgbox BattleFrontier_BattleFactoryLobby_Text_CameramanHint, MSGBOX_DEFAULT
 # 72 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	closemessage
 # 73 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
 # 74 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	releaseall
+	setflag FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN
 # 75 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	releaseall
 # 76 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 77 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge::
+BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done::
 # 78 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lockall
-# 79 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_isbrain
-# 80 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleFactoryLobby_EventScript_DefeatedFactoryHead
-# 81 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_CongratsSevenWins, MSGBOX_DEFAULT
-# 82 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
-# 83 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints
-# 84 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 85 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_DefeatedFactoryHead::
-# 86 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_CongratsForDefeatingHead, MSGBOX_DEFAULT
-# 87 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
-# 88 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 89 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript::
-# 90 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints, MSGBOX_DEFAULT
-# 91 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_givepoints
-# 92 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_Text_ObtainedXBattlePoints, MSGBOX_GETPOINTS
-# 93 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_ExchangeMonsAndSave
-# 94 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
-# 95 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_checkairshow
-# 96 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	special LoadPlayerParty
-# 97 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_giverewardmon
-# 98 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 99 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript::
-# 100 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	callnative UpdateFollowingPokemon
-# 101 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_save 0
-# 102 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	playse SE_SAVE
-# 103 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitse
-# 104 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_AskRecordBattle
-# 105 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	end
-# 106 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 79 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
-# 107 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge::
-# 108 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 80 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving::
+# 81 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	lockall
+# 82 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
+# 83 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	closemessage
+# 84 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_setswapped
+# 85 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_set FACTORY_DATA_WIN_STREAK_SWAPS, 0
+# 86 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_set FACTORY_DATA_WIN_STREAK, 0
+# 87 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, FALSE
+# 88 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+# 89 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+# 90 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	releaseall
+# 91 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
+# 92 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 93 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge::
+# 94 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	lockall
+# 95 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_isbrain
+# 96 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleFactoryLobby_EventScript_DefeatedFactoryHead
+# 97 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_CongratsSevenWins, MSGBOX_DEFAULT
+# 98 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitmessage
+# 99 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints
+# 100 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 101 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_DefeatedFactoryHead::
+# 102 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_CongratsForDefeatingHead, MSGBOX_DEFAULT
+# 103 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitmessage
+# 104 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 105 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript::
+# 106 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints, MSGBOX_DEFAULT
+# 107 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_givepoints
+# 108 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_Text_ObtainedXBattlePoints, MSGBOX_GETPOINTS
 # 109 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_ReturnMonsSaveResults
+	message BattleFrontier_BattleFactoryLobby_Text_ExchangeMonsAndSave
 # 110 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitmessage
 # 111 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
@@ -223,3050 +223,2991 @@ BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge::
 # 112 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	special LoadPlayerParty
 # 113 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	callnative UpdateFollowingPokemon
+	factory_giverewardmon
 # 114 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, FALSE
+
 # 115 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_save 0
+BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardSaveAndExitScript::
 # 116 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	playse SE_SAVE
+	callnative UpdateFollowingPokemon
 # 117 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitse
+	factory_save 0
 # 118 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 119 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_AskRecordBattle::
-# 120 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call BattleFrontier_EventScript_GetCantRecordBattle
-# 121 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle
-# 122 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_RecordLastMatch
-# 123 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
-# 124 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
-# 125 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 126 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle
-# 127 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_RecordBattle
-# 128 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle
-# 129 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 130 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RecordBattle::
-# 131 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call BattleFrontier_EventScript_SaveBattle
-# 132 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle::
-# 133 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
-# 134 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	closemessage
-# 135 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_TEMP_CHALLENGE_STATUS, 255
-# 136 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	releaseall
-# 137 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
-# 138 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 139 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge::
-# 140 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lockall
-# 141 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_WaitingForYouToResume
-# 142 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
-# 143 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_save CHALLENGE_STATUS_SAVING
-# 144 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SAVE
-# 145 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 119 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitse
+# 120 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto BattleFrontier_BattleFactoryLobby_EventScript_AskRecordBattle
+# 121 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
+# 122 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 123 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge::
+# 124 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	lockall
+# 125 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	message BattleFrontier_BattleFactoryLobby_Text_ReturnMonsSaveResults
+# 126 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitmessage
+# 127 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_checkairshow
+# 128 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	special LoadPlayerParty
+# 129 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	callnative UpdateFollowingPokemon
+# 130 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, FALSE
+# 131 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_save 0
+# 132 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	playse SE_SAVE
+# 133 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitse
+# 134 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 135 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_AskRecordBattle::
+# 136 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	call BattleFrontier_EventScript_GetCantRecordBattle
+# 137 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle
+# 138 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	message BattleFrontier_BattleFactoryLobby_Text_RecordLastMatch
+# 139 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitmessage
+# 140 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+# 141 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
+# 142 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle
+# 143 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_RecordBattle
+# 144 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle
+# 145 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
 # 146 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_PAUSED, FALSE
+BattleFrontier_BattleFactoryLobby_EventScript_RecordBattle::
 # 147 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	call BattleFrontier_EventScript_SaveBattle
 # 148 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_0x8006, 2
+BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle::
 # 149 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_EnterChallenge
+	msgbox BattleFrontier_BattleFactoryLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
 # 150 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	closemessage
 # 151 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_SinglesAttendant::
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 # 152 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lock
+	releaseall
 # 153 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	faceplayer
+	end
 # 154 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	clearflag FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE
-# 155 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_FACTORY
-# 156 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES
-# 157 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_Attendant
-# 158 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
-# 159 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 155 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge::
+# 156 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	lockall
+# 157 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	message BattleFrontier_BattleFactoryLobby_Text_WaitingForYouToResume
+# 158 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitmessage
+# 159 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_save CHALLENGE_STATUS_SAVING
 # 160 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_DoublesAttendant::
+	playse SE_SAVE
 # 161 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	clearflag FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE
+	waitse
 # 162 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_FACTORY
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
 # 163 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 # 164 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_Attendant
+	setvar VAR_0x8006, 2
 # 165 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	goto BattleFrontier_BattleFactoryLobby_EventScript_EnterChallenge
 # 166 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 167 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesAttendant::
+BattleFrontier_BattleFactoryLobby_EventScript_SinglesAttendant::
 # 168 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	lock
 # 169 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	faceplayer
 # 170 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setflag FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE
+	clearflag FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE
 # 171 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_FACTORY
 # 172 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES
 # 173 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesAttendantMain
+	goto BattleFrontier_BattleFactoryLobby_EventScript_Attendant
 # 174 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	end
 # 175 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 176 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesAttendantMain::
+BattleFrontier_BattleFactoryLobby_EventScript_DoublesAttendant::
 # 177 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	special SavePlayerParty
+	clearflag FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE
 # 178 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_WelcomeForRandomBattle, MSGBOX_DEFAULT
+	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_FACTORY
 # 179 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_TakeRandomChallenge
+	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES
 # 180 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
+	goto BattleFrontier_BattleFactoryLobby_EventScript_Attendant
 # 181 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
+	end
 # 182 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 183 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesTryEnterChallenge
-# 184 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesExplainChallenge
-# 185 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
-# 186 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
-# 187 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 183 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesAttendant::
+# 184 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	lock
+# 185 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	faceplayer
+# 186 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setflag FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE
+# 187 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_FACTORY
 # 188 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesExplainChallenge::
+	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES
 # 189 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainRandomChallenge, MSGBOX_DEFAULT
-# 190 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesAttendantMain
+# 190 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
 # 191 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 192 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesTryEnterChallenge::
+BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesAttendantMain::
 # 193 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_OPEN
+	special SavePlayerParty
 # 194 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_OkayToSaveBeforeChallenge, MSGBOX_YESNO
+	msgbox BattleFrontier_BattleFactoryLobby_Text_WelcomeForRandomBattle, MSGBOX_DEFAULT
 # 195 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
+	message BattleFrontier_BattleFactoryLobby_Text_TakeRandomChallenge
 # 196 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case NO, BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge
+	waitmessage
 # 197 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case YES, BattleFrontier_BattleFactoryLobby_EventScript_SaveBeforeChallenge
-# 198 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge
-# 199 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 200 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_Attendant::
-# 201 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	special SavePlayerParty
-# 202 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForSingleBattle
-# 203 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForDoubleBattle
-# 204 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_AskTakeChallenge::
-# 205 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_TakeSinglesChallenge
-# 206 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_TakeDoublesChallenge
-# 207 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
-# 208 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
-# 209 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 198 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 210 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_TryEnterChallenge
-# 211 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_ExplainChallenge
-# 212 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 199 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesTryEnterChallenge
+# 200 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesExplainChallenge
+# 201 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
-# 213 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 202 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
-# 214 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 203 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
-# 215 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_TryEnterChallenge::
-# 216 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_WhichLevelMode
-# 217 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
-# 218 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	multichoice 17, 6, MULTI_LEVEL_MODE, FALSE
-# 219 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 220 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case FRONTIER_LVL_TENT, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
-# 221 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
-# 222 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_LVL_MODE, VAR_RESULT
-# 223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 204 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesExplainChallenge::
+# 205 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainRandomChallenge, MSGBOX_DEFAULT
+# 206 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesAttendantMain
+# 207 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 208 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_RandomBattlesTryEnterChallenge::
+# 209 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_OPEN
+# 210 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_OkayToSaveBeforeChallenge, MSGBOX_YESNO
-# 224 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 211 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 225 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 212 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case NO, BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge
-# 226 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 213 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case YES, BattleFrontier_BattleFactoryLobby_EventScript_SaveBeforeChallenge
-# 227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 214 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge
-# 228 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 215 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
-# 229 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_SaveBeforeChallenge::
-# 230 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0
-# 231 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_init
-# 232 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
-# 233 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, TRUE
-# 234 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_PAUSED, FALSE
-# 235 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	closemessage
-# 236 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	delay 2
-# 237 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call Common_EventScript_SaveGame
-# 238 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_TEMP_CHALLENGE_STATUS, 255
-# 239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallengeSaveFailed
-# 240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_0x8006, 0
-# 241 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_EnterChallenge::
-# 242 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 216 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_Attendant::
+# 217 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	special SavePlayerParty
+# 218 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForSingleBattle
+# 219 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForDoubleBattle
+# 220 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_AskTakeChallenge::
+# 221 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_TakeSinglesChallenge
+# 222 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_TakeDoublesChallenge
+# 223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitmessage
+# 224 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
+# 225 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
+# 226 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_TryEnterChallenge
+# 227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_ExplainChallenge
+# 228 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
+# 229 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
+# 230 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 231 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_TryEnterChallenge::
+# 232 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	message BattleFrontier_BattleFactoryLobby_Text_WhichLevelMode
+# 233 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitmessage
+# 234 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	multichoice 17, 6, MULTI_LEVEL_MODE, FALSE
+# 235 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
+# 236 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case FRONTIER_LVL_TENT, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
+# 237 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
+# 238 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_set FRONTIER_DATA_LVL_MODE, VAR_RESULT
+# 239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_OkayToSaveBeforeChallenge, MSGBOX_YESNO
+# 240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
+# 241 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case NO, BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge
+# 242 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case YES, BattleFrontier_BattleFactoryLobby_EventScript_SaveBeforeChallenge
 # 243 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_StepThisWay, MSGBOX_DEFAULT
+	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge
 # 244 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	closemessage
+
 # 245 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_set FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE, BattleFrontier_BattleFactoryLobby_EventScript_UseCurrentTalkedNpc
+BattleFrontier_BattleFactoryLobby_EventScript_SaveBeforeChallenge::
 # 246 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_TalkedToSinglesAttendant
-# 247 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_TalkedToDoublesAttendant
-# 248 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_UseCurrentTalkedNpc::
-# 249 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	applymovement VAR_LAST_TALKED, BattleFrontier_BattleFactoryLobby_Movement_AttendantEnterDoor
-# 250 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	applymovement LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerEnterDoor
-# 251 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmovement 0
-# 252 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	warp MAP_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM, 8, 13
-# 253 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_TEMP_CHALLENGE_STATUS, 0
+# 247 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_init
+# 248 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
+# 249 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, TRUE
+# 250 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
+# 251 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	closemessage
+# 252 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	delay 2
+# 253 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	call Common_EventScript_SaveGame
 # 254 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitstate
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 # 255 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallengeSaveFailed
 # 256 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	setvar VAR_0x8006, 0
 # 257 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_TalkedToSinglesAttendant::
+BattleFrontier_BattleFactoryLobby_EventScript_EnterChallenge::
 # 258 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_LAST_TALKED, LOCALID_FACTORY_ATTENDANT_SINGLES
+	special SavePlayerParty
 # 259 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	return
+	msgbox BattleFrontier_BattleFactoryLobby_Text_StepThisWay, MSGBOX_DEFAULT
 # 260 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	closemessage
 # 261 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_TalkedToDoublesAttendant::
+	goto_if_set FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE, BattleFrontier_BattleFactoryLobby_EventScript_UseCurrentTalkedNpc
 # 262 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setvar VAR_LAST_TALKED, LOCALID_FACTORY_ATTENDANT_DOUBLES
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_TalkedToSinglesAttendant
 # 263 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	return
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_TalkedToDoublesAttendant
 # 264 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+BattleFrontier_BattleFactoryLobby_EventScript_UseCurrentTalkedNpc::
 # 265 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ExplainChallenge::
+	applymovement VAR_LAST_TALKED, BattleFrontier_BattleFactoryLobby_Movement_AttendantEnterDoor
 # 266 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_ExplainSinglesChallenge
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerEnterDoor
 # 267 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_ExplainDoublesChallenge
+	waitmovement 0
 # 268 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_AskTakeChallenge
+	warp MAP_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM, 8, 13
 # 269 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 # 270 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_CancelChallengeSaveFailed::
+	waitstate
 # 271 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
-# 272 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
-# 273 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 274 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge::
-# 275 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	special LoadPlayerParty
-# 276 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	callnative UpdateFollowingPokemon
-# 277 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge::
-# 278 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
-# 279 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	release
-# 280 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	end
+# 272 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 273 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_TalkedToSinglesAttendant::
+# 274 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setvar VAR_LAST_TALKED, LOCALID_FACTORY_ATTENDANT_SINGLES
+# 275 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	return
+# 276 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 277 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_TalkedToDoublesAttendant::
+# 278 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setvar VAR_LAST_TALKED, LOCALID_FACTORY_ATTENDANT_DOUBLES
+# 279 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	return
+# 280 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
 # 281 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+BattleFrontier_BattleFactoryLobby_EventScript_ExplainChallenge::
 # 282 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Movement_AttendantEnterDoor:
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleFactoryLobby_EventScript_ExplainSinglesChallenge
 # 283 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryLobby_EventScript_ExplainDoublesChallenge
 # 284 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
+	goto BattleFrontier_BattleFactoryLobby_EventScript_AskTakeChallenge
 # 285 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
+
 # 286 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	set_invisible
+BattleFrontier_BattleFactoryLobby_EventScript_CancelChallengeSaveFailed::
 # 287 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	step_end
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
 # 288 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	goto BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge
 # 289 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Movement_PlayerEnterDoor:
+
 # 290 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
+BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge::
 # 291 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
+	special LoadPlayerParty
 # 292 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
+	callnative UpdateFollowingPokemon
 # 293 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
+BattleFrontier_BattleFactoryLobby_EventScript_CancelChallenge::
 # 294 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	step_end
+	msgbox BattleFrontier_BattleFactoryLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
 # 295 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	release
 # 296 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForSingleBattle::
+	end
 # 297 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_WelcomeForSingleBattle, MSGBOX_DEFAULT
+
 # 298 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	return
+BattleFrontier_BattleFactoryLobby_Movement_AttendantEnterDoor:
 # 299 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	walk_up
 # 300 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForDoubleBattle::
+	walk_up
 # 301 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_WelcomeForDoubleBattle, MSGBOX_DEFAULT
+	walk_up
 # 302 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	return
+	set_invisible
 # 303 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	step_end
 # 304 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_TakeSinglesChallenge::
-# 305 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_TakeSinglesChallenge
-# 306 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	return
-# 307 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 305 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Movement_PlayerEnterDoor:
+# 306 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_up
+# 307 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_up
 # 308 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_TakeDoublesChallenge::
+	walk_up
 # 309 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_TakeDoublesChallenge
+	walk_up
 # 310 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	return
+	step_end
 # 311 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 312 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ExplainSinglesChallenge::
+BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForSingleBattle::
 # 313 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSinglesChallenge, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_WelcomeForSingleBattle, MSGBOX_DEFAULT
 # 314 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	return
 # 315 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 316 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ExplainDoublesChallenge::
+BattleFrontier_BattleFactoryLobby_EventScript_WelcomeForDoubleBattle::
 # 317 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainDoublesChallenge, MSGBOX_DEFAULT
+	msgbox BattleFrontier_BattleFactoryLobby_Text_WelcomeForDoubleBattle, MSGBOX_DEFAULT
 # 318 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	return
 # 319 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 320 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ShowSinglesResults::
+BattleFrontier_BattleFactoryLobby_EventScript_TakeSinglesChallenge::
 # 321 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lockall
+	message BattleFrontier_BattleFactoryLobby_Text_TakeSinglesChallenge
 # 322 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_results FRONTIER_FACILITY_FACTORY, FRONTIER_MODE_SINGLES
+	return
 # 323 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitbuttonpress
+
 # 324 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	special RemoveRecordsWindow
+BattleFrontier_BattleFactoryLobby_EventScript_TakeDoublesChallenge::
 # 325 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	releaseall
+	message BattleFrontier_BattleFactoryLobby_Text_TakeDoublesChallenge
 # 326 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	return
 # 327 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 328 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ShowDoublesResults::
+BattleFrontier_BattleFactoryLobby_EventScript_ExplainSinglesChallenge::
 # 329 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lockall
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSinglesChallenge, MSGBOX_DEFAULT
 # 330 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	frontier_results FRONTIER_FACILITY_FACTORY, FRONTIER_MODE_DOUBLES
+	return
 # 331 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitbuttonpress
+
 # 332 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	special RemoveRecordsWindow
+BattleFrontier_BattleFactoryLobby_EventScript_ExplainDoublesChallenge::
 # 333 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	releaseall
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainDoublesChallenge, MSGBOX_DEFAULT
 # 334 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	return
 # 335 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 336 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_Woman::
+BattleFrontier_BattleFactoryLobby_EventScript_ShowSinglesResults::
 # 337 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_NeedKnowledgeOfMonsMoves, MSGBOX_NPC
+	lockall
 # 338 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	frontier_results FRONTIER_FACILITY_FACTORY, FRONTIER_MODE_SINGLES
 # 339 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	waitbuttonpress
 # 340 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_Camper::
+	special RemoveRecordsWindow
 # 341 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_SwappedForWeakMon, MSGBOX_NPC
+	releaseall
 # 342 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	end
 # 343 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 344 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_Picnicker::
+BattleFrontier_BattleFactoryLobby_EventScript_ShowDoublesResults::
 # 345 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	lock
-# 346 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_NeedToCheckOpponentsMons, MSGBOX_DEFAULT
-# 347 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	release
-# 348 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
-# 349 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 350 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_FatMan::
-# 351 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_CantFigureOutStaffHints, MSGBOX_NPC
-# 352 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
-# 353 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 354 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RulesBoard::
-# 355 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	lockall
+# 346 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	frontier_results FRONTIER_FACILITY_FACTORY, FRONTIER_MODE_DOUBLES
+# 347 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitbuttonpress
+# 348 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	special RemoveRecordsWindow
+# 349 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	releaseall
+# 350 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
+# 351 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 352 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_Woman::
+# 353 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_NeedKnowledgeOfMonsMoves, MSGBOX_NPC
+# 354 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
+# 355 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
 # 356 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_RulesAreListed, MSGBOX_DEFAULT
+BattleFrontier_BattleFactoryLobby_EventScript_Camper::
 # 357 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
+	msgbox BattleFrontier_BattleFactoryLobby_Text_SwappedForWeakMon, MSGBOX_NPC
 # 358 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	end
 # 359 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 360 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard::
+BattleFrontier_BattleFactoryLobby_EventScript_Picnicker::
 # 361 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	message BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading
+	lock
 # 362 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitmessage
+	msgbox BattleFrontier_BattleFactoryLobby_Text_NeedToCheckOpponentsMons, MSGBOX_DEFAULT
 # 363 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	multichoice 17, 0, MULTI_BATTLE_FACTORY_RULES, FALSE
+	release
 # 364 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
+	end
 # 365 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_RulesBasics
+
 # 366 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapPartner
+BattleFrontier_BattleFactoryLobby_EventScript_FatMan::
 # 367 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNumber
+	msgbox BattleFrontier_BattleFactoryLobby_Text_CantFigureOutStaffHints, MSGBOX_NPC
 # 368 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNotes
+	end
 # 369 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_RulesOpenLv
+
 # 370 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 5, BattleFrontier_BattleFactoryLobby_EventScript_ExitRules
+BattleFrontier_BattleFactoryLobby_EventScript_RulesBoard::
 # 371 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_ExitRules
+	lockall
 # 372 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	msgbox BattleFrontier_BattleFactoryLobby_Text_RulesAreListed, MSGBOX_DEFAULT
 # 373 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
 # 374 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RulesBasics::
+	end
 # 375 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainBasicRules, MSGBOX_DEFAULT
+
 # 376 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
+BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard::
 # 377 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	message BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading
 # 378 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	waitmessage
 # 379 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapPartner::
+	multichoice 17, 0, MULTI_BATTLE_FACTORY_RULES, FALSE
 # 380 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSwapPartnerRules, MSGBOX_DEFAULT
+	switch VAR_RESULT
 # 381 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_RulesBasics
 # 382 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapPartner
 # 383 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNumber
 # 384 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNumber::
+	case 3, BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNotes
 # 385 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNumberRules, MSGBOX_DEFAULT
+	case 4, BattleFrontier_BattleFactoryLobby_EventScript_RulesOpenLv
 # 386 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
+	case 5, BattleFrontier_BattleFactoryLobby_EventScript_ExitRules
 # 387 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_ExitRules
 # 388 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	end
 # 389 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNotes::
+
 # 390 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNotesRules, MSGBOX_DEFAULT
+BattleFrontier_BattleFactoryLobby_EventScript_RulesBasics::
 # 391 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainBasicRules, MSGBOX_DEFAULT
 # 392 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
-# 393 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 394 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_RulesOpenLv::
-# 395 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainOpenLvRules, MSGBOX_DEFAULT
-# 396 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
+# 393 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	end
+# 394 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 395 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapPartner::
+# 396 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSwapPartnerRules, MSGBOX_DEFAULT
 # 397 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	end
+	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
 # 398 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 399 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_EventScript_ExitRules::
-# 400 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	releaseall
-# 401 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	end
-# 402 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 399 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 400 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNumber::
+# 401 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNumberRules, MSGBOX_DEFAULT
+# 402 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
 # 403 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_WelcomeForSingleBattle:
+	end
 # 404 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Where the intelligence of TRAINERS\n"
+
 # 405 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "is put to the test!\p"
+BattleFrontier_BattleFactoryLobby_EventScript_RulesSwapNotes::
 # 406 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Welcome to the BATTLE FACTORY!\p"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNotesRules, MSGBOX_DEFAULT
 # 407 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I am your guide to the Battle Swap\n"
+	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
 # 408 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Single Tournament.$"
+	end
 # 409 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 410 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_TakeSinglesChallenge:
+BattleFrontier_BattleFactoryLobby_EventScript_RulesOpenLv::
 # 411 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Would you like to take the Battle\n"
+	msgbox BattleFrontier_BattleFactoryLobby_Text_ExplainOpenLvRules, MSGBOX_DEFAULT
 # 412 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Swap Single challenge?$"
+	goto BattleFrontier_BattleFactoryLobby_EventScript_ReadRulesBoard
 # 413 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	end
 # 414 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainSinglesChallenge:
+
 # 415 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "The Battle Swap Single Tournament\n"
+BattleFrontier_BattleFactoryLobby_EventScript_ExitRules::
 # 416 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "is a SINGLE BATTLE competition using\l"
+	releaseall
 # 417 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "only rental POKéMON.\p"
+	end
 # 418 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "First, you will be loaned three\n"
+
 # 419 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "POKéMON specifically for this event.\p"
+BattleFrontier_BattleFactoryLobby_Text_WelcomeForSingleBattle:
 # 420 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Using the supplied rental POKéMON,\n"
+	.string "Where the intelligence of TRAINERS\n"
 # 421 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "you must conduct a SINGLE BATTLE.\p"
+	.string "is put to the test!\p"
 # 422 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "If you win, you are permitted to trade\n"
+	.string "Welcome to the BATTLE FACTORY!\p"
 # 423 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "one of your rental POKéMON.\p"
+	.string "I am your guide to the Battle Swap\n"
 # 424 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Repeat this cycle of battling and\n"
+	.string "Single Tournament.$"
 # 425 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "trading--if you win seven times in\l"
+
 # 426 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "a row, you will earn Battle Points.\p"
+BattleFrontier_BattleFactoryLobby_Text_TakeSinglesChallenge:
 # 427 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "If you want to interrupt your\n"
+	.string "Would you like to take the Battle\n"
 # 428 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "challenge, please save the game.\p"
+	.string "Swap Single challenge?$"
 # 429 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "If you don't save, you will be\n"
+
 # 430 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "disqualified from your challenge.$"
+BattleFrontier_BattleFactoryLobby_Text_ExplainSinglesChallenge:
 # 431 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "The Battle Swap Single Tournament\n"
 # 432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_LookForwardToNextVisit:
+	.string "is a SINGLE BATTLE competition using\l"
 # 433 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "We look forward to your next visit.$"
+	.string "only rental POKéMON.\p"
 # 434 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "First, you will be loaned three\n"
 # 435 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_WhichLevelMode:
+	.string "POKéMON specifically for this event.\p"
 # 436 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Which level do you wish to challenge?\n"
+	.string "Using the supplied rental POKéMON,\n"
 # 437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Level 50 or Open Level?$"
+	.string "you must conduct a SINGLE BATTLE.\p"
 # 438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "If you win, you are permitted to trade\n"
 # 439 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_OkayToSaveBeforeChallenge:
+	.string "one of your rental POKéMON.\p"
 # 440 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Before you begin your challenge,\n"
+	.string "Repeat this cycle of battling and\n"
 # 441 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I need to save the game. Is that okay?$"
+	.string "trading--if you win seven times in\l"
 # 442 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "a row, you will earn Battle Points.\p"
 # 443 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-@ Unused
+	.string "If you want to interrupt your\n"
 # 444 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_WillHoldMonsForSafekeeping:
+	.string "challenge, please save the game.\p"
 # 445 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Okay, I will hold your POKéMON for\n"
+	.string "If you don't save, you will be\n"
 # 446 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "safekeeping while you compete.$"
+	.string "disqualified from your challenge.$"
 # 447 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 448 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_StepThisWay:
+BattleFrontier_BattleFactoryLobby_Text_LookForwardToNextVisit:
 # 449 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Please step this way.$"
+	.string "We look forward to your next visit.$"
 # 450 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 451 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ReturnMonsSaveResults:
+BattleFrontier_BattleFactoryLobby_Text_WhichLevelMode:
 # 452 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Thank you for participating!\p"
+	.string "Which level do you wish to challenge?\n"
 # 453 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I will return your POKéMON in exchange\n"
+	.string "Level 50 or Open Level?$"
 # 454 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "for our rental POKéMON.\p"
+
 # 455 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I must also save the event results.\n"
+BattleFrontier_BattleFactoryLobby_Text_OkayToSaveBeforeChallenge:
 # 456 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Please wait.$"
+	.string "Before you begin your challenge,\n"
 # 457 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "I need to save the game. Is that okay?$"
 # 458 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-@ Unused
-# 459 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ReturnMons:
-# 460 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I will return your POKéMON in exchange\n"
-# 461 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "for our rental POKéMON.$"
-# 462 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 459 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+@ Unused
+# 460 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_WillHoldMonsForSafekeeping:
+# 461 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Okay, I will hold your POKéMON for\n"
+# 462 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "safekeeping while you compete.$"
 # 463 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_CongratsSevenWins:
+
 # 464 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Congratulations! You've won seven\n"
+BattleFrontier_BattleFactoryLobby_Text_StepThisWay:
 # 465 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "straight Battle Swap matches!$"
+	.string "Please step this way.$"
 # 466 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 467 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-@ Unused
+BattleFrontier_BattleFactoryLobby_Text_ReturnMonsSaveResults:
 # 468 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_AwardBattlePointsForStreak:
+	.string "Thank you for participating!\p"
 # 469 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "In recognition of your 7-win streak,\n"
+	.string "I will return your POKéMON in exchange\n"
 # 470 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "we award you these Battle Point(s).$"
+	.string "for our rental POKéMON.\p"
 # 471 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "I must also save the event results.\n"
 # 472 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-@ Unused
+	.string "Please wait.$"
 # 473 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_MaxBattlePoints:
+
 # 474 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Oh, oh, oh!\p"
+@ Unused
 # 475 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Your Battle Points are maxed.\p"
+BattleFrontier_BattleFactoryLobby_Text_ReturnMons:
 # 476 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Please come back after using\n"
+	.string "I will return your POKéMON in exchange\n"
 # 477 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "some Battle Points.$"
+	.string "for our rental POKéMON.$"
 # 478 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 479 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_WaitingForYouToResume:
+BattleFrontier_BattleFactoryLobby_Text_CongratsSevenWins:
 # 480 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "We've been waiting for you!\p"
+	.string "Congratulations! You've won seven\n"
 # 481 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Before we resume your challenge,\n"
+	.string "straight Battle Swap matches!$"
 # 482 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I must save the game.$"
+
 # 483 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+@ Unused
 # 484 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_DidntSaveBeforeQuitting:
+BattleFrontier_BattleFactoryLobby_Text_AwardBattlePointsForStreak:
 # 485 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I'm sorry to say this, but you didn't\n"
+	.string "In recognition of your 7-win streak,\n"
 # 486 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "save before you quit playing last time.\p"
+	.string "we award you these Battle Point(s).$"
 # 487 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "As a result, you have been disqualified\n"
+
 # 488 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "from your challenge.$"
+@ Unused
 # 489 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+BattleFrontier_BattleFactoryLobby_Text_MaxBattlePoints:
 # 490 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-@ Unused
+	.string "Oh, oh, oh!\p"
 # 491 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_WellReturnMons:
+	.string "Your Battle Points are maxed.\p"
 # 492 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "We'll return your personal POKéMON.$"
+	.string "Please come back after using\n"
 # 493 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "some Battle Points.$"
 # 494 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-@ Unused
-# 495 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ReceivedPrizeItem:
-# 496 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "{PLAYER} received the prize\n"
-# 497 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "{STR_VAR_1}.$"
-# 498 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 495 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_WaitingForYouToResume:
+# 496 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "We've been waiting for you!\p"
+# 497 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Before we resume your challenge,\n"
+# 498 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "I must save the game.$"
 # 499 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_WelcomeForDoubleBattle:
+
 # 500 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Where the intelligence of TRAINERS\n"
+BattleFrontier_BattleFactoryLobby_Text_DidntSaveBeforeQuitting:
 # 501 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "is put to the test!\p"
+	.string "I'm sorry to say this, but you didn't\n"
 # 502 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Welcome to the BATTLE FACTORY!\p"
+	.string "save before you quit playing last time.\p"
 # 503 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I am your guide to the Battle Swap\n"
+	.string "As a result, you have been disqualified\n"
 # 504 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Double Tournament.$"
+	.string "from your challenge.$"
 # 505 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 506 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_TakeDoublesChallenge:
+@ Unused
 # 507 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Would you like to take the Battle\n"
+BattleFrontier_BattleFactoryLobby_Text_WellReturnMons:
 # 508 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Swap Double challenge?$"
+	.string "We'll return your personal POKéMON.$"
 # 509 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 510 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainDoublesChallenge:
+@ Unused
 # 511 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "The Battle Swap Double Tournament\n"
+BattleFrontier_BattleFactoryLobby_Text_ReceivedPrizeItem:
 # 512 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "is a DOUBLE BATTLE competition using\l"
+	.string "{PLAYER} received the prize\n"
 # 513 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "only rental POKéMON.\p"
+	.string "{STR_VAR_1}.$"
 # 514 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "First, you will be loaned three\n"
+
 # 515 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "POKéMON specifically for this event.\p"
+BattleFrontier_BattleFactoryLobby_Text_WelcomeForDoubleBattle:
 # 516 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Using the supplied rental POKéMON,\n"
-# 517 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "you must conduct a DOUBLE BATTLE.\p"
-# 518 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "If you win, you are permitted to trade\n"
-# 519 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "one of your rental POKéMON.\p"
-# 520 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Repeat this cycle of battling and\n"
-# 521 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "trading--if you win seven times in\l"
-# 522 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "a row, you will earn Battle Points.\p"
-# 523 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "If you want to interrupt your\n"
-# 524 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "challenge, please save the game.\p"
-# 525 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "If you don't save before interrupting,\n"
-# 526 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "you will be disqualified.$"
-# 527 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 528 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_WelcomeForRandomBattle:
-# 529 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Where the intelligence of TRAINERS\n"
-# 530 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 517 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "is put to the test!\p"
-# 531 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 518 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Welcome to the BATTLE FACTORY!\p"
+# 519 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "I am your guide to the Battle Swap\n"
+# 520 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Double Tournament.$"
+# 521 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 522 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_TakeDoublesChallenge:
+# 523 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Would you like to take the Battle\n"
+# 524 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Swap Double challenge?$"
+# 525 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 526 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_ExplainDoublesChallenge:
+# 527 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "The Battle Swap Double Tournament\n"
+# 528 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "is a DOUBLE BATTLE competition using\l"
+# 529 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "only rental POKéMON.\p"
+# 530 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "First, you will be loaned three\n"
+# 531 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "POKéMON specifically for this event.\p"
 # 532 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I am your guide to the Random\n"
+	.string "Using the supplied rental POKéMON,\n"
 # 533 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Battles challenge.\p"
+	.string "you must conduct a DOUBLE BATTLE.\p"
 # 534 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Please note: this mode is still under\n"
+	.string "If you win, you are permitted to trade\n"
 # 535 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "development and may contain bugs.$"
+	.string "one of your rental POKéMON.\p"
 # 536 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "Repeat this cycle of battling and\n"
 # 537 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_TakeRandomChallenge:
+	.string "trading--if you win seven times in\l"
 # 538 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Would you like to take the Random\n"
+	.string "a row, you will earn Battle Points.\p"
 # 539 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Battles challenge?$"
+	.string "If you want to interrupt your\n"
 # 540 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "challenge, please save the game.\p"
 # 541 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainRandomChallenge:
+	.string "If you don't save before interrupting,\n"
 # 542 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "This challenge uses rental POKeMON\n"
+	.string "you will be disqualified.$"
 # 543 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "sets from a Random Battles pool.\p"
+
 # 544 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Please note: this mode is under\n"
+BattleFrontier_BattleFactoryLobby_Text_WelcomeForRandomBattle:
 # 545 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "development, so issues may occur.\p"
+	.string "Where the intelligence of TRAINERS\n"
 # 546 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Unlike Level 50 or Open Level modes,\n"
+	.string "is put to the test!\p"
 # 547 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "each rental set has its own level,\l"
+	.string "Welcome to the BATTLE FACTORY!\p"
 # 548 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "balanced for that set.\p"
+	.string "I am your guide to the Random\n"
 # 549 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Rules for battling and swapping are\n"
+	.string "Battles challenge.\p"
 # 550 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "otherwise the same as the regular\l"
+	.string "Please note: this mode is still under\n"
 # 551 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Battle Swap challenge.$"
+	.string "development and may contain bugs.$"
 # 552 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 553 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_CongratsForDefeatingHead:
+BattleFrontier_BattleFactoryLobby_Text_TakeRandomChallenge:
 # 554 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Congratulations for defeating\n"
+	.string "Would you like to take the Random\n"
 # 555 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "the FACTORY HEAD and winning\l"
+	.string "Battles challenge?$"
 # 556 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "seven matches in a row!$"
+
 # 557 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+BattleFrontier_BattleFactoryLobby_Text_ExplainRandomChallenge:
 # 558 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints:
+	.string "This challenge uses rental POKeMON\n"
 # 559 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "In recognition of your wealth of\n"
+	.string "sets from a Random Battles pool.\p"
 # 560 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "knowledge and keen intelligence,\l"
+	.string "Please note: this mode is under\n"
 # 561 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "we award you these Battle Point(s).$"
+	.string "development, so issues may occur.\p"
 # 562 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "Unlike Level 50 or Open Level modes,\n"
 # 563 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExchangeMonsAndSave:
+	.string "each rental set has its own level,\l"
 # 564 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Let me exchange your POKéMON\n"
+	.string "balanced for that set.\p"
 # 565 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "for our rental POKéMON.\p"
+	.string "Rules for battling and swapping are\n"
 # 566 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I need to save the battle data,\n"
+	.string "otherwise the same as the regular\l"
 # 567 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "so please wait.$"
+	.string "Battle Swap challenge.$"
 # 568 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 569 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_RecordLastMatch:
+BattleFrontier_BattleFactoryLobby_Text_CongratsForDefeatingHead:
 # 570 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Would you like to record your last\n"
+	.string "Congratulations for defeating\n"
 # 571 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "BATTLE FACTORY match on your\l"
+	.string "the FACTORY HEAD and winning\l"
 # 572 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "FRONTIER PASS?$"
+	.string "seven matches in a row!$"
 # 573 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 574 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_NeedKnowledgeOfMonsMoves:
+BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints:
 # 575 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Hi!\n"
+	.string "In recognition of your wealth of\n"
 # 576 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "You, there!\p"
+	.string "knowledge and keen intelligence,\l"
 # 577 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Are you thinking that the events here\n"
+	.string "we award you these Battle Point(s).$"
 # 578 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "are easy since you don't need to have\l"
+
 # 579 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "a raised team of POKéMON?\p"
+BattleFrontier_BattleFactoryLobby_Text_ExchangeMonsAndSave:
 # 580 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I wouldn't be too sure about winning\n"
+	.string "Let me exchange your POKéMON\n"
 # 581 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "that easily.\p"
+	.string "for our rental POKéMON.\p"
 # 582 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "If you don't have thorough knowledge\n"
+	.string "I need to save the battle data,\n"
 # 583 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "about POKéMON and their moves,\l"
+	.string "so please wait.$"
 # 584 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "it will be tough to keep winning.$"
+
 # 585 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+BattleFrontier_BattleFactoryLobby_Text_RecordLastMatch:
 # 586 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_SwappedForWeakMon:
+	.string "Would you like to record your last\n"
 # 587 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I swapped for a weak POKéMON…\n"
+	.string "BATTLE FACTORY match on your\l"
 # 588 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I thought it was a good kind to have…\p"
+	.string "FRONTIER PASS?$"
 # 589 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "They wiped the floor with us…$"
+
 # 590 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+BattleFrontier_BattleFactoryLobby_Text_NeedKnowledgeOfMonsMoves:
 # 591 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_NeedToCheckOpponentsMons:
+	.string "Hi!\n"
 # 592 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Things haven't been going my way\n"
+	.string "You, there!\p"
 # 593 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "at all.\p"
+	.string "Are you thinking that the events here\n"
 # 594 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "You need to check your opponent's\n"
+	.string "are easy since you don't need to have\l"
 # 595 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "POKéMON during battle to see if\l"
+	.string "a raised team of POKéMON?\p"
 # 596 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "they're any good.$"
+	.string "I wouldn't be too sure about winning\n"
 # 597 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "that easily.\p"
 # 598 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_CantFigureOutStaffHints:
+	.string "If you don't have thorough knowledge\n"
 # 599 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "You know how the staff here give you\n"
+	.string "about POKéMON and their moves,\l"
 # 600 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "a few hints about your next opponent?\p"
+	.string "it will be tough to keep winning.$"
 # 601 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Well, I'm a full-grown man, but I have\n"
+
 # 602 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "trouble figuring out their hints.$"
+BattleFrontier_BattleFactoryLobby_Text_SwappedForWeakMon:
 # 603 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "I swapped for a weak POKéMON…\n"
 # 604 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-@ Unused
+	.string "I thought it was a good kind to have…\p"
 # 605 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_RentalMonsAreVaried:
+	.string "They wiped the floor with us…$"
 # 606 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Like, I'm really tough, but I get bored\n"
+
 # 607 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "really easily, so I just kept swapping\l"
+BattleFrontier_BattleFactoryLobby_Text_NeedToCheckOpponentsMons:
 # 608 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "and battling over and over.\p"
+	.string "Things haven't been going my way\n"
 # 609 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "So anyway, when I kept entering\n"
+	.string "at all.\p"
 # 610 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Battle Swap events, I noticed they\l"
+	.string "You need to check your opponent's\n"
 # 611 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "varied the rental POKéMON.$"
+	.string "POKéMON during battle to see if\l"
 # 612 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "they're any good.$"
 # 613 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_RulesAreListed:
+
 # 614 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "The Battle Swap rules are listed.$"
+BattleFrontier_BattleFactoryLobby_Text_CantFigureOutStaffHints:
 # 615 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "You know how the staff here give you\n"
 # 616 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading:
+	.string "a few hints about your next opponent?\p"
 # 617 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Which heading do you want to read?$"
+	.string "Well, I'm a full-grown man, but I have\n"
 # 618 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "trouble figuring out their hints.$"
 # 619 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainBasicRules:
-# 620 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "In a Battle Swap event, you may use\n"
-# 621 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "only three POKéMON.\p"
-# 622 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Whether you are renting or swapping,\n"
-# 623 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "your team may not have two or more\l"
-# 624 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "of the same POKéMON.$"
-# 625 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 620 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+@ Unused
+# 621 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_RentalMonsAreVaried:
+# 622 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Like, I'm really tough, but I get bored\n"
+# 623 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "really easily, so I just kept swapping\l"
+# 624 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "and battling over and over.\p"
+# 625 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "So anyway, when I kept entering\n"
 # 626 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainSwapPartnerRules:
+	.string "Battle Swap events, I noticed they\l"
 # 627 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "You may swap POKéMON only with\n"
+	.string "varied the rental POKéMON.$"
 # 628 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "the TRAINER you have just defeated.\p"
+
 # 629 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "You may swap for only those POKéMON\n"
+BattleFrontier_BattleFactoryLobby_Text_RulesAreListed:
 # 630 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "used by the beaten TRAINER.$"
+	.string "The Battle Swap rules are listed.$"
 # 631 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
 # 632 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNumberRules:
+BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading:
 # 633 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "After every battle you win, you may\n"
+	.string "Which heading do you want to read?$"
 # 634 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "swap for one of your defeated\l"
+
 # 635 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "opponent's POKéMON.\p"
+BattleFrontier_BattleFactoryLobby_Text_ExplainBasicRules:
 # 636 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "You will not be able to swap POKéMON\n"
+	.string "In a Battle Swap event, you may use\n"
 # 637 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "with the seventh TRAINER in the event.$"
+	.string "only three POKéMON.\p"
 # 638 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	.string "Whether you are renting or swapping,\n"
 # 639 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNotesRules:
+	.string "your team may not have two or more\l"
 # 640 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "There are two key points to be aware\n"
+	.string "of the same POKéMON.$"
 # 641 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "of when swapping POKéMON.\p"
-# 642 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "First, when swapping, you can't check\n"
-# 643 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "the stats of the POKéMON you are\l"
-# 644 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "about to receive.\p"
-# 645 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Second, the POKéMON on your team\n"
-# 646 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "are lined up in sequence, depending on\l"
-# 647 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "the order in which you rented them.\p"
-# 648 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "This sequence remains unchanged\n"
-# 649 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "even when swaps are made.$"
-# 650 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 
+# 642 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_ExplainSwapPartnerRules:
+# 643 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "You may swap POKéMON only with\n"
+# 644 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "the TRAINER you have just defeated.\p"
+# 645 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "You may swap for only those POKéMON\n"
+# 646 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "used by the beaten TRAINER.$"
+# 647 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 648 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNumberRules:
+# 649 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "After every battle you win, you may\n"
+# 650 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "swap for one of your defeated\l"
 # 651 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ExplainOpenLvRules:
+	.string "opponent's POKéMON.\p"
 # 652 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "In the Open Level, the rental POKéMON\n"
+	.string "You will not be able to swap POKéMON\n"
 # 653 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "and the opposing TRAINERS' POKéMON\l"
+	.string "with the seventh TRAINER in the event.$"
 # 654 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 655 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNotesRules:
+# 656 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "There are two key points to be aware\n"
+# 657 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "of when swapping POKéMON.\p"
+# 658 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "First, when swapping, you can't check\n"
+# 659 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "the stats of the POKéMON you are\l"
+# 660 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "about to receive.\p"
+# 661 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Second, the POKéMON on your team\n"
+# 662 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "are lined up in sequence, depending on\l"
+# 663 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "the order in which you rented them.\p"
+# 664 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "This sequence remains unchanged\n"
+# 665 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "even when swaps are made.$"
+# 666 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+
+# 667 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Text_ExplainOpenLvRules:
+# 668 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "In the Open Level, the rental POKéMON\n"
+# 669 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "and the opposing TRAINERS' POKéMON\l"
+# 670 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "are all Level 100.$"
 
 BattleFrontier_BattleFactoryLobby_Noland::
-# 658 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 674 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	faceplayer
-# 659 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 675 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Noland_Text_0
-# 660 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 676 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	call BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices
-# 661 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 677 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions
 	return
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions::
-# 665 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 681 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 10
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_1:
-# 668 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 684 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 20
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_5
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_4:
-# 671 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 687 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 30
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_8
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_7:
-# 674 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 690 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_0, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 675 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 691 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 676 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 692 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_12
-# 678 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 694 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_13
-# 680 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 696 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_14
-# 682 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 698 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_15
-# 684 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 700 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_16
-# 687 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 703 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_10:
-# 689 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 705 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_2:
-# 666 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 682 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_5:
-# 669 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 685 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_8:
-# 672 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 688 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_12:
-# 677 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 693 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_10
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_13:
-# 679 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 695 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_10
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_14:
-# 681 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 697 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_10
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_15:
-# 683 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 699 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_10
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_16:
-# 685 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 701 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_10
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic::
-# 693 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 709 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 694 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 710 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 695 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 711 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic_3
-# 697 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 713 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic_4
-# 700 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 716 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic_1:
-# 702 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 718 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic_3:
-# 696 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 712 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic_4:
-# 698 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 714 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreMusic_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground::
-# 706 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 722 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 707 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 723 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 708 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 724 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_3
-# 710 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 726 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_4
-# 712 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 728 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_5
-# 715 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 731 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_1:
-# 717 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 733 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_3:
-# 709 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 725 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_4:
-# 711 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 727 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_5:
-# 713 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 729 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreBackground_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks::
-# 721 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 737 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 722 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 738 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 723 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 739 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_3
-# 725 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 741 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_4
-# 727 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 743 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_5
-# 729 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 745 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_6
-# 732 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 748 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_1:
-# 734 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 750 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_3:
-# 724 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 740 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_4:
-# 726 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 742 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_5:
-# 728 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 744 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_6:
-# 730 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 746 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_PreGimmicks_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins::
-# 738 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 754 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	buffernumberstring STR_VAR_1, VAR_FACTORY_TOTAL_WINS
-# 739 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 755 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_0
-# 740 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 756 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 10
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_1:
-# 744 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 760 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 20
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_5
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_4:
-# 748 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 764 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 30
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_8
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_7:
-# 752 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 768 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 40
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_11
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_10:
-# 756 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 772 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 50
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_14
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_13:
-# 760 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 776 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_6
-# 761 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 777 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_2:
-# 741 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 757 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_1
-# 742 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 758 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_5:
-# 745 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 761 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_2
-# 746 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 762 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_8:
-# 749 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 765 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_3
-# 750 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 766 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_11:
-# 753 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 769 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_4
-# 754 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 770 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_10
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_14:
-# 757 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 773 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_5
-# 758 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 774 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_13
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices::
-# 765 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 781 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 10
 	goto_if_ge BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_1:
-# 773 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 789 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 20
 	goto_if_ge BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_5
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_4:
-# 781 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 797 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 30
 	goto_if_ge BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_10
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_9:
-# 789 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 805 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 40
 	goto_if_ge BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_15
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_14:
-# 797 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 813 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 50
 	goto_if_ge BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_20
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_19:
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_2:
-# 766 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 782 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_MUSIC, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_7
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_5:
-# 774 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 790 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_BACKGROUND, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_12
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_7:
-# 767 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	playfanfare MUS_OBTAIN_B_POINTS
-# 768 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitfanfare
-# 769 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_0
-# 770 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_MUSIC
-	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_1
-
-BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_10:
-# 782 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_MEGA, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_17
-	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_9
-
-BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_12:
-# 775 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	playfanfare MUS_OBTAIN_B_POINTS
-# 776 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	waitfanfare
-# 777 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_1
-# 778 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_BACKGROUND
-	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_4
-
-BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_15:
-# 790 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_Z_MOVES, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_22
-	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_14
-
-BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_17:
 # 783 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playfanfare MUS_OBTAIN_B_POINTS
 # 784 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitfanfare
 # 785 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_2
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_0
 # 786 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_MEGA
+	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_MUSIC
+	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_1
+
+BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_10:
+# 798 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_MEGA, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_17
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_9
 
-BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_20:
-# 798 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_TERA, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_24
-	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_19
-
-BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_22:
+BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_12:
 # 791 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playfanfare MUS_OBTAIN_B_POINTS
 # 792 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitfanfare
 # 793 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_3
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_1
 # 794 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_Z_MOVES
+	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_BACKGROUND
+	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_4
+
+BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_15:
+# 806 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_Z_MOVES, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_22
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_14
 
-BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_24:
+BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_17:
 # 799 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playfanfare MUS_OBTAIN_B_POINTS
 # 800 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitfanfare
 # 801 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_4
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_2
 # 802 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_MEGA
+	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_9
+
+BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_20:
+# 814 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	goto_if_unset FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_TERA, BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_24
+	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_19
+
+BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_22:
+# 807 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	playfanfare MUS_OBTAIN_B_POINTS
+# 808 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitfanfare
+# 809 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_3
+# 810 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_Z_MOVES
+	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_14
+
+BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_24:
+# 815 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	playfanfare MUS_OBTAIN_B_POINTS
+# 816 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	waitfanfare
+# 817 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_4
+# 818 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_BATTLE_FACTORY_UNLOCK_NOTICE_TERA
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_19
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions::
-# 812 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 828 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_0
-# 813 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 829 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 40
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_1:
-# 816 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 832 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 50
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_5
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_4:
-# 819 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 835 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 820 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 836 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 821 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 837 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_9
-# 823 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 839 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_10
-# 825 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 841 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_11
-# 827 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 843 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_12
-# 830 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 846 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_7:
-# 832 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 848 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_2:
-# 814 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 830 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_5:
-# 817 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 833 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_9:
-# 822 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 838 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_10:
-# 824 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 840 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_11:
-# 826 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 842 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_12:
-# 828 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 844 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_7
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly::
-# 836 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 852 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 837 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 853 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 838 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 854 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly_3
-# 840 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 856 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly_4
-# 843 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 859 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly_1:
-# 845 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 861 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly_3:
-# 839 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 855 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly_4:
-# 841 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 857 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaOnly_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ::
-# 849 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 865 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 850 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 866 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 851 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 867 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_3
-# 853 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 869 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_4
-# 855 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 871 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_5
-# 858 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 874 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_1:
-# 860 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 876 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_3:
-# 852 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 868 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_4:
-# 854 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 870 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_5:
-# 856 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 872 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_MegaAndZ_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode::
-# 864 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 880 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 50
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_1:
-# 868 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 884 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_set FLAG_BATTLE_FACTORY_ALLOW_TERASTALLISATION, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_5
-# 872 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 888 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_4:
-# 874 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 890 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_3
-# 875 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 891 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_5
-# 876 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 892 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 877 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 893 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_10
-# 880 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 896 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_11
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_8:
-# 884 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 900 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_2:
-# 865 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 881 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_0
-# 866 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 882 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_5:
-# 869 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 885 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_1
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_10:
-# 878 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 894 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_6
-# 879 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 895 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_BATTLE_FACTORY_ALLOW_TERASTALLISATION
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_8
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_11:
-# 881 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 897 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_7
-# 882 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 898 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_BATTLE_FACTORY_ALLOW_TERASTALLISATION
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_8
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode::
-# 888 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 904 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 30
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_1:
-# 892 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 908 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_set FLAG_BATTLE_FACTORY_ALLOW_MEGA_EVOLUTION, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_5
-# 896 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 912 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_4:
-# 898 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 914 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_3
-# 899 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 915 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_5
-# 900 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 916 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 901 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 917 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_10
-# 904 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 920 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_11
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_8:
-# 908 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 924 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_2:
-# 889 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 905 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_0
-# 890 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 906 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_5:
-# 893 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 909 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_1
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_10:
-# 902 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 918 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_4
-# 903 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 919 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_BATTLE_FACTORY_ALLOW_MEGA_EVOLUTION
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_8
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_11:
-# 905 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 921 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_5
-# 906 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 922 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_BATTLE_FACTORY_ALLOW_MEGA_EVOLUTION
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_8
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode::
-# 912 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 928 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 40
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_1:
-# 916 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 932 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_set FLAG_BATTLE_FACTORY_ALLOW_Z_MOVES, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_5
-# 920 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 936 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_4:
-# 922 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 938 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_3
-# 923 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 939 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_5
-# 924 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 940 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 925 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 941 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_10
-# 928 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 944 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_11
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_8:
-# 932 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 948 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_2:
-# 913 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 929 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_0
-# 914 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 930 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_5:
-# 917 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 933 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_1
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_10:
-# 926 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_4
-# 927 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 943 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_BATTLE_FACTORY_ALLOW_Z_MOVES
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_8
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_11:
-# 929 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 945 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_5
-# 930 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 946 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_BATTLE_FACTORY_ALLOW_Z_MOVES
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_8
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions::
-# 936 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 952 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 10
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_1:
-# 940 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_1
-# 941 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	dynmultichoice 0, 0, FALSE, 4, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 943 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 944 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_5
-# 946 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_6
-# 948 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_7
-# 950 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_8
-# 952 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_9
-# 954 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_10
 # 956 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_11
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_1
+# 957 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	dynmultichoice 0, 0, FALSE, 4, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
+# 959 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
 # 960 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_5
+# 962 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_6
+# 964 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_7
+# 966 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_8
+# 968 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_9
+# 970 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_10
+# 972 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_11
+# 976 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_12
-# 963 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 979 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_2:
-# 937 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 953 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_0
-# 938 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 954 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_5:
-# 945 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 961 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_6:
-# 947 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 963 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_7:
-# 949 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 965 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_8:
-# 951 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 967 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_9:
-# 953 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 969 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_10:
-# 955 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 971 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_11:
-# 957 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 973 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_SHUFFLE_FRONTIER_BGM
-# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 974 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 959 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 975 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_12:
-# 961 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 977 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE::
-# 968 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_0
-# 969 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
-# 973 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 974 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_3
-# 976 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_4
-# 978 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_5
-# 980 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_6
-# 982 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_7
 # 984 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_8
-# 986 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_9
-# 988 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_10
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_0
+# 985 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
+# 989 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
 # 990 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_11
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_3
 # 992 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_12
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_4
 # 994 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_13
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_5
 # 996 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_14
+	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_6
 # 998 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_7
+# 1000 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_8
+# 1002 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_9
+# 1004 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_10
+# 1006 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_11
+# 1008 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_12
+# 1010 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_13
+# 1012 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_14
+# 1014 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_15
-# 1001 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1017 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1:
-# 1003 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1019 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_BGM
-# 1004 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1020 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1005 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1021 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_3:
-# 975 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 991 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 0
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_4:
-# 977 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 993 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 1
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_5:
-# 979 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 995 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 2
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_6:
-# 981 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 997 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 3
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_7:
-# 983 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 999 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 4
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_8:
-# 985 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1001 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 5
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_9:
-# 987 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1003 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 6
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_10:
-# 989 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1005 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 7
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_11:
-# 991 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1007 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 8
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_12:
-# 993 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1009 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 9
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_13:
-# 995 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1011 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 10
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_14:
-# 997 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1013 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 11
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_15:
-# 999 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1015 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg::
-# 1009 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_0
-# 1010 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
-# 1014 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 1015 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_3
-# 1017 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_4
-# 1019 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_5
-# 1021 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_6
-# 1023 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_7
 # 1025 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_0
+# 1026 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
+# 1030 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
+# 1031 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_3
+# 1033 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_4
+# 1035 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_5
+# 1037 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_6
+# 1039 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_7
+# 1041 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_8
-# 1027 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1043 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_9
-# 1029 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1045 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_10
-# 1032 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1048 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1:
-# 1034 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1050 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_BGM
-# 1035 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1051 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1036 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1052 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_3:
-# 1016 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1032 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 12
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_4:
-# 1018 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1034 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 13
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_5:
-# 1020 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1036 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 14
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_6:
-# 1022 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1038 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 15
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_7:
-# 1024 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1040 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 16
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_8:
-# 1026 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1042 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 17
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_9:
-# 1028 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1044 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 18
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_10:
-# 1030 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1046 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP::
-# 1040 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1056 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_0
-# 1041 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
-# 1046 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 1047 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_3
-# 1049 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_4
-# 1051 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_5
-# 1053 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_6
-# 1055 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_7
 # 1057 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_8
-# 1059 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_9
-# 1061 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_10
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
+# 1062 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
 # 1063 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_11
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_3
 # 1065 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_12
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_4
 # 1067 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_13
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_5
 # 1069 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_14
+	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_6
 # 1071 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_15
+	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_7
 # 1073 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_8
+# 1075 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_9
+# 1077 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_10
+# 1079 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_11
+# 1081 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_12
+# 1083 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_13
+# 1085 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_14
+# 1087 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_15
+# 1089 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 13, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_16
-# 1076 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1092 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1:
-# 1078 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1094 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_BGM
-# 1079 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1095 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1080 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1096 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_3:
-# 1048 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1064 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 19
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_4:
-# 1050 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1066 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 20
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_5:
-# 1052 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1068 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 21
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_6:
-# 1054 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1070 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 22
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_7:
-# 1056 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1072 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 23
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_8:
-# 1058 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1074 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 24
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_9:
-# 1060 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1076 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 25
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_10:
-# 1062 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1078 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 26
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_11:
-# 1064 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1080 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 27
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_12:
-# 1066 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1082 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 28
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_13:
-# 1068 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1084 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 29
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_14:
-# 1070 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1086 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 30
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_15:
-# 1072 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1088 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 31
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_16:
-# 1074 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1090 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum::
-# 1084 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1100 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_Text_0
-# 1085 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1101 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
-# 1087 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1103 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_RESULT
-# 1088 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1104 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_3
-# 1090 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1106 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_4
-# 1092 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1108 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_5
-# 1094 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1110 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_6
-# 1097 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1113 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_1:
-# 1099 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1115 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_BGM
-# 1100 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1116 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1101 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1117 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_3:
-# 1089 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1105 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 32
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_4:
-# 1091 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1107 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 33
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_5:
-# 1093 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1109 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 34
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_6:
-# 1095 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1111 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs::
-# 1105 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_0
-# 1106 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
-# 1112 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 1113 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_3
-# 1115 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_4
-# 1117 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_5
-# 1119 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_6
 # 1121 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_7
-# 1123 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_8
-# 1125 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_9
-# 1127 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_10
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_0
+# 1122 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
+# 1128 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
 # 1129 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_11
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_3
 # 1131 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_12
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_4
 # 1133 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_13
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_5
 # 1135 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_14
+	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_6
 # 1137 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_15
+	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_7
 # 1139 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 13, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_16
+	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_8
 # 1141 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 14, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_17
+	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_9
 # 1143 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 15, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_18
+	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_10
 # 1145 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 16, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_19
+	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_11
 # 1147 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_12
+# 1149 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_13
+# 1151 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_14
+# 1153 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_15
+# 1155 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 13, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_16
+# 1157 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 14, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_17
+# 1159 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 15, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_18
+# 1161 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 16, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_19
+# 1163 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 17, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_20
-# 1150 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1166 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1:
-# 1152 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1168 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_BGM
-# 1153 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1169 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1154 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1170 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_3:
-# 1114 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1130 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 35
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_4:
-# 1116 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1132 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 36
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_5:
-# 1118 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1134 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 37
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_6:
-# 1120 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1136 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 38
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_7:
-# 1122 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1138 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 39
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_8:
-# 1124 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1140 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 40
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_9:
-# 1126 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1142 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 41
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_10:
-# 1128 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1144 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 42
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_11:
-# 1130 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1146 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 43
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_12:
-# 1132 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1148 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 44
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_13:
-# 1134 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1150 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 45
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_14:
-# 1136 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1152 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 46
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_15:
-# 1138 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1154 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 47
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_16:
-# 1140 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1156 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 48
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_17:
-# 1142 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1158 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 49
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_18:
-# 1144 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1160 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 50
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_19:
-# 1146 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1162 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 51
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_20:
-# 1148 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1164 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite::
-# 1158 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_0
-# 1159 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
-# 1165 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 1166 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_3
-# 1168 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_4
-# 1170 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_5
-# 1172 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_6
 # 1174 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_7
-# 1176 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_8
-# 1178 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_9
-# 1180 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_10
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_0
+# 1175 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13
+# 1181 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
 # 1182 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_11
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_3
 # 1184 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_12
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_4
 # 1186 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_13
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_5
 # 1188 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_14
+	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_6
 # 1190 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_15
+	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_7
 # 1192 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 13, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_16
+	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_8
 # 1194 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 14, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_17
+	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_9
 # 1196 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 15, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_18
+	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_10
 # 1198 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 16, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_19
+	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_11
 # 1200 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 17, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_20
+	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_12
 # 1202 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 18, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_21
+	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_13
 # 1204 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 19, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_22
+	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_14
 # 1206 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_15
+# 1208 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 13, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_16
+# 1210 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 14, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_17
+# 1212 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 15, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_18
+# 1214 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 16, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_19
+# 1216 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 17, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_20
+# 1218 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 18, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_21
+# 1220 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 19, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_22
+# 1222 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 20, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_23
-# 1209 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1225 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1:
-# 1211 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_BGM
-# 1212 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1228 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1213 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1229 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_3:
-# 1167 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1183 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 52
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_4:
-# 1169 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1185 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 53
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_5:
-# 1171 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1187 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 54
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_6:
-# 1173 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1189 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 55
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_7:
-# 1175 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1191 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 56
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_8:
-# 1177 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1193 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 57
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_9:
-# 1179 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1195 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 58
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_10:
-# 1181 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1197 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 59
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_11:
-# 1183 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1199 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 60
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_12:
-# 1185 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1201 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 61
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_13:
-# 1187 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1203 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 62
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_14:
-# 1189 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1205 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 63
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_15:
-# 1191 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1207 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 64
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_16:
-# 1193 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1209 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 65
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_17:
-# 1195 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1211 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 66
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_18:
-# 1197 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1213 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 67
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_19:
-# 1199 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1215 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 68
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_20:
-# 1201 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1217 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 69
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_21:
-# 1203 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1219 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 70
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_22:
-# 1205 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1221 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_BGM, 71
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_23:
-# 1207 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_1
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions::
-# 1217 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1233 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_TOTAL_WINS, 20
 	goto_if_lt BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_2
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_1:
-# 1221 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_1
-# 1222 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_12, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_13, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_14, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_15, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_16, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_17, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_18, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_19, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_20, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_21, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_22, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_23, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_24, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
-# 1228 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_RESULT
-# 1229 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_6
-# 1232 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_7
-# 1234 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_8
 # 1237 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_1
+# 1238 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_2, BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_3, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_4, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_5, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_6, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_7, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_8, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_9, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_10, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_11, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_12, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_13, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_14, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_15, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_16, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_17, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_18, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_19, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_20, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_21, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_22, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_23, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_24, BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4
+# 1244 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	switch VAR_RESULT
+# 1245 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 0, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_6
+# 1248 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 1, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_7
+# 1250 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	case 2, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_8
+# 1253 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 3, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_9
-# 1240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1256 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 4, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_10
-# 1243 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1259 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 5, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_11
-# 1246 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1262 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 6, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_12
-# 1249 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1265 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 7, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_13
-# 1252 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1268 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 8, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_14
-# 1255 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1271 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 9, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_15
-# 1258 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1274 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 10, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_16
-# 1261 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1277 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 11, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_17
-# 1264 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1280 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 12, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_18
-# 1267 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1283 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 13, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_19
-# 1270 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1286 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 14, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_20
-# 1273 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1289 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 15, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_21
-# 1276 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1292 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 16, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_22
-# 1279 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1295 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 17, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_23
-# 1282 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1298 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 18, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_24
-# 1285 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1301 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 19, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_25
-# 1288 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1304 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 20, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_26
-# 1291 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1307 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 21, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_27
-# 1294 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1310 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 22, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_28
-# 1297 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1313 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 23, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_29
-# 1300 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1316 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 24, BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_30
-# 1303 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1319 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4:
-# 1305 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1321 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1306 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1322 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeBackgroundSuccess
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_2:
-# 1218 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1234 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_0
-# 1219 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1235 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_6:
-# 1230 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1246 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 0
-# 1231 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1247 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_7:
-# 1233 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1249 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_8:
-# 1235 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1251 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 1
-# 1236 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1252 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_9:
-# 1238 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1254 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 2
-# 1239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1255 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_10:
-# 1241 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1257 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 3
-# 1242 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1258 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_11:
-# 1244 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1260 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 4
-# 1245 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1261 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_12:
-# 1247 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1263 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 5
-# 1248 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1264 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_13:
-# 1250 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1266 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 6
-# 1251 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1267 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_14:
-# 1253 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1269 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 7
-# 1254 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1270 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_15:
-# 1256 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1272 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 8
-# 1257 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1273 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_16:
-# 1259 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1275 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 9
-# 1260 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1276 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_17:
-# 1262 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1278 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 10
-# 1263 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1279 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_18:
-# 1265 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1281 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 11
-# 1266 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1282 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_19:
-# 1268 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1284 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 12
-# 1269 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1285 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_20:
-# 1271 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1287 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 13
-# 1272 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1288 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_21:
-# 1274 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1290 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 14
-# 1275 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1291 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_22:
-# 1277 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1293 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 15
-# 1278 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1294 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_23:
-# 1280 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1296 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 16
-# 1281 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1297 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_24:
-# 1283 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1299 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 17
-# 1284 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1300 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_25:
-# 1286 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1302 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 18
-# 1287 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1303 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_26:
-# 1289 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1305 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 19
-# 1290 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1306 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_27:
-# 1292 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1308 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 20
-# 1293 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1309 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_28:
-# 1295 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1311 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 21
-# 1296 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1312 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_29:
-# 1298 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1314 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setvar VAR_FRONTIER_ENVIRONMENT, 22
-# 1299 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1315 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_SHUFFLE_FRONTIER_ENVIRONMENT
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_30:
-# 1301 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1317 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_4
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess::
-# 1310 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1326 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1311 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1327 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess_Text_0
-# 1312 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1328 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitse
-# 1313 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1329 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeBackgroundSuccess::
-# 1317 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1333 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playse SE_SUCCESS
-# 1318 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1334 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeBackgroundSuccess_Text_0
-# 1319 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1335 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitse
-# 1320 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1336 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse
 	return
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse::
-# 1324 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1340 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse_Text_0
-# 1325 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1341 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions
 	return
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints::
-# 1329 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1345 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints_Text_0
-# 1331 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1347 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	factory_selectrewardmon
 	return
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout::
-# 1335 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1351 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	lock
-# 1336 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1352 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	faceplayer
-# 1337 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1353 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_FACTORY_BOSS_UNLOCK_STATE, 0
 	goto_if_eq BattleFrontier_BattleFactoryLobby_EventScript_BossScout_2
-# 1342 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1358 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	special GetNextFactoryBossIdForScout
-# 1343 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1359 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	compare VAR_RESULT, 0
 	goto_if_eq BattleFrontier_BattleFactoryLobby_EventScript_BossScout_5
-# 1348 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1364 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setorcopyvar VAR_0x8004, VAR_RESULT
-# 1349 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1365 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	switch VAR_0x8004
-# 1350 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1366 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 1, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_9
-# 1352 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1368 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 2, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_10
-# 1354 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1370 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 4, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_11
-# 1356 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1372 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	case 3, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_12
-# 1359 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1375 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	special BufferFactoryBossNameFromVar
-# 1360 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1376 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_6
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7:
-# 1362 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1378 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	release
 	end
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_2:
-# 1338 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1354 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_0
-# 1339 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1355 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	release
 	end
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_5:
-# 1344 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1360 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_1
-# 1345 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1361 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	release
 	end
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_9:
-# 1351 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1367 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_2
 	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_10:
-# 1353 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1369 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_3
 	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_11:
-# 1355 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1371 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_4
 	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_12:
-# 1357 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1373 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_5
 	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossReporter::
-# 1367 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1383 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossReporter_Text_0
 	end
 
 
-# 1371 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 1372 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer:
-# 1373 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_left
-# 1374 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_left
-# 1375 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	step_end
-# 1376 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 1377 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera:
-# 1378 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_down
-# 1379 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1380 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1381 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_up
-# 1382 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	step_end
-# 1383 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 1384 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera:
-# 1385 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_down
-# 1386 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1387 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1388 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1389 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1390 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	face_up
-# 1391 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	step_end
-# 1392 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 1393 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview:
-# 1394 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_down
-# 1395 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_down
-# 1396 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_down
-# 1397 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1398 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1399 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1400 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1401 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1402 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	walk_right
-# 1403 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	face_down
-# 1404 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	delay_8
-# 1405 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	set_invisible
-# 1406 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	step_end
-# 1407 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 1408 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro:
-# 1409 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "REPORTER: Excuse me! Quick interview!\p"
-# 1410 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "You just defeated NOLAND.\n"
-# 1411 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Please, step over by our camera!$"
-# 1412 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 1413 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne:
-# 1414 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "REPORTER: The whole crowd felt that\n"
-# 1415 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "moment.\p"
-# 1416 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "How did you keep your nerve when the\n"
-# 1417 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "last exchange decided everything?$"
-# 1418 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
 # 1419 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo:
+BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer:
 # 1420 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "REPORTER: Let's talk strategy.\p"
-# 1421 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "What was your plan once you saw\n"
-# 1422 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "that final matchup?$"
-# 1423 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_left
+# 1420 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_left
+	step_end
 
+# 1423 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera:
 # 1424 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree:
+	walk_down
 # 1425 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "REPORTER: Last one for viewers at home.\p"
+	walk_right
+# 1425 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
 # 1426 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "In FACTORY battles, what's tougher:\n"
-# 1427 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "planning ahead or adapting on the fly?$"
-# 1428 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_up
+	step_end
 
 # 1429 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor:
+BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera:
 # 1430 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "CAMERAMAN: Big scoop time!\p"
+	walk_down
 # 1431 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Powerful TRAINERS from far and wide\n"
+	walk_right
+# 1431 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
+# 1431 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
+# 1431 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
 # 1432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "are already en route to the FACTORY.\p"
-# 1433 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "REPORTER: Stay sharp, champ.\n"
-# 1434 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "This story is just getting started!$"
+	face_up
+	step_end
+
 # 1435 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview:
 # 1436 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut:
+	walk_down
+# 1436 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_down
+# 1436 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_down
 # 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "CAMERAMAN: And... cut! Great take!$"
+	walk_right
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	walk_right
 # 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
+	face_down
 # 1439 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewSignOff:
+	delay_8
 # 1440 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "REPORTER: This is your FRONTIER desk,\n"
-# 1441 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "signing off from the BATTLE FACTORY!$"
-# 1442 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-
-# 1443 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp:
-# 1444 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "REPORTER: Thanks for your time!\p"
-# 1445 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "I've got to rush to another facility\n"
-# 1446 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "for the next big interview.\p"
-# 1447 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "See you on the FRONTIER feed!$"
+	set_invisible
+	step_end
 
 BattleFrontier_BattleFactoryLobby_Noland_Text_0:
-# 659 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 675 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Hey, {PLAYER}. Can't handle the heat?\n"
 	.string "Or just fancy a new challenge? Let me\l"
 	.string "know and I'll adjust some things for ya.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_0:
-# 674 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 690 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "GIMMICK OPTIONS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_1:
-# 674 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 690 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "MUSIC OPTIONS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_2:
-# 674 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 690 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "BACKGROUND OPTIONS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_3:
-# 674 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 690 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "TOTAL WINS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandOptions_Text_4:
-# 674 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 690 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "CANCEL$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_0:
-# 739 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 755 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You've won {STR_VAR_1} Battle\n"
 	.string "Factory battle(s) in total.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_1:
-# 741 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 757 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Next unlock at 10 wins: MUSIC OPTIONS.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_2:
-# 745 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 761 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Next unlock at 20 wins: BACKGROUND\n"
 	.string "OPTIONS.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_3:
-# 749 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 765 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Next unlock at 30 wins: MEGA EVOLUTION.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_4:
-# 753 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 769 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Next unlock at 40 wins: Z-MOVES.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_5:
-# 757 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 773 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Next unlock at 50 wins:\n"
 	.string "TERASTALLISATION.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandShowTotalWins_Text_6:
-# 760 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 776 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "All current Noland options are\n"
 	.string "unlocked.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_0:
-# 769 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 785 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Hey, nice going! You've unlocked MUSIC\n"
 	.string "OPTIONS!\p"
 	.string "From now on, I can tune your battles\n"
@@ -3274,21 +3215,21 @@ BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_0:
 	.string "let me shuffle them.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_1:
-# 777 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 793 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Whoa! You're on a roll--BACKGROUND\n"
 	.string "OPTIONS unlocked!\p"
 	.string "Now you can pick your battle scenery,\n"
 	.string "or leave it to chance with a shuffle.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_2:
-# 785 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 801 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Now that's battle sense! MEGA\n"
 	.string "EVOLUTION is unlocked!\p"
 	.string "Want mega power in your runs? Just tell\n"
 	.string "me and I'll switch it on--or off.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_3:
-# 793 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 809 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You're really heating up! Z-MOVES are\n"
 	.string "unlocked!\p"
 	.string "If you want high-impact finishes, I can\n"
@@ -3296,7 +3237,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_3:
 	.string "anytime.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_4:
-# 801 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 817 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Outstanding battling! You've unlocked\n"
 	.string "TERASTALLISATION!\p"
 	.string "You've got the full set now--I can\n"
@@ -3304,480 +3245,480 @@ BattleFrontier_BattleFactoryLobby_EventScript_NolandCheckUnlockNotices_Text_4:
 	.string "challenge.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_0:
-# 812 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 828 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Interested in spicing up your battles?$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_1:
-# 819 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 835 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "TERASTALLISATION$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_2:
-# 819 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 835 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "MEGA EVOLUTION$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandGimmickOptions_Text_3:
-# 819 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 835 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Z-MOVES$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_0:
-# 865 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 881 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "TERASTALLISATION unlocks at 50 total\n"
 	.string "Battle Factory wins.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_1:
-# 869 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 885 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "TERASTALLISATION is currently\n"
 	.string "ENABLED.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_2:
-# 872 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 888 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "TERASTALLISATION is currently\n"
 	.string "DISABLED.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_3:
-# 874 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 890 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Would you like to change\n"
 	.string "TERASTALLISATION mode?$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_4:
-# 875 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 891 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "ENABLE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_5:
-# 875 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 891 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "DISABLE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_6:
-# 878 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 894 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You enabled TERASTALLISATION!\n"
 	.string "POKéMON with the TERA BLAST move will\l"
 	.string "also be added to the selection pool.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseTeraMode_Text_7:
-# 881 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 897 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You disabled TERASTALLISATION!$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_0:
-# 889 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 905 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "MEGA EVOLUTION unlocks at 30 total\n"
 	.string "Battle Factory wins.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_1:
-# 893 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 909 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "MEGA EVOLUTION is currently ENABLED.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_2:
-# 896 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 912 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "MEGA EVOLUTION is currently DISABLED.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_3:
-# 898 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 914 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Would you like to change MEGA\n"
 	.string "EVOLUTION mode?$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_4:
-# 902 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 918 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You enabled MEGA EVOLUTION! POKéMON\n"
 	.string "with the ability to MEGA EVOLVE will be\l"
 	.string "added to the selection pool.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseMegaMode_Text_5:
-# 905 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 921 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You disabled MEGA EVOLUTION!$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_0:
-# 913 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 929 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Z-MOVES unlock at 40 total Battle\n"
 	.string "Factory wins.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_1:
-# 917 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 933 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Z-MOVES are currently ENABLED.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_2:
-# 920 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 936 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Z-MOVES are currently DISABLED.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_3:
-# 922 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 938 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Would you like to change Z-MOVE mode?$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_4:
-# 926 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You enabled Z-MOVES! POKéMON with the\n"
 	.string "ability to use Z-MOVES will be added to\l"
 	.string "the selection pool.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChooseZMoveMode_Text_5:
-# 929 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 945 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You disabled Z-MOVES!$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_0:
-# 937 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 953 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Music options unlock at 10 total Battle\n"
 	.string "Factory wins.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_1:
-# 940 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 956 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "I can change the music that plays\n"
 	.string "during your battles!$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_2:
-# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "R/S/E MUSIC$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_3:
-# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "FR/LG MUSIC$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_4:
-# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "D/P MUSIC$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_5:
-# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "PLATINUM MUSIC$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_6:
-# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "HG/SS MUSIC$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_7:
-# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "BLACK/WHITE MUSIC$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Text_8:
-# 942 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 958 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "SHUFFLE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_0:
-# 968 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 984 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Select battle music from Ruby, Sapphire\n"
 	.string "and Emerald:$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_1:
-# 970 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 986 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. TRAINER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_2:
-# 970 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 986 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. FRONTIER BRAIN$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_3:
-# 970 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 986 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. MEW$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_4:
-# 970 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 986 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. WILD POKEMON$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_5:
-# 970 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 986 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. TEAM AQUA & MAGMA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_6:
-# 971 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 987 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. GYM LEADER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_7:
-# 971 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 987 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. CHAMPION$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_8:
-# 971 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 987 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. REGI$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_9:
-# 971 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 987 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. KYOGRE & GROUDON$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_10:
-# 971 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 987 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. RIVAL$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_11:
-# 972 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 988 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. ELITE FOUR$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_12:
-# 972 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 988 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. AQUA & MAGMA LEADER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_RSE_Text_13:
-# 972 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 988 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "BACK$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_0:
-# 1009 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1025 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Select battle music from FireRed and\n"
 	.string "LeafGreen:$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_1:
-# 1012 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1028 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. DEOXYS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_2:
-# 1013 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1029 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. MEWTWO$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_FrLg_Text_3:
-# 1013 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1029 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. LEGEND$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_0:
-# 1040 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1056 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Select battle music from Diamond and\n"
 	.string "Pearl:$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_1:
-# 1042 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1058 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. UXIE/ASELF/MESPRIT$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_2:
-# 1043 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1059 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. TEAM GALACTIC BOSS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_3:
-# 1043 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1059 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS DIALGA/PALKIA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_4:
-# 1044 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1060 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. TEAM GALACTIC$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_5:
-# 1044 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1060 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. ARCEUS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_DP_Text_6:
-# 1045 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1061 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. GALACTIC COMMANDER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_Text_0:
-# 1084 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1100 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Select battle music from Platinum:$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_Platinum_Text_1:
-# 1086 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1102 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. GIRATINA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_0:
-# 1105 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1121 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Select battle music from HeartGold and\n"
 	.string "SoulSilver:$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_1:
-# 1108 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1124 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. TEAM ROCKET$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_2:
-# 1108 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1124 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. SUICUNE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_3:
-# 1109 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1125 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. ENTEI$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_4:
-# 1109 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1125 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. RAIKOU$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_5:
-# 1109 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1125 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. WILD POKEMON KANTO$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_6:
-# 1110 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1126 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. TRAINER KANTO$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_7:
-# 1110 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1126 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. GYM LEADER KANTO$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_8:
-# 1110 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1126 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. HO-OH$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_9:
-# 1110 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1126 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. LUGIA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_HgSs_Text_10:
-# 1111 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1127 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. KYOGRE/GROUDON$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_0:
-# 1158 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1174 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Select battle music from Black and\n"
 	.string "White:$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_1:
-# 1160 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1176 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. TEAM PLASMA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_2:
-# 1161 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1177 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. WINNING THEME$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_3:
-# 1161 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1177 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. N (1)$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_4:
-# 1161 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1177 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. IN A PINCH THEME$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_5:
-# 1162 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1178 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. RESHIRAM/ZEKROM$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_6:
-# 1162 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1178 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. N (2)$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_7:
-# 1162 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1178 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. GHETSIS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_8:
-# 1163 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1179 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. SUBWAY TRAINER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_9:
-# 1163 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1179 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. CYNTHIA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_10:
-# 1163 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1179 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. STRONG WILD POKEMON$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_11:
-# 1164 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1180 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. KYUREM$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandMusicOptions_BlackWhite_Text_12:
-# 1164 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1180 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "VS. WCS CHAMPION$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_0:
-# 1218 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1234 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Background options unlock at 20 total\n"
 	.string "Battle Factory wins.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_1:
-# 1221 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1237 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Fancy a new lick of paint on your\n"
 	.string "battles?$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_2:
-# 1223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "DEFAULT$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_3:
-# 1223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "GRASS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_4:
-# 1223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "LONG GRASS$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_5:
-# 1223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "SAND$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_6:
-# 1223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "UNDERWATER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_7:
-# 1223 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1239 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "WATER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_8:
-# 1224 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "POND$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_9:
-# 1224 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "MOUNTAIN$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_10:
-# 1224 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "CAVE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_11:
-# 1224 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "BUILDING$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_12:
-# 1224 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1240 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "PLAIN$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_13:
-# 1225 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1241 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "GYM$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_14:
-# 1225 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1241 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "GYM LEADER$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_15:
-# 1225 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1241 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "TEAM MAGMA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_16:
-# 1225 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1241 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "TEAM AQUA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_17:
-# 1226 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1242 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "ELITE FOUR SIDNEY$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_18:
-# 1226 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1242 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "ELITE FOUR PHOEBE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_19:
-# 1226 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1242 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "ELITE FOUR GLACIA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_20:
-# 1227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1243 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "ELITE FOUR DRAKE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_21:
-# 1227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1243 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "CHAMPION$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_22:
-# 1227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1243 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "GROUDON$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_23:
-# 1227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1243 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "KYOGRE$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandBackgroundOptions_Text_24:
-# 1227 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1243 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "RAYQUAZA$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeMusicSuccess_Text_0:
-# 1311 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1327 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "All done! Your music selection has been\n"
 	.string "changed.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandChangeBackgroundSuccess_Text_0:
-# 1318 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1334 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "All done! Your background has been\n"
 	.string "changed.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse_Text_0:
-# 1324 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1340 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Is there anything else I can help you\n"
 	.string "with?$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints_Text_0:
-# 1329 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1345 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "As a reward for your display of skill,\n"
 	.string "you will be able to select one of the\l"
 	.string "POKéMON in your party to keep forever,\l"
@@ -3785,52 +3726,101 @@ BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints_Text_0:
 	.string "facilities.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_0:
-# 1338 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1354 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "No special challengers are scheduled\n"
 	.string "yet.\p"
 	.string "Beat NOLAND once and I'll start\n"
 	.string "tracking who's coming next.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_1:
-# 1344 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1360 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "You've already beaten the current\n"
 	.string "special challenger lineup.\p"
 	.string "If new contenders show up, I'll let you\n"
 	.string "know right away.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_2:
-# 1351 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Breaking news!\p"
-	.string "STEVEN is in the area, and he's aiming\n"
-	.string "straight for the FACTORY floor.$"
+# 1367 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Breaking news! STEVEN is in the area,\n"
+	.string "and he's aiming straight for the\l"
+	.string "FACTORY floor.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_3:
-# 1353 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Fresh report!\p"
-	.string "WALLY's back, and he says he's ready to\n"
-	.string "show everyone how far he's come.$"
+# 1369 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Fresh report! WALLY's back, and he says\n"
+	.string "he's ready to show everyone how far\l"
+	.string "he's come.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_4:
-# 1355 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Big headline!\p"
-	.string "NORMAN has arrived, and he's looking for\n"
-	.string "a no-holds-barred battle.$"
+# 1371 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Big headline! Your old man NORMAN was\n"
+	.string "just spotted arriving at the FACTORY.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_5:
-# 1357 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "This is huge...\p"
-	.string "RED has been spotted nearby.\n"
-	.string "No words, just battle aura.$"
+# 1373 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "Rumour has it that a truly legendary\n"
+	.string "TRAINER has come to the FACTORY.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_6:
-# 1360 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1376 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "Breaking news! {STR_VAR_1} is the\n"
 	.string "next major challenger headed to the\l"
 	.string "BATTLE FACTORY.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossReporter_Text_0:
-# 1367 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1383 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "I'm with the FACTORY EXCLUSIVE team.\p"
 	.string "Talk to my cameraman partner if you\n"
 	.string "want the latest on incoming top\l"
 	.string "TRAINERS.$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro::
+# 1387 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "REPORTER: Thank you for joining us.\p"
+	.string "How does it feel to be the new HEAD of\n"
+	.string "the BATTLE FACTORY?$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne::
+# 1391 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "REPORTER: That battle had the whole\n"
+	.string "FRONTIER on its feet! How did you\l"
+	.string "maintain your composure?$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo::
+# 1395 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "REPORTER: Do you have any advice for\n"
+	.string "our audience on picking a strong team\l"
+	.string "of rental POKeMON in the FACTORY?$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree::
+# 1399 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "REPORTER: Last question. Will you\n"
+	.string "defend your title?\p"
+	.string "There's bound to be huge interest in\n"
+	.string "the BATTLE FACTORY after this victory.$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor::
+# 1403 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "CAMERAMAN: Big scoop time! Powerful\n"
+	.string "TRAINERS from far and wide are already\l"
+	.string "en route to the FACTORY.\p"
+	.string "REPORTER: We'll be here around the\n"
+	.string "clock to cover all the action.$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut::
+# 1407 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "CAMERAMAN: And... cut! Great take!$"
+
+BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp::
+# 1411 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "REPORTER: Thanks for your time! I've\n"
+	.string "got to rush to another facility for the\l"
+	.string "next big interview.\p"
+	.string "See you on the FRONTIER feed!$"
+
+BattleFrontier_BattleFactoryLobby_Text_CameramanHint::
+# 1415 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	.string "CAMERAMAN: Psst, champ! I'm out here all\n"
+	.string "day, so if you wanna know which\l"
+	.string "powerful TRAINERS I've seen nearby,\l"
+	.string "just let me know.$"

@@ -57,6 +57,7 @@ void InitEventData(void)
     // Factory lobby boss NPCs are hidden until first Factory silver symbol unlock.
     FlagSet(FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND);
     FlagSet(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN);
+    FlagSet(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER);
 }
 
 void ClearTempFieldEventData(void)
