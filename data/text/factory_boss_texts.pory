@@ -197,6 +197,64 @@ text sText_DebugBossName_Roxanne {
 }
 
 // --------------------
+// Roxanne
+// --------------------
+
+text sText_BrawlyPreBattleCall {
+    "BRAWLY is ready to throw down!"
+}
+
+text sText_BrawlyBattleRoomPrompt {
+    "Hey, hurry up!"
+}
+
+text sText_BrawlyBattleIntro {
+     "I haven't seen you in a while,
+      {PLAYER}!
+
+      Where have I been? Well,
+      I've travelled the seas of HOENN
+      and beyond.
+
+      I've learned first hand how
+      you need to be tough to survive
+      in this world.
+
+      Do you have what it takes to
+      beat me this time?
+
+      I'd like to see you try!"
+}
+
+text sText_BrawlyLastMonSlide {
+    "Come on, {B_OPPONENT_MON1_NAME}!
+     Lend me your strength."
+}
+
+text sText_BrawlyLastMonLowHpSlide {
+    "I've been raised in the rough seas!
+     I can handle anything."
+}
+
+text sText_BrawlyBattlePostWin {
+    "Argh...
+     I thought I had you beat there!"
+}
+
+text sText_BrawlyBattleSpeechPlayerWon {
+    "Whoa! You made a much bigger
+    splash than I expected"
+}
+
+text sText_BrawlyBattleSpeechPlayerLost {
+    "Wow! I swamped you again!"
+}
+
+text sText_DebugBossName_Brawly {
+    "Brawly"
+}
+
+// --------------------
 // Norman
 // --------------------
 text sText_NormanPreBattleCall {

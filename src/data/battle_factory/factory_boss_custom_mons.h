@@ -107,6 +107,32 @@ static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_RoxanneDiancie 
     },
 };
 
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_BrawlyMedicham =
+{
+    .species = SPECIES_MEDICHAM,
+    .nature = NATURE_JOLLY,
+    .heldItem = ITEM_MEDICHAMITE,
+    .abilityNum = 1, // Pure Power
+    .hasTeraType = TRUE,
+    .teraType = TYPE_FIGHTING,
+    .evs =
+    {
+        [STAT_HP] = 4,
+        [STAT_ATK] = 252,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 0,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_FAKE_OUT,
+        MOVE_CLOSE_COMBAT,
+        MOVE_ZEN_HEADBUTT,
+        MOVE_BULLET_PUNCH,
+    },
+};
+
 static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_NormanKangaskhan =
 {
     .species = SPECIES_KANGASKHAN,
@@ -140,6 +166,7 @@ static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FAC
     [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
     [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
     [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
+    [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };
 
@@ -150,5 +177,6 @@ static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTOR
     [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
     [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
     [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
+    [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };

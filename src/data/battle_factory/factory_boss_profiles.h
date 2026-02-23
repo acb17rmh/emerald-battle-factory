@@ -1,5 +1,6 @@
 // Boss dialogue symbols are generated from data/text/factory_boss_texts.pory
 
+#include "../../../include/battle_transition.h"
 #include "../../../include/constants/event_objects.h"
 #include "../../../include/constants/factory_boss.h"
 #include "../../../include/constants/opponents.h"
@@ -37,6 +38,17 @@
 	    sText_RoxanneBattlePostWin[],
 	    sText_RoxanneBattleSpeechPlayerWon[],
 	    sText_RoxanneBattleSpeechPlayerLost[];
+
+// Brawly
+	extern const u8 sText_DebugBossName_Brawly[],
+		sText_BrawlyPreBattleCall[],
+		sText_BrawlyBattleIntro[],
+		sText_BrawlyBattleRoomPrompt[],
+		sText_BrawlyLastMonSlide[],
+		sText_BrawlyLastMonLowHpSlide[],
+		sText_BrawlyBattlePostWin[],
+		sText_BrawlyBattleSpeechPlayerWon[],
+		sText_BrawlyBattleSpeechPlayerLost[];
 
 	// Norman
 		extern const u8 sText_DebugBossName_Norman[],
@@ -129,6 +141,27 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
 		.acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_FIRST,
 		.aceSpecies = SPECIES_TYRANITAR,
 		.mugshotColour = MUGSHOT_COLOR_GREEN,
+	},
+		[FACTORY_BOSS_BRAWLY] =
+	    {
+    		.enabled = TRUE,
+			.debugMenuName = sText_DebugBossName_Brawly,
+			.preBattleCallText = sText_BrawlyPreBattleCall,
+			.battleIntroText = sText_BrawlyBattleIntro,
+			.battleRoomPromptText = sText_BrawlyBattleRoomPrompt,
+			.lastSwitchInSlideText = sText_BrawlyLastMonSlide,
+			.lastLowHpSlideText = sText_BrawlyLastMonLowHpSlide,
+			.battlePostWinText = sText_BrawlyBattlePostWin,
+			.battleSpeechPlayerWon = sText_BrawlyBattleSpeechPlayerWon,
+			.battleSpeechPlayerLost = sText_BrawlyBattleSpeechPlayerLost,
+			.trainerId = TRAINER_BRAWLY_1,
+			.objEventGfx = OBJ_EVENT_GFX_BRAWLY,
+			.battleBgm = MUS_VS_GYM_LEADER,
+			.preBattleRoomBgm = MUS_ENCOUNTER_INTENSE,
+			.awardSymbol = FALSE,
+			.acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
+			.aceSpecies = SPECIES_MEDICHAM,
+			.mugshotColour = MUGSHOT_COLOR_BLUE
 	},
 	    [FACTORY_BOSS_NORMAN] =
 	    {

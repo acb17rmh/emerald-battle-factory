@@ -162,19 +162,69 @@ sText_DebugBossName_Roxanne::
 # 195 "data/text/factory_boss_texts.pory"
 	.string "Roxanne$"
 
+sText_BrawlyPreBattleCall::
+# 203 "data/text/factory_boss_texts.pory"
+	.string "BRAWLY is ready to throw down!$"
+
+sText_BrawlyBattleRoomPrompt::
+# 207 "data/text/factory_boss_texts.pory"
+	.string "Hey, hurry up!$"
+
+sText_BrawlyBattleIntro::
+# 211 "data/text/factory_boss_texts.pory"
+	.string "I haven't seen you in a while,\n"
+	.string "{PLAYER}!\p"
+	.string "Where have I been? Well,\n"
+	.string "I've travelled the seas of HOENN\l"
+	.string "and beyond.\p"
+	.string "I've learned first hand how\n"
+	.string "you need to be tough to survive\l"
+	.string "in this world.\p"
+	.string "Do you have what it takes to\n"
+	.string "beat me this time?\p"
+	.string "I'd like to see you try!$"
+
+sText_BrawlyLastMonSlide::
+# 229 "data/text/factory_boss_texts.pory"
+	.string "Come on, {B_OPPONENT_MON1_NAME}!\n"
+	.string "Lend me your strength.$"
+
+sText_BrawlyLastMonLowHpSlide::
+# 234 "data/text/factory_boss_texts.pory"
+	.string "I've been raised in the rough seas!\n"
+	.string "I can handle anything.$"
+
+sText_BrawlyBattlePostWin::
+# 239 "data/text/factory_boss_texts.pory"
+	.string "Argh...\n"
+	.string "I thought I had you beat there!$"
+
+sText_BrawlyBattleSpeechPlayerWon::
+# 244 "data/text/factory_boss_texts.pory"
+	.string "Whoa! You made a much bigger\n"
+	.string "splash than I expected$"
+
+sText_BrawlyBattleSpeechPlayerLost::
+# 249 "data/text/factory_boss_texts.pory"
+	.string "Wow! I swamped you again!$"
+
+sText_DebugBossName_Brawly::
+# 253 "data/text/factory_boss_texts.pory"
+	.string "Brawly$"
+
 sText_NormanPreBattleCall::
-# 202 "data/text/factory_boss_texts.pory"
+# 260 "data/text/factory_boss_texts.pory"
 	.string "Your father NORMAN is in the building\n"
 	.string "and looking fired up!$"
 
 sText_NormanBattleRoomPrompt::
-# 207 "data/text/factory_boss_texts.pory"
+# 265 "data/text/factory_boss_texts.pory"
 	.string "{PLAYER}!\p"
 	.string "Let's get moving!\n"
 	.string "I've been waiting for you!$"
 
 sText_NormanBattleIntro::
-# 214 "data/text/factory_boss_texts.pory"
+# 272 "data/text/factory_boss_texts.pory"
 	.string "Didn't expect to see me here, huh?\p"
 	.string "Your old man still has a few tricks\n"
 	.string "up his sleeve.\p"
@@ -185,67 +235,67 @@ sText_NormanBattleIntro::
 	.string "Don't hold back!$"
 
 sText_NormanLastMonSlide::
-# 228 "data/text/factory_boss_texts.pory"
+# 286 "data/text/factory_boss_texts.pory"
 	.string "You're no match for my {B_OPPONENT_MON1_NAME}!\n"
 	.string "Let's end this!$"
 
 sText_NormanLastMonLowHpSlide::
-# 233 "data/text/factory_boss_texts.pory"
+# 291 "data/text/factory_boss_texts.pory"
 	.string "Well battled.\n"
 	.string "Now finish it!$"
 
 sText_NormanBattlePostWin::
-# 238 "data/text/factory_boss_texts.pory"
+# 296 "data/text/factory_boss_texts.pory"
 	.string "Hah! That's the spirit.\p"
 	.string "You fought with nerve and discipline.\n"
 	.string "That's what wins tough matches.$"
 
 sText_NormanBattleSpeechPlayerWon::
-# 245 "data/text/factory_boss_texts.pory"
+# 303 "data/text/factory_boss_texts.pory"
 	.string "Wow! What a battle!\n"
 	.string "Well fought.$"
 
 sText_NormanBattleSpeechPlayerLost::
-# 250 "data/text/factory_boss_texts.pory"
+# 308 "data/text/factory_boss_texts.pory"
 	.string "I'm disappointed, {PLAYER}...\n"
 	.string "You could do far better!$"
 
 sText_DebugBossName_Norman::
-# 255 "data/text/factory_boss_texts.pory"
+# 313 "data/text/factory_boss_texts.pory"
 	.string "Norman$"
 
 sText_RedPreBattleCall::
-# 262 "data/text/factory_boss_texts.pory"
+# 320 "data/text/factory_boss_texts.pory"
 	.string "A truly LEGENDARY TRAINER awaits!$"
 
 sText_RedBattleRoomPrompt::
-# 266 "data/text/factory_boss_texts.pory"
+# 324 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleIntro::
-# 270 "data/text/factory_boss_texts.pory"
+# 328 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedLastMonSlide::
-# 274 "data/text/factory_boss_texts.pory"
+# 332 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedLastMonLowHpSlide::
-# 278 "data/text/factory_boss_texts.pory"
+# 336 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattlePostWin::
-# 282 "data/text/factory_boss_texts.pory"
+# 340 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleSpeechPlayerWon::
-# 286 "data/text/factory_boss_texts.pory"
+# 344 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleSpeechPlayerLost::
-# 290 "data/text/factory_boss_texts.pory"
+# 348 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_DebugBossName_Red::
-# 294 "data/text/factory_boss_texts.pory"
+# 352 "data/text/factory_boss_texts.pory"
 	.string "Red$"
