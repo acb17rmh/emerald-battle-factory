@@ -1,3 +1,8 @@
+#include "../../../include/constants/factory_boss.h"
+#include "../../../include/constants/items.h"
+#include "../../../include/constants/moves.h"
+#include "../../../include/constants/pokemon.h"
+#include "../../../include/constants/species.h"
 static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_StevenAceMetagross =
 {
     .species = SPECIES_METAGROSS,
@@ -76,6 +81,32 @@ static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_RedPikachu =
     },
 };
 
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_RoxanneDiancie =
+{
+    .species = SPECIES_DIANCIE,
+    .nature = NATURE_TIMID,
+    .heldItem = ITEM_DIANCITE,
+    .abilityNum = 1,
+    .hasTeraType = TRUE,
+    .teraType = TYPE_STEEL,
+    .evs =
+    {
+        [STAT_HP] = 0,
+        [STAT_ATK] = 0,
+        [STAT_DEF] = 4,
+        [STAT_SPATK] = 252,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_POWER_GEM,
+        MOVE_MOONBLAST,
+        MOVE_MYSTICAL_FIRE,
+        MOVE_EARTH_POWER,
+    },
+};
+
 static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_NormanKangaskhan =
 {
     .species = SPECIES_KANGASKHAN,
@@ -108,6 +139,7 @@ static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FAC
     [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
     [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
     [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
+    [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };
 
@@ -115,7 +147,8 @@ static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTOR
 {
     [FACTORY_BOSS_NONE] = NULL,
     [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
-    [FACTORY_BOSS_WALLY] = NULL,
-    [FACTORY_BOSS_RED] = NULL,
+    [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
+    [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
+    [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };

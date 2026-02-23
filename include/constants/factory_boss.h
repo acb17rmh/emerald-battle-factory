@@ -6,7 +6,9 @@
 #define FACTORY_BOSS_WALLY   2
 #define FACTORY_BOSS_NORMAN  3
 #define FACTORY_BOSS_RED     4
-#define FACTORY_BOSS_COUNT   5
+#define FACTORY_BOSS_ROXANNE 5
+#define FACTORY_BOSS_BRAWLY  6
+#define FACTORY_BOSS_COUNT   7
 
 enum FactoryBossAcePolicy
 {

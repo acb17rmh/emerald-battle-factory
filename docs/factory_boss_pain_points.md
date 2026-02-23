@@ -14,7 +14,7 @@
 
 - Pre-battle cutscene text:
   - Status: resolved.
-  - Now profile-driven via `FactoryBossTextSet` (`preBattleCallText`, `battleIntroText`, `battleStartText`, `battlePostWinText`).
+  - Now profile-driven via `FactoryBossProfile` text fields (call, room prompt, intro, post-win, etc).
 
 - Post-battle defeat text:
   - Status: resolved.

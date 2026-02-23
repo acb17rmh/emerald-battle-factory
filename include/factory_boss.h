@@ -8,7 +8,14 @@ struct FactoryBossProfile
 {
     bool8 enabled;
     const u8 *debugMenuName;
-    const struct FactoryBossTextSet *text;
+    const u8 *preBattleCallText;
+    const u8 *battleIntroText;
+    const u8 *battleRoomPromptText;
+    const u8 *lastSwitchInSlideText;
+    const u8 *lastLowHpSlideText;
+    const u8 *battlePostWinText;
+    const u8 *battleSpeechPlayerWon;
+    const u8 *battleSpeechPlayerLost;
     u16 trainerId;
     u8 objEventGfx;
     u16 battleBgm;
@@ -17,19 +24,6 @@ struct FactoryBossProfile
     u8 acePolicy;
     u16 aceSpecies;
     u8 mugshotColour;
-};
-
-struct FactoryBossTextSet
-{
-    const u8 *preBattleCallText;
-    const u8 *battleIntroText;
-    const u8 *battleRoomPromptText;
-    const u8 *battleStartText;
-    const u8 *lastSwitchInSlideText;
-    const u8 *lastLowHpSlideText;
-    const u8 *battlePostWinText;
-    const u8 *battleSpeechPlayerWon;
-    const u8 *battleSpeechPlayerLost;
 };
 
 u8 GetActiveFactoryBossId(void);

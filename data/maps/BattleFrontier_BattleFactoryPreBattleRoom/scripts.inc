@@ -360,7 +360,7 @@ BattleFrontier_BattleFactoryPreBattleRoom_EventScript_StyleFlexible::
 
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskReadyForHead::
 	copyvar VAR_RESULT, VAR_FACTORY_ACTIVE_BOSS
-	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskReadyForPowerfulTrainer
+	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskReadyForPowerfulTrainer
 	message BattleFrontier_BattleFactoryPreBattleRoom_Text_PreparedToFaceHead
 	goto BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskReadyForHeadPrompt
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskReadyForPowerfulTrainer::
@@ -387,7 +387,7 @@ BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskReadyForHeadNoRecord::
 
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskSwapBeforeHead::
 	copyvar VAR_RESULT, VAR_FACTORY_ACTIVE_BOSS
-	goto_if_eq VAR_RESULT, 1, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskSwapBeforePowerfulTrainer
+	goto_if_ne VAR_RESULT, 0, BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskSwapBeforePowerfulTrainer
 	msgbox BattleFrontier_BattleFactoryPreBattleRoom_Text_CantTellAnythingAboutHead, MSGBOX_DEFAULT
 	goto BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskSwapBeforeHeadConfirm
 BattleFrontier_BattleFactoryPreBattleRoom_EventScript_AskSwapBeforePowerfulTrainer::
@@ -654,7 +654,7 @@ BattleFrontier_BattleFactoryPreBattleRoom_Text_WaitFewMoments:
 
 BattleFrontier_BattleFactoryPreBattleRoom_Text_UnderstoodSirWillDo:
 	.string "…Uh-huh? What?! …Whoa!\n"
-	.string "Understood, sir! Will do!$"
+	.string "Understood! Will do!$"
 
 BattleFrontier_BattleFactoryPreBattleRoom_Text_MessageFromHeadComeRightNow:
 	.string "Oh, my…\n"
@@ -677,12 +677,12 @@ BattleFrontier_BattleFactoryPreBattleRoom_Text_MessageFromPowerfulTrainerComeRig
 	.string "Sorry to keep you waiting!\p"
 	.string "I have a message from a powerful\n"
 	.string "TRAINER who wants to battle you.\p"
-	.string "He says, “We're going to do it!\n"
+	.string "They say, “We're going to do it!\n"
 	.string "Come here right now!”$"
 
 BattleFrontier_BattleFactoryPreBattleRoom_Text_PreparedToFacePowerfulTrainer:
 	.string "A powerful TRAINER is demanding you.\n"
-	.string "Are you prepared to face him?$"
+	.string "Are you prepared to face them?$"
 
 BattleFrontier_BattleFactoryPreBattleRoom_Text_CantTellAnythingAboutPowerfulTrainer:
 	.string "I'm terribly sorry, but I can't tell you\n"

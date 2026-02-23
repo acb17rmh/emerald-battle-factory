@@ -2905,8 +2905,6 @@ static const u8 sText_DefaultFactoryBossIntro[] = COMPOUND_STRING(
 static const u8 sText_DefaultFactoryBossBattleRoomPrompt[] = COMPOUND_STRING(
     "Hey, hey!\n"
     "Get a move on!");
-static const u8 sText_DefaultFactoryBossStart[] = COMPOUND_STRING(
-    "Let's battle!");
 static const u8 sText_DefaultFactoryBossPostWin[] = COMPOUND_STRING(
     "Well done.\n"
     "That was an excellent battle.");
@@ -2916,8 +2914,8 @@ void BufferFactoryBossCallText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->preBattleCallText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->preBattleCallText);
+    if (bossProfile != NULL && bossProfile->preBattleCallText != NULL)
+        StringCopy(gStringVar4, bossProfile->preBattleCallText);
     else
         StringCopy(gStringVar4, sText_DefaultFactoryBossCall);
 }
@@ -2926,28 +2924,18 @@ void BufferFactoryBossBattleIntroText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleIntroText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->battleIntroText);
+    if (bossProfile != NULL && bossProfile->battleIntroText != NULL)
+        StringCopy(gStringVar4, bossProfile->battleIntroText);
     else
         StringCopy(gStringVar4, sText_DefaultFactoryBossIntro);
-}
-
-void BufferFactoryBossBattleStartText(void)
-{
-    const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
-
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleStartText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->battleStartText);
-    else
-        StringCopy(gStringVar4, sText_DefaultFactoryBossStart);
 }
 
 void BufferFactoryBossBattleRoomPromptText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleRoomPromptText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->battleRoomPromptText);
+    if (bossProfile != NULL && bossProfile->battleRoomPromptText != NULL)
+        StringCopy(gStringVar4, bossProfile->battleRoomPromptText);
     else
         StringCopy(gStringVar4, sText_DefaultFactoryBossBattleRoomPrompt);
 }
@@ -2956,8 +2944,8 @@ void BufferFactoryBossBattlePostWinText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battlePostWinText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->battlePostWinText);
+    if (bossProfile != NULL && bossProfile->battlePostWinText != NULL)
+        StringCopy(gStringVar4, bossProfile->battlePostWinText);
     else
         StringCopy(gStringVar4, sText_DefaultFactoryBossPostWin);
 }
@@ -3021,14 +3009,14 @@ static void CopyFrontierBrainText(bool8 playerWonText)
     switch (playerWonText)
     {
     case FALSE:
-        if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleSpeechPlayerLost != NULL)
-            StringCopy(gStringVar4, bossProfile->text->battleSpeechPlayerLost);
+        if (bossProfile != NULL && bossProfile->battleSpeechPlayerLost != NULL)
+            StringCopy(gStringVar4, bossProfile->battleSpeechPlayerLost);
         else
             StringCopy(gStringVar4, gFrontierBrainInfo[facility].wonTexts[symbol]);
         break;
     case TRUE:
-        if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleSpeechPlayerWon != NULL)
-            StringCopy(gStringVar4, bossProfile->text->battleSpeechPlayerWon);
+        if (bossProfile != NULL && bossProfile->battleSpeechPlayerWon != NULL)
+            StringCopy(gStringVar4, bossProfile->battleSpeechPlayerWon);
         else
             StringCopy(gStringVar4, gFrontierBrainInfo[facility].lostTexts[symbol]);
         break;

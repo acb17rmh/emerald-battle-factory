@@ -260,24 +260,22 @@ enum TrainerSlideTargets ShouldDoTrainerSlide(u32 battler, enum TrainerSlideType
 
     if (slideId == TRAINER_SLIDE_LAST_SWITCHIN
         && bossProfile != NULL
-        && bossProfile->text != NULL
-        && bossProfile->text->lastSwitchInSlideText != NULL
+        && bossProfile->lastSwitchInSlideText != NULL
         && !IsTrainerSlidePlayed(slideId)
         && ShouldRunTrainerSlideLastSwitchIn(battler))
     {
-        gBattleStruct->trainerSlideMsg = bossProfile->text->lastSwitchInSlideText;
+        gBattleStruct->trainerSlideMsg = bossProfile->lastSwitchInSlideText;
         MarkTrainerSlideAsPlayed(slideId);
         return retValue;
     }
 
     if (slideId == TRAINER_SLIDE_LAST_LOW_HP
         && bossProfile != NULL
-        && bossProfile->text != NULL
-        && bossProfile->text->lastLowHpSlideText != NULL
+        && bossProfile->lastLowHpSlideText != NULL
         && !IsTrainerSlidePlayed(slideId)
         && ShouldRunTrainerSlideLastLowHp(firstId, lastId, battler))
     {
-        gBattleStruct->trainerSlideMsg = bossProfile->text->lastLowHpSlideText;
+        gBattleStruct->trainerSlideMsg = bossProfile->lastLowHpSlideText;
         MarkTrainerSlideAsPlayed(slideId);
         return retValue;
     }

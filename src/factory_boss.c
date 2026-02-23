@@ -12,12 +12,7 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 
-#include "data/battle_factory/factory_boss_text_sets.h"
-
-static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] =
-{
 #include "data/battle_factory/factory_boss_profiles.h"
-};
 
 static bool8 IsFactoryBossModeSupported(void)
 {
