@@ -2668,6 +2668,18 @@ u8 GetFrontierBrainTrainerPicIndex(void)
     return GetTrainerPicFromId(GetActiveFrontierBrainTrainerId(facility));
 }
 
+u16 GetCurrentFrontierBrainTrainerId(void)
+{
+    s32 facility;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
+        facility = GetRecordedBattleFrontierFacility();
+    else
+        facility = VarGet(VAR_FRONTIER_FACILITY);
+
+    return GetActiveFrontierBrainTrainerId(facility);
+}
+
 enum TrainerClassID GetFrontierBrainTrainerClass(void)
 {
     s32 facility;
@@ -2890,6 +2902,9 @@ static const u8 sText_DefaultFactoryBossCall[] = COMPOUND_STRING(
     "Come to the battle room right now.");
 static const u8 sText_DefaultFactoryBossIntro[] = COMPOUND_STRING(
     "A powerful TRAINER appears before you!");
+static const u8 sText_DefaultFactoryBossBattleRoomPrompt[] = COMPOUND_STRING(
+    "Hey, hey!\n"
+    "Get a move on!");
 static const u8 sText_DefaultFactoryBossStart[] = COMPOUND_STRING(
     "Let's battle!");
 static const u8 sText_DefaultFactoryBossPostWin[] = COMPOUND_STRING(
@@ -2925,6 +2940,16 @@ void BufferFactoryBossBattleStartText(void)
         StringCopy(gStringVar4, bossProfile->text->battleStartText);
     else
         StringCopy(gStringVar4, sText_DefaultFactoryBossStart);
+}
+
+void BufferFactoryBossBattleRoomPromptText(void)
+{
+    const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+
+    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleRoomPromptText != NULL)
+        StringCopy(gStringVar4, bossProfile->text->battleRoomPromptText);
+    else
+        StringCopy(gStringVar4, sText_DefaultFactoryBossBattleRoomPrompt);
 }
 
 void BufferFactoryBossBattlePostWinText(void)

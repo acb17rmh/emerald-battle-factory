@@ -1,6 +1,7 @@
     [FACTORY_BOSS_NONE] =
     {
         .enabled = FALSE,
+        .mugshotColour = MUGSHOT_COLOR_NONE,
     },
     [FACTORY_BOSS_STEVEN] =
     {
@@ -14,6 +15,7 @@
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_METAGROSS,
+        .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_WALLY] =
     {
@@ -27,6 +29,7 @@
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_GALLADE,
+        .mugshotColour = MUGSHOT_COLOR_GREEN,
     },
     [FACTORY_BOSS_NORMAN] =
     {
@@ -40,6 +43,7 @@
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_KANGASKHAN,
+        .mugshotColour = MUGSHOT_COLOR_PURPLE,
     },
     [FACTORY_BOSS_RED] =
     {
@@ -53,4 +57,5 @@
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_FIRST,
         .aceSpecies = SPECIES_PIKACHU,
+        .mugshotColour = MUGSHOT_COLOR_YELLOW,
     },

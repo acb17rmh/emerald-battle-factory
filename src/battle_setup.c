@@ -29,6 +29,7 @@
 #include "secret_base.h"
 #include "string_util.h"
 #include "overworld.h"
+#include "factory_boss.h"
 #include "field_weather.h"
 #include "battle_tower.h"
 #include "gym_leader_rematch.h"
@@ -820,6 +821,11 @@ enum BattleTransition GetSpecialBattleTransition(enum BattleTransitionGroup id)
     u16 var;
     u8 enemyLevel = GetMonData(&gEnemyParty[0], MON_DATA_LEVEL);
     u8 playerLevel = GetSumOfPlayerPartyLevel(1);
+
+    if (id == B_TRANSITION_GROUP_B_FACTORY
+     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_FRONTIER_BRAIN
+     && IsActiveFactoryBossUsingMugshot())
+        return B_TRANSITION_MUGSHOT;
 
     if (enemyLevel < playerLevel)
     {

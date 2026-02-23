@@ -16,12 +16,14 @@ struct FactoryBossProfile
     bool8 awardSymbol;
     u8 acePolicy;
     u16 aceSpecies;
+    u8 mugshotColour;
 };
 
 struct FactoryBossTextSet
 {
     const u8 *preBattleCallText;
     const u8 *battleIntroText;
+    const u8 *battleRoomPromptText;
     const u8 *battleStartText;
     const u8 *lastSwitchInSlideText;
     const u8 *lastLowHpSlideText;
@@ -33,5 +35,7 @@ struct FactoryBossTextSet
 u8 GetActiveFactoryBossId(void);
 const struct FactoryBossProfile *GetFactoryBossProfile(u8 bossId);
 const struct FactoryBossProfile *GetActiveFactoryBossProfile(void);
+bool8 IsActiveFactoryBossUsingMugshot(void);
+u8 GetActiveFactoryBossMugshotColour(void);
 
 #endif // GUARD_FACTORY_BOSS_H

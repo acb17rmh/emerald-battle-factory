@@ -11,6 +11,9 @@ static const u8 sText_StevenBattleIntro[] = COMPOUND_STRING(
     "still demand sharp judgment.\p"
     "Let's see how your decisions hold\n"
     "up under pressure");
+static const u8 sText_StevenBattleRoomPrompt[] = COMPOUND_STRING(
+    "No delays.\n"
+    "Take your position.");
 static const u8 sText_StevenBattleStart[] = COMPOUND_STRING(
     "Show me the strength of your\n"
     "strategy. I'm ready. Now face me!");
@@ -40,6 +43,9 @@ static const u8 sText_NormanBattleIntro[] = COMPOUND_STRING(
     "Didn't expect to see me here, huh?\n"
     "Your old man has a few tricks up\n"
     "his sleeve");
+static const u8 sText_NormanBattleRoomPrompt[] = COMPOUND_STRING(
+    "Let's get moving!\n"
+    "I'm waiting for you!");
 static const u8 sText_NormanBattleStart[] = COMPOUND_STRING(
     "Show me everything you've learned!\n"
     "Don't hold back!");
@@ -70,6 +76,9 @@ static const u8 sText_WallyBattleIntro[] = COMPOUND_STRING(
     "I've been training hard so I can\n"
     "stand here with confidence.\p"
     "Let's battle with everything we have!");
+static const u8 sText_WallyBattleRoomPrompt[] = COMPOUND_STRING(
+    "I'm ready...\n"
+    "Please come forward!");
 static const u8 sText_WallyBattleStart[] = COMPOUND_STRING(
     "I won't back down this time!\n"
     "Let's do this!");
@@ -95,6 +104,8 @@ static const u8 sText_RedPreBattleCall[] = COMPOUND_STRING(
     "No message. No introduction.\p"
     "RED is already waiting in silence.");
 static const u8 sText_RedBattleIntro[] = COMPOUND_STRING(
+    "...");
+static const u8 sText_RedBattleRoomPrompt[] = COMPOUND_STRING(
     "...");
 static const u8 sText_RedBattleStart[] = COMPOUND_STRING(
     "...");

@@ -4,8 +4,8 @@
 #define FACTORY_BOSS_NONE    0
 #define FACTORY_BOSS_STEVEN  1
 #define FACTORY_BOSS_WALLY   2
-#define FACTORY_BOSS_RED     3
-#define FACTORY_BOSS_NORMAN  4
+#define FACTORY_BOSS_NORMAN  3
+#define FACTORY_BOSS_RED     4
 #define FACTORY_BOSS_COUNT   5
 
 enum FactoryBossAcePolicy
