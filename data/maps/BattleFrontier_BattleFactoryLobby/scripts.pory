@@ -15,17 +15,6 @@ BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth::
 	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter::
-	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide
-	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide
-	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
-	addobject LOCALID_FACTORY_BOSS_REPORTER
-	end
-
-BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide::
-	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
-	end
-
 BattleFrontier_BattleFactoryLobby_OnFrame:
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving
@@ -38,43 +27,6 @@ BattleFrontier_BattleFactoryLobby_OnFrame:
 
 BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus::
 	frontier_getstatus
-	end
-
-BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview::
-	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
-	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
-	lockall
-	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, Common_Movement_ExclamationMark
-	waitmovement 0
-	playbgm MUS_ENCOUNTER_INTERVIEWER, FALSE
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer
-	waitmovement 0
-	turnobject LOCALID_PLAYER, DIR_EAST
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro, MSGBOX_DEFAULT
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera
-	applymovement LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera
-	waitmovement 0
-	turnobject LOCALID_FACTORY_BOSS_REPORTER, DIR_SOUTH
-	turnobject LOCALID_PLAYER, DIR_NORTH
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne, MSGBOX_DEFAULT
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo, MSGBOX_DEFAULT
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree, MSGBOX_DEFAULT
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor, MSGBOX_DEFAULT
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut, MSGBOX_DEFAULT
-	fadedefaultbgm
-	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview
-	waitmovement 0
-	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
-	msgbox BattleFrontier_BattleFactoryLobby_Text_CameramanHint, MSGBOX_DEFAULT
-	closemessage
-	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
-	setflag FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN
-	releaseall
-
-BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done::
 	end
 
 BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving::
@@ -1381,6 +1333,66 @@ script BattleFrontier_BattleFactoryLobby_EventScript_BossScout {
 
 script BattleFrontier_BattleFactoryLobby_EventScript_BossReporter {
     msgbox(format("I'm with the FACTORY EXCLUSIVE team.\pTalk to my cameraman partner if you want the latest on incoming top TRAINERS."))
+    end
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter {
+    if(flag(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide)
+    }
+    if(flag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide)
+    }
+    clearflag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER)
+    addobject(LOCALID_FACTORY_BOSS_REPORTER)
+    end
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide {
+    setflag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER)
+    end
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview {
+    if(flag(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done)
+    }
+    if(flag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done)
+    }
+    lockall
+    turnobject(LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH)
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, Common_Movement_ExclamationMark)
+    waitmovement(0)
+    playbgm(MUS_ENCOUNTER_INTERVIEWER, FALSE)
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer)
+    waitmovement(0)
+    turnobject(LOCALID_PLAYER, DIR_EAST)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro)
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera)
+    applymovement(LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera)
+    waitmovement(0)
+    turnobject(LOCALID_FACTORY_BOSS_REPORTER, DIR_SOUTH)
+    turnobject(LOCALID_PLAYER, DIR_NORTH)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut)
+    fadedefaultbgm
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp)
+    closemessage
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview)
+    waitmovement(0)
+    turnobject(LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_CameramanHint)
+    closemessage
+    setflag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER)
+    setflag(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN)
+    releaseall
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done {
     end
 }
 
