@@ -6,6 +6,8 @@ BattleFrontier_BattleFactoryLobby_MapScripts::
 
 BattleFrontier_BattleFactoryLobby_OnWarp:
 	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 1, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 2, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter
 	.2byte 0
 
 BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth::
@@ -19,6 +21,8 @@ BattleFrontier_BattleFactoryLobby_OnFrame:
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge
 	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 1, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview
+	map_script_2 VAR_FACTORY_BOSS_UNLOCK_STATE, 2, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview
 	.2byte 0
 
 BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus::
@@ -1310,8 +1314,140 @@ script BattleFrontier_BattleFactoryLobby_EventScript_BossScout {
         end
     }
     setorcopyvar(VAR_0x8004, VAR_RESULT)
-    special(BufferFactoryBossNameFromVar)
-    msgbox(format("Breaking news! {STR_VAR_1} is the next major challenger headed to the BATTLE FACTORY."))
+    switch(var(VAR_0x8004)) {
+        case 1:
+            msgbox(format("Breaking news! STEVEN is in the area, and he's aiming straight for the FACTORY floor."))
+        case 2:
+            msgbox(format("Fresh report! WALLY's back, and he says he's ready to show everyone how far he's come."))
+        case 4:
+            msgbox(format("Big headline! Your old man NORMAN was just spotted arriving at the FACTORY."))
+        case 3:
+            msgbox(format("Rumour has it that a truly legendary TRAINER has come to the FACTORY."))
+        default:
+            special(BufferFactoryBossNameFromVar)
+            msgbox(format("Breaking news! {STR_VAR_1} is the next major challenger headed to the BATTLE FACTORY."))
+    }
     release
     end
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_BossReporter {
+    msgbox(format("I'm with the FACTORY EXCLUSIVE team.\pTalk to my cameraman partner if you want the latest on incoming top TRAINERS."))
+    end
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter {
+    if(flag(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide)
+    }
+    if(flag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide)
+    }
+    clearflag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER)
+    addobject(LOCALID_FACTORY_BOSS_REPORTER)
+    end
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide {
+    setflag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER)
+    end
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview {
+    if(flag(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done)
+    }
+    if(flag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN) == TRUE) {
+        goto(BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done)
+    }
+    lockall
+    turnobject(LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH)
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, Common_Movement_ExclamationMark)
+    waitmovement(0)
+    playbgm(MUS_ENCOUNTER_INTERVIEWER, FALSE)
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer)
+    waitmovement(0)
+    turnobject(LOCALID_PLAYER, DIR_EAST)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro)
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera)
+    applymovement(LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera)
+    waitmovement(0)
+    turnobject(LOCALID_FACTORY_BOSS_REPORTER, DIR_SOUTH)
+    turnobject(LOCALID_PLAYER, DIR_NORTH)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut)
+    fadedefaultbgm
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp)
+    closemessage
+    applymovement(LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview)
+    waitmovement(0)
+    turnobject(LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH)
+    msgbox(BattleFrontier_BattleFactoryLobby_Text_CameramanHint)
+    closemessage
+    setflag(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER)
+    setflag(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN)
+    releaseall
+}
+
+script BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done {
+    end
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro {
+	format("REPORTER: Thank you for joining us.\pHow does it feel to be the new HEAD of the BATTLE FACTORY?")
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne {
+	format("REPORTER: That battle had the whole FRONTIER on its feet! How did you maintain your composure?")
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo {
+	format("REPORTER: Do you have any advice for our audience on picking a strong team of rental POKeMON in the FACTORY?")
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree {
+	format("REPORTER: Last question. Will you defend your title?\pThere's bound to be huge interest in the BATTLE FACTORY after this victory.")
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor {
+	format("CAMERAMAN: Big scoop time! Powerful TRAINERS from far and wide are already en route to the FACTORY.\pREPORTER: We'll be here around the clock to cover all the action.")
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut {
+	format("CAMERAMAN: And... cut! Great take!")
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp {
+	format("REPORTER: Thanks for your time! I've got to rush to another facility for the next big interview.\pSee you on the FRONTIER feed!")
+}
+
+text BattleFrontier_BattleFactoryLobby_Text_CameramanHint {
+	format("CAMERAMAN: Psst, champ! I'm out here all day, so if you wanna know which powerful TRAINERS I've seen nearby, just let me know.")
+}
+
+movement BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer {
+	walk_left * 2
+}
+
+movement BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera {
+	walk_down
+	walk_right * 2
+	walk_up
+}
+
+movement BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera {
+	walk_down
+	walk_right * 4
+	face_up
+}
+
+movement BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview {
+	walk_down * 3
+	walk_right * 6
+	face_down
+	delay_8
+	set_invisible
 }

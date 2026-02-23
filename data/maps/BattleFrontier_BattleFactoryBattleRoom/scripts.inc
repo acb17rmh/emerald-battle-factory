@@ -141,9 +141,10 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_UnlockFactoryBossesIfNeeded::
 	setvar VAR_FACTORY_BOSS_UNLOCK_STATE, 1
 	setvar VAR_FACTORY_BOSS_CLEARED_MASK, 0
 	setvar VAR_FACTORY_BOSS_ROTATION_INDEX, 0
+	clearflag FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN
 	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND
 	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN
-	msgbox BattleFrontier_BattleFactoryBattleRoom_Text_NewChallengersApproaching, MSGBOX_DEFAULT
+	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
 BattleFrontier_BattleFactoryBattleRoom_EventScript_UnlockFactoryBossesIfNeeded_Done::
 	return
 
@@ -330,13 +331,6 @@ BattleFrontier_BattleFactoryBattleRoom_Text_NolandLetsSeeFrontierPass:
 BattleFrontier_BattleFactoryBattleRoom_Text_ReceivedKnowledgeSymbol:
 	.string "The Knowledge Symbol was embossed\n"
 	.string "on the FRONTIER PASS!$"
-
-BattleFrontier_BattleFactoryBattleRoom_Text_NewChallengersApproaching:
-	.string "NOLAND: Hey! You've earned this.\p"
-	.string "Word's spreading around the FRONTIER,\n"
-	.string "and some powerful TRAINERS are coming\l"
-	.string "to test you in the FACTORY.\p"
-	.string "Keep sharpening your battle sense!$"
 
 BattleFrontier_BattleFactoryBattleRoom_Text_NextTimeNoHoldsBarred:
 	.string "Heh…\n"
