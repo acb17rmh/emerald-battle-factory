@@ -2948,16 +2948,18 @@ void PlayFactoryBossPreBattleRoomBgmIfSet(void)
         PlayNewMapMusic(bossProfile->preBattleRoomBgm);
 }
 
-void GetNextFactoryBossIdForScout(void)
+u8 GetNextFactoryBossId(void)
 {
     if (VarGet(VAR_FACTORY_BOSS_UNLOCK_STATE) == 0
      || AreAllFactoryTier1BossesCleared())
-    {
-        gSpecialVar_Result = FACTORY_BOSS_NONE;
-        return;
-    }
+        return FACTORY_BOSS_NONE;
 
-    gSpecialVar_Result = GetNextFactoryTier1BossId();
+    return GetNextFactoryTier1BossId();
+}
+
+void GetNextFactoryBossIdForScout(void)
+{
+    gSpecialVar_Result = GetNextFactoryBossId();
 }
 
 void BufferFactoryBossNameFromVar(void)
