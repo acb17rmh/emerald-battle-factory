@@ -211,6 +211,33 @@ static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_NormanKangaskha
     },
 };
 
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_WinonaAltaria =
+{
+    .species = SPECIES_ALTARIA,
+    .nature = NATURE_JOLLY,
+    .heldItem = ITEM_ALTARIANITE,
+    .abilityNum = 1,
+    .hasTeraType = TRUE,
+    .teraType = TYPE_FIRE,
+    .evs =
+    {
+        [STAT_HP] = 4,
+        [STAT_ATK] = 252,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 0,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_DOUBLE_EDGE,
+        MOVE_EARTHQUAKE,
+        MOVE_ROOST,
+        MOVE_DRAGON_DANCE
+    },
+};
+
+
 static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FACTORY_BOSS_COUNT] =
 {
     [FACTORY_BOSS_NONE] = NULL,
@@ -221,6 +248,7 @@ static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FAC
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
     [FACTORY_BOSS_FLANNERY] = &sFactoryCustomMonBuild_FlanneryBlaziken,
+    [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };
 
@@ -234,5 +262,6 @@ static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTOR
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
     [FACTORY_BOSS_FLANNERY] = &sFactoryCustomMonBuild_FlanneryBlaziken,
+    [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };

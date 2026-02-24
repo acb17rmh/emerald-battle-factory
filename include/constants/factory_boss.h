@@ -10,7 +10,8 @@
 #define FACTORY_BOSS_BRAWLY   6
 #define FACTORY_BOSS_WATTSON  7
 #define FACTORY_BOSS_FLANNERY 8
-#define FACTORY_BOSS_COUNT    9
+#define FACTORY_BOSS_WINONA   9
+#define FACTORY_BOSS_COUNT    10
 
 enum FactoryBossAcePolicy
 {

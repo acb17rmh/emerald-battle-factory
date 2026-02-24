@@ -442,6 +442,63 @@ text sText_DebugBossName_Norman {
 }
 
 // --------------------
+// Winona
+// --------------------
+
+text sText_WinonaPreBattleCall {
+    "WINONA has a score to settle with you!"
+}
+
+text sText_WinonaBattleRoomPrompt {
+    "Hey there, {PLAYER}!"
+}
+
+text sText_WinonaBattleIntro {
+     "You will remember me as the one and
+     only WINONA, LEADER of the FORTREE GYM!
+
+     I have become one with bird POK\eMON
+     and have soared the skies!
+
+     However grueling the battle, we will
+     triumph with grace.
+
+     A little birdie told me you became the
+     CHAMPION, but in all my years, never
+     have I seen a TRAINER command POK\eMON
+     with more grace than I.
+
+     Now witness the elegant choreography
+     of BIRD POK\eMON and I!"
+}
+
+text sText_WinonaLastMonSlide {
+    "Dance with me, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_WinonaLastMonLowHpSlide {
+    "Keep going, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_WinonaBattlePostWin {
+    "Though I fell to you, my wings
+     will never break!"
+}
+
+text sText_WinonaBattleSpeechPlayerWon {
+    "You truly are a graceful TRAINER.
+     Not just a TRAINER, but a CHAMPION!"
+}
+
+text sText_WinonaBattleSpeechPlayerLost {
+    "Our elegant dance is finished."
+}
+
+text sText_DebugBossName_Winona {
+    "Winona"
+}
+
+// --------------------
 // Red
 // --------------------
 text sText_RedPreBattleCall {

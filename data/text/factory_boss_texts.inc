@@ -372,38 +372,88 @@ sText_DebugBossName_Norman::
 # 440 "data/text/factory_boss_texts.pory"
 	.string "Norman$"
 
+sText_WinonaPreBattleCall::
+# 448 "data/text/factory_boss_texts.pory"
+	.string "WINONA has a score to settle with you!$"
+
+sText_WinonaBattleRoomPrompt::
+# 452 "data/text/factory_boss_texts.pory"
+	.string "Hey there, {PLAYER}!$"
+
+sText_WinonaBattleIntro::
+# 456 "data/text/factory_boss_texts.pory"
+	.string "You will remember me as the one and\n"
+	.string "only WINONA, LEADER of the FORTREE GYM!\p"
+	.string "I have become one with bird POKéMON\n"
+	.string "and have soared the skies!\p"
+	.string "However grueling the battle, we will\n"
+	.string "triumph with grace.\p"
+	.string "A little birdie told me you became the\n"
+	.string "CHAMPION, but in all my years, never\l"
+	.string "have I seen a TRAINER command POKéMON\l"
+	.string "with more grace than I.\p"
+	.string "Now witness the elegant choreography\n"
+	.string "of BIRD POKéMON and I!$"
+
+sText_WinonaLastMonSlide::
+# 475 "data/text/factory_boss_texts.pory"
+	.string "Dance with me, {B_OPPONENT_MON1_NAME}!$"
+
+sText_WinonaLastMonLowHpSlide::
+# 479 "data/text/factory_boss_texts.pory"
+	.string "Keep going, {B_OPPONENT_MON1_NAME}!$"
+
+sText_WinonaBattlePostWin::
+# 483 "data/text/factory_boss_texts.pory"
+	.string "Though I fell to you, my wings\n"
+	.string "will never break!$"
+
+sText_WinonaBattleSpeechPlayerWon::
+# 488 "data/text/factory_boss_texts.pory"
+	.string "You truly are a graceful TRAINER.\n"
+	.string "Not just a TRAINER, but a CHAMPION!$"
+
+sText_WinonaBattleSpeechPlayerLost::
+# 493 "data/text/factory_boss_texts.pory"
+	.string "Our elegant dance is finished.\n"
+	.string "Return, {B_OPPONENT_MON1_NAME}!$"
+
+sText_DebugBossName_Winona::
+# 498 "data/text/factory_boss_texts.pory"
+	.string "Winona$"
+
 sText_RedPreBattleCall::
-# 447 "data/text/factory_boss_texts.pory"
+# 505 "data/text/factory_boss_texts.pory"
 	.string "A truly LEGENDARY TRAINER awaits!$"
 
 sText_RedBattleRoomPrompt::
-# 451 "data/text/factory_boss_texts.pory"
+# 509 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleIntro::
-# 455 "data/text/factory_boss_texts.pory"
+# 513 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedLastMonSlide::
-# 459 "data/text/factory_boss_texts.pory"
+# 517 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedLastMonLowHpSlide::
-# 463 "data/text/factory_boss_texts.pory"
+# 521 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattlePostWin::
-# 467 "data/text/factory_boss_texts.pory"
+# 525 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleSpeechPlayerWon::
-# 471 "data/text/factory_boss_texts.pory"
+# 529 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleSpeechPlayerLost::
-# 475 "data/text/factory_boss_texts.pory"
+# 533 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_DebugBossName_Red::
-# 479 "data/text/factory_boss_texts.pory"
+# 537 "data/text/factory_boss_texts.pory"
 	.string "Red$"

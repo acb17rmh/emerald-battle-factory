@@ -61,7 +61,7 @@ extern const u8 sText_DebugBossName_Wattson[],
         sText_WattsonBattleSpeechPlayerWon[],
         sText_WattsonBattleSpeechPlayerLost[];
 
-// Wattson
+// Flannery
 extern const u8 sText_DebugBossName_Flannery[],
         sText_FlanneryPreBattleCall[],
         sText_FlanneryBattleIntro[],
@@ -82,6 +82,17 @@ extern const u8 sText_DebugBossName_Norman[],
         sText_NormanBattlePostWin[],
         sText_NormanBattleSpeechPlayerWon[],
         sText_NormanBattleSpeechPlayerLost[];
+
+// Winona
+extern const u8 sText_DebugBossName_Winona[],
+        sText_WinonaPreBattleCall[],
+        sText_WinonaBattleIntro[],
+        sText_WinonaBattleRoomPrompt[],
+        sText_WinonaLastMonSlide[],
+        sText_WinonaLastMonLowHpSlide[],
+        sText_WinonaBattlePostWin[],
+        sText_WinonaBattleSpeechPlayerWon[],
+        sText_WinonaBattleSpeechPlayerLost[];
 
 // Red
 extern const u8 sText_DebugBossName_Red[],
@@ -247,6 +258,27 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_KANGASKHAN,
         .mugshotColour = MUGSHOT_COLOR_PURPLE,
+    },
+    [FACTORY_BOSS_WINONA] =
+    {
+        .enabled = TRUE,
+        .debugMenuName = sText_DebugBossName_Winona,
+        .preBattleCallText = sText_WinonaPreBattleCall,
+        .battleIntroText = sText_WinonaBattleIntro,
+        .battleRoomPromptText = sText_WinonaBattleRoomPrompt,
+        .lastSwitchInSlideText = sText_WinonaLastMonSlide,
+        .lastLowHpSlideText = sText_WinonaLastMonLowHpSlide,
+        .battlePostWinText = sText_WinonaBattlePostWin,
+        .battleSpeechPlayerWon = sText_WinonaBattleSpeechPlayerWon,
+        .battleSpeechPlayerLost = sText_WinonaBattleSpeechPlayerLost,
+        .trainerId = TRAINER_WINONA_1,
+        .objEventGfx = OBJ_EVENT_GFX_WINONA,
+        .battleBgm = MUS_VS_GYM_LEADER,
+        .preBattleRoomBgm = MUS_ENCOUNTER_INTENSE,
+        .awardSymbol = FALSE,
+        .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
+        .aceSpecies = SPECIES_ALTARIA,
+        .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_RED] =
     {
