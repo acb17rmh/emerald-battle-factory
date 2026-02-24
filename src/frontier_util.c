@@ -2909,6 +2909,10 @@ static const u8 sText_DefaultFactoryBossPostWin[] = COMPOUND_STRING(
     "Well done.\n"
     "That was an excellent battle.");
 static const u8 sText_FactoryBossName_None[] = COMPOUND_STRING("No one");
+static const u8 sText_DefaultFactoryBossScoutHint[] = COMPOUND_STRING(
+    "Breaking news!\p"
+    "{STR_VAR_1} is the next major challenger\n"
+    "headed to the BATTLE FACTORY.");
 
 void BufferFactoryBossCallText(void)
 {
@@ -2983,6 +2987,22 @@ void BufferFactoryBossNameFromVar(void)
         StringCopy(gStringVar1, bossProfile->debugMenuName);
     else
         StringCopy(gStringVar1, sText_FactoryBossName_None);
+}
+
+void BufferFactoryBossScoutHintTextFromVar(void)
+{
+    const struct FactoryBossProfile *bossProfile = GetFactoryBossProfile(VarGet(VAR_0x8004));
+
+    // Ensure {STR_VAR_1} is always usable by hint text (or the default fallback).
+    if (bossProfile != NULL && bossProfile->debugMenuName != NULL)
+        StringCopy(gStringVar1, bossProfile->debugMenuName);
+    else
+        StringCopy(gStringVar1, sText_FactoryBossName_None);
+
+    if (bossProfile != NULL && bossProfile->scoutHintText != NULL)
+        StringCopy(gStringVar4, bossProfile->scoutHintText);
+    else
+        StringCopy(gStringVar4, sText_DefaultFactoryBossScoutHint);
 }
 
 // Called for intro speech as well despite the fact that its handled in the map scripts files instead

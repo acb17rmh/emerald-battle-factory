@@ -35,6 +35,7 @@ void PlayFactoryBossPreBattleRoomBgmIfSet(void);
 u8 GetNextFactoryBossId(void);
 void GetNextFactoryBossIdForScout(void);
 void BufferFactoryBossNameFromVar(void);
+void BufferFactoryBossScoutHintTextFromVar(void);
 void PrepareFactoryBossForNextBattle(void);
 void RecordFactoryBossDefeat(void);
 void ClearEnemyPartyAfterChallenge(void);

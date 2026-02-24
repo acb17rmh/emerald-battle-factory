@@ -8,6 +8,12 @@
 // Steven
 // --------------------
 
+text sText_StevenScoutHint {
+    "Breaking news! STEVEN is in the area,
+     and he's aiming straight for the
+     FACTORY floor."
+}
+
 text sText_StevenPreBattleCall {
     "Report from the floor:
      STEVEN has entered the arena.
@@ -69,6 +75,12 @@ text sText_DebugBossName_Steven {
 // --------------------
 // Wally
 // --------------------
+text sText_WallyScoutHint {
+    "Fresh report! WALLY's back,
+     and he says he's ready to show
+     everyone how far he's come."
+}
+
 text sText_WallyPreBattleCall {
     "A call just came in from WALLY.
      He's waiting in the arena for you."
@@ -144,6 +156,12 @@ text sText_DebugBossName_Wally {
 // Roxanne
 // --------------------
 
+text sText_RoxanneScoutHint {
+    "Update from the city desk!
+     ROXANNE has been spotted nearby,
+     sharpening her strategy."
+}
+
 text sText_RoxannePreBattleCall {
     "Report from the floor:
      ROXANNE has entered the arena.
@@ -199,6 +217,11 @@ text sText_DebugBossName_Roxanne {
 // --------------------
 // Brawly
 // --------------------
+
+text sText_BrawlyScoutHint {
+    "Heads up! BRAWLY's in town,
+     itching for a match."
+}
 
 text sText_BrawlyPreBattleCall {
     "BRAWLY is ready to throw down!"
@@ -257,6 +280,11 @@ text sText_DebugBossName_Brawly {
 // --------------------
 // Wattson
 // --------------------
+
+text sText_WattsonScoutHint {
+    "Flash bulletin! WATTSON's been seen
+     tinkering with a new battle plan."
+}
 
 text sText_WattsonPreBattleCall {
     "WATTSON is ready to face you!"
@@ -323,6 +351,11 @@ text sText_DebugBossName_Wattson {
 // Flannery
 // --------------------
 
+text sText_FlanneryScoutHint {
+    "Hot scoop! FLANNERY's in the area,
+     and she's fired up for a challenge."
+}
+
 text sText_FlanneryPreBattleCall {
     "FLANNERY has a score to settle with you!"
 }
@@ -384,6 +417,12 @@ text sText_DebugBossName_Flannery {
 // --------------------
 // Norman
 // --------------------
+text sText_NormanScoutHint {
+    "Big headline! Your old man NORMAN
+     was just spotted arriving at the
+     FACTORY."
+}
+
 text sText_NormanPreBattleCall {
     "Your father NORMAN is in the building
      and looking fired up!"
@@ -445,6 +484,11 @@ text sText_DebugBossName_Norman {
 // Winona
 // --------------------
 
+text sText_WinonaScoutHint {
+    "Breaking news! WINONA's been spotted
+     circling the FACTORY, watching closely."
+}
+
 text sText_WinonaPreBattleCall {
     "WINONA has a score to settle with you!"
 }
@@ -501,6 +545,11 @@ text sText_DebugBossName_Winona {
 // --------------------
 // Red
 // --------------------
+text sText_RedScoutHint {
+    "Rumour has it that a truly legendary
+     TRAINER has come to the FACTORY."
+}
+
 text sText_RedPreBattleCall {
     "A truly LEGENDARY TRAINER awaits!"
 }

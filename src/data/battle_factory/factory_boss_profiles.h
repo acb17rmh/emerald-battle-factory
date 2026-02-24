@@ -7,99 +7,108 @@
 #include "../../../include/constants/songs.h"
 #include "../../../include/constants/species.h"
 // Steven
-extern const u8 sText_DebugBossName_Steven[],
-        sText_StevenPreBattleCall[],
-        sText_StevenBattleIntro[],
-        sText_StevenBattleRoomPrompt[],
-        sText_StevenLastMonSlide[],
-        sText_StevenLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Steven[],
+	    sText_StevenScoutHint[],
+	    sText_StevenPreBattleCall[],
+	    sText_StevenBattleIntro[],
+	    sText_StevenBattleRoomPrompt[],
+	    sText_StevenLastMonSlide[],
+	    sText_StevenLastMonLowHpSlide[],
         sText_StevenBattlePostWin[],
         sText_StevenBattleSpeechPlayerWon[],
         sText_StevenBattleSpeechPlayerLost[];
 
 // Wally
-extern const u8 sText_DebugBossName_Wally[],
-        sText_WallyPreBattleCall[],
-        sText_WallyBattleIntro[],
-        sText_WallyBattleRoomPrompt[],
-        sText_WallyLastMonSlide[],
-        sText_WallyLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Wally[],
+	    sText_WallyScoutHint[],
+	    sText_WallyPreBattleCall[],
+	    sText_WallyBattleIntro[],
+	    sText_WallyBattleRoomPrompt[],
+	    sText_WallyLastMonSlide[],
+	    sText_WallyLastMonLowHpSlide[],
         sText_WallyBattlePostWin[],
         sText_WallyBattleSpeechPlayerWon[],
         sText_WallyBattleSpeechPlayerLost[];
 
 // Roxanne
-extern const u8 sText_DebugBossName_Roxanne[],
-        sText_RoxannePreBattleCall[],
-        sText_RoxanneBattleIntro[],
-        sText_RoxanneBattleRoomPrompt[],
-        sText_RoxanneLastMonSlide[],
-        sText_RoxanneLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Roxanne[],
+	    sText_RoxanneScoutHint[],
+	    sText_RoxannePreBattleCall[],
+	    sText_RoxanneBattleIntro[],
+	    sText_RoxanneBattleRoomPrompt[],
+	    sText_RoxanneLastMonSlide[],
+	    sText_RoxanneLastMonLowHpSlide[],
         sText_RoxanneBattlePostWin[],
         sText_RoxanneBattleSpeechPlayerWon[],
         sText_RoxanneBattleSpeechPlayerLost[];
 
 // Brawly
-extern const u8 sText_DebugBossName_Brawly[],
-        sText_BrawlyPreBattleCall[],
-        sText_BrawlyBattleIntro[],
-        sText_BrawlyBattleRoomPrompt[],
-        sText_BrawlyLastMonSlide[],
-        sText_BrawlyLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Brawly[],
+	    sText_BrawlyScoutHint[],
+	    sText_BrawlyPreBattleCall[],
+	    sText_BrawlyBattleIntro[],
+	    sText_BrawlyBattleRoomPrompt[],
+	    sText_BrawlyLastMonSlide[],
+	    sText_BrawlyLastMonLowHpSlide[],
         sText_BrawlyBattlePostWin[],
         sText_BrawlyBattleSpeechPlayerWon[],
         sText_BrawlyBattleSpeechPlayerLost[];
 
 // Wattson
-extern const u8 sText_DebugBossName_Wattson[],
-        sText_WattsonPreBattleCall[],
-        sText_WattsonBattleIntro[],
-        sText_WattsonBattleRoomPrompt[],
-        sText_WattsonLastMonSlide[],
-        sText_WattsonLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Wattson[],
+	    sText_WattsonScoutHint[],
+	    sText_WattsonPreBattleCall[],
+	    sText_WattsonBattleIntro[],
+	    sText_WattsonBattleRoomPrompt[],
+	    sText_WattsonLastMonSlide[],
+	    sText_WattsonLastMonLowHpSlide[],
         sText_WattsonBattlePostWin[],
         sText_WattsonBattleSpeechPlayerWon[],
         sText_WattsonBattleSpeechPlayerLost[];
 
 // Flannery
-extern const u8 sText_DebugBossName_Flannery[],
-        sText_FlanneryPreBattleCall[],
-        sText_FlanneryBattleIntro[],
-        sText_FlanneryBattleRoomPrompt[],
-        sText_FlanneryLastMonSlide[],
-        sText_FlanneryLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Flannery[],
+	    sText_FlanneryScoutHint[],
+	    sText_FlanneryPreBattleCall[],
+	    sText_FlanneryBattleIntro[],
+	    sText_FlanneryBattleRoomPrompt[],
+	    sText_FlanneryLastMonSlide[],
+	    sText_FlanneryLastMonLowHpSlide[],
         sText_FlanneryBattlePostWin[],
         sText_FlanneryBattleSpeechPlayerWon[],
         sText_FlanneryBattleSpeechPlayerLost[];
 
 // Norman
-extern const u8 sText_DebugBossName_Norman[],
-        sText_NormanPreBattleCall[],
-        sText_NormanBattleIntro[],
-        sText_NormanBattleRoomPrompt[],
-        sText_NormanLastMonSlide[],
-        sText_NormanLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Norman[],
+	    sText_NormanScoutHint[],
+	    sText_NormanPreBattleCall[],
+	    sText_NormanBattleIntro[],
+	    sText_NormanBattleRoomPrompt[],
+	    sText_NormanLastMonSlide[],
+	    sText_NormanLastMonLowHpSlide[],
         sText_NormanBattlePostWin[],
         sText_NormanBattleSpeechPlayerWon[],
         sText_NormanBattleSpeechPlayerLost[];
 
 // Winona
-extern const u8 sText_DebugBossName_Winona[],
-        sText_WinonaPreBattleCall[],
-        sText_WinonaBattleIntro[],
-        sText_WinonaBattleRoomPrompt[],
-        sText_WinonaLastMonSlide[],
-        sText_WinonaLastMonLowHpSlide[],
+	extern const u8 sText_DebugBossName_Winona[],
+	    sText_WinonaScoutHint[],
+	    sText_WinonaPreBattleCall[],
+	    sText_WinonaBattleIntro[],
+	    sText_WinonaBattleRoomPrompt[],
+	    sText_WinonaLastMonSlide[],
+	    sText_WinonaLastMonLowHpSlide[],
         sText_WinonaBattlePostWin[],
         sText_WinonaBattleSpeechPlayerWon[],
         sText_WinonaBattleSpeechPlayerLost[];
 
 // Red
-extern const u8 sText_DebugBossName_Red[],
-        sText_RedPreBattleCall[],
-        sText_RedBattleIntro[],
-        sText_RedBattleRoomPrompt[],
-        sText_RedLastMonSlide[],
+	extern const u8 sText_DebugBossName_Red[],
+	        sText_RedScoutHint[],
+	        sText_RedPreBattleCall[],
+	        sText_RedBattleIntro[],
+	        sText_RedBattleRoomPrompt[],
+	        sText_RedLastMonSlide[],
         sText_RedLastMonLowHpSlide[],
         sText_RedBattlePostWin[],
         sText_RedBattleSpeechPlayerWon[],
@@ -116,6 +125,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Steven,
+        .scoutHintText = sText_StevenScoutHint,
         .preBattleCallText = sText_StevenPreBattleCall,
         .battleIntroText = sText_StevenBattleIntro,
         .battleRoomPromptText = sText_StevenBattleRoomPrompt,
@@ -137,6 +147,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Wally,
+        .scoutHintText = sText_WallyScoutHint,
         .preBattleCallText = sText_WallyPreBattleCall,
         .battleIntroText = sText_WallyBattleIntro,
         .battleRoomPromptText = sText_WallyBattleRoomPrompt,
@@ -158,6 +169,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Roxanne,
+        .scoutHintText = sText_RoxanneScoutHint,
         .preBattleCallText = sText_RoxannePreBattleCall,
         .battleIntroText = sText_RoxanneBattleIntro,
         .battleRoomPromptText = sText_RoxanneBattleRoomPrompt,
@@ -179,6 +191,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Brawly,
+        .scoutHintText = sText_BrawlyScoutHint,
         .preBattleCallText = sText_BrawlyPreBattleCall,
         .battleIntroText = sText_BrawlyBattleIntro,
         .battleRoomPromptText = sText_BrawlyBattleRoomPrompt,
@@ -200,6 +213,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Wattson,
+        .scoutHintText = sText_WattsonScoutHint,
         .preBattleCallText = sText_WattsonPreBattleCall,
         .battleIntroText = sText_WattsonBattleIntro,
         .battleRoomPromptText = sText_WattsonBattleRoomPrompt,
@@ -221,6 +235,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Flannery,
+        .scoutHintText = sText_FlanneryScoutHint,
         .preBattleCallText = sText_FlanneryPreBattleCall,
         .battleIntroText = sText_FlanneryBattleIntro,
         .battleRoomPromptText = sText_FlanneryBattleRoomPrompt,
@@ -242,6 +257,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Norman,
+        .scoutHintText = sText_NormanScoutHint,
         .preBattleCallText = sText_NormanPreBattleCall,
         .battleIntroText = sText_NormanBattleIntro,
         .battleRoomPromptText = sText_NormanBattleRoomPrompt,
@@ -263,6 +279,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Winona,
+        .scoutHintText = sText_WinonaScoutHint,
         .preBattleCallText = sText_WinonaPreBattleCall,
         .battleIntroText = sText_WinonaBattleIntro,
         .battleRoomPromptText = sText_WinonaBattleRoomPrompt,
@@ -284,6 +301,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
     {
         .enabled = TRUE,
         .debugMenuName = sText_DebugBossName_Red,
+        .scoutHintText = sText_RedScoutHint,
         .preBattleCallText = sText_RedPreBattleCall,
         .battleIntroText = sText_RedBattleIntro,
         .battleRoomPromptText = sText_RedBattleRoomPrompt,

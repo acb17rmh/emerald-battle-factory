@@ -8,6 +8,7 @@ struct FactoryBossProfile
 {
     bool8 enabled;
     const u8 *debugMenuName;
+    const u8 *scoutHintText;
     const u8 *preBattleCallText;
     const u8 *battleIntroText;
     const u8 *battleRoomPromptText;
