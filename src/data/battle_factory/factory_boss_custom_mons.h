@@ -133,6 +133,58 @@ static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_BrawlyMedicham 
     },
 };
 
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_WattsonManectric =
+{
+    .species = SPECIES_MANECTRIC,
+    .nature = NATURE_TIMID,
+    .heldItem = ITEM_MANECTITE,
+    .abilityNum = 2, // Lightning Rod
+    .hasTeraType = TRUE,
+    .teraType = TYPE_FLYING,
+    .evs =
+    {
+        [STAT_HP] = 0,
+        [STAT_ATK] = 0,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 252,
+        [STAT_SPDEF] = 4,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_VOLT_SWITCH,
+        MOVE_THUNDERBOLT,
+        MOVE_OVERHEAT,
+        MOVE_SNARL
+    },
+};
+
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_FlanneryBlaziken =
+{
+    .species = SPECIES_BLAZIKEN,
+    .nature = NATURE_ADAMANT,
+    .heldItem = ITEM_BLAZIKENITE,
+    .abilityNum = 2, // Speed Boost
+    .hasTeraType = TRUE,
+    .teraType = TYPE_FIGHTING,
+    .evs =
+    {
+        [STAT_HP] = 4,
+        [STAT_ATK] = 252,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 0,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_PROTECT,
+        MOVE_CLOSE_COMBAT,
+        MOVE_SWORDS_DANCE,
+        MOVE_FLARE_BLITZ
+    },
+};
+
 static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_NormanKangaskhan =
 {
     .species = SPECIES_KANGASKHAN,
@@ -167,6 +219,8 @@ static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FAC
     [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
     [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
+    [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
+    [FACTORY_BOSS_FLANNERY] = &sFactoryCustomMonBuild_FlanneryBlaziken,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };
 
@@ -178,5 +232,7 @@ static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTOR
     [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
     [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
+    [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
+    [FACTORY_BOSS_FLANNERY] = &sFactoryCustomMonBuild_FlanneryBlaziken,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
 };
