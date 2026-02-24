@@ -237,6 +237,31 @@ static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_WinonaAltaria =
     },
 };
 
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_JuanSwampert =
+{
+    .species = SPECIES_SWAMPERT,
+    .nature = NATURE_JOLLY,
+    .heldItem = ITEM_SWAMPERTITE,
+    .abilityNum = 1,
+    .hasTeraType = TRUE,
+    .teraType = TYPE_GRASS,
+    .evs =
+    {
+        [STAT_HP] = 4,
+        [STAT_ATK] = 252,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 0,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_WATERFALL,
+        MOVE_EARTHQUAKE,
+        MOVE_FLIP_TURN,
+        MOVE_ICE_PUNCH
+    },
+};
 
 static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FACTORY_BOSS_COUNT] =
 {
@@ -248,8 +273,9 @@ static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FAC
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
     [FACTORY_BOSS_FLANNERY] = &sFactoryCustomMonBuild_FlanneryBlaziken,
-    [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
+    [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
+    [FACTORY_BOSS_JUAN] = &sFactoryCustomMonBuild_JuanSwampert,
 };
 
 static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTORY_BOSS_COUNT] =
@@ -262,6 +288,7 @@ static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTOR
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
     [FACTORY_BOSS_FLANNERY] = &sFactoryCustomMonBuild_FlanneryBlaziken,
-    [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
+    [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
+    [FACTORY_BOSS_JUAN] = &sFactoryCustomMonBuild_JuanSwampert,
 };

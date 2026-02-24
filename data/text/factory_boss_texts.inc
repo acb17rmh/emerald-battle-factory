@@ -465,43 +465,103 @@ sText_DebugBossName_Winona::
 # 541 "data/text/factory_boss_texts.pory"
 	.string "Winona$"
 
+sText_JuanScoutHint::
+# 549 "data/text/factory_boss_texts.pory"
+	.string "Breaking news!\p"
+	.string "Graceful JUAN was spotted with\n"
+	.string "his SWAMPERT near the FACTORY.$"
+
+sText_JuanPreBattleCall::
+# 556 "data/text/factory_boss_texts.pory"
+	.string "JUAN has a score to settle with you!$"
+
+sText_JuanBattleRoomPrompt::
+# 560 "data/text/factory_boss_texts.pory"
+	.string "Greetings, {PLAYER}!$"
+
+sText_JuanBattleIntro::
+# 564 "data/text/factory_boss_texts.pory"
+	.string "I am glad we have another chance to\n"
+	.string "battle. My eye for appraising talent\l"
+	.string "wasn't mistaken.\p"
+	.string "Though little did I know, you would\n"
+	.string "defeat dear WALLACE, and become the\l"
+	.string "POKéMON LEAGUE CHAMPION.\p"
+	.string "And now you've become the HEAD of\n"
+	.string "this place.\p"
+	.string "Who better than me to dethrone you?\p"
+	.string "Let us begin our match, shall we?\n"
+	.string "Please, you shall bear witness to our\l"
+	.string "artistry.\p"
+	.string "A grand illusion of water sculpted\n"
+	.string "by POKéMON and myself!$"
+
+sText_JuanLastMonSlide::
+# 586 "data/text/factory_boss_texts.pory"
+	.string "Dance with me, {B_OPPONENT_MON1_NAME}!$"
+
+sText_JuanLastMonLowHpSlide::
+# 590 "data/text/factory_boss_texts.pory"
+	.string "We can still turn this around,\n"
+	.string "can't we, {B_OPPONENT_MON1_NAME}$"
+
+sText_JuanBattlePostWin::
+# 595 "data/text/factory_boss_texts.pory"
+	.string "Ahahaha, excellent!\n"
+	.string "Very well, you are the winner.$"
+
+sText_JuanBattleSpeechPlayerWon::
+# 600 "data/text/factory_boss_texts.pory"
+	.string "From you, I sense the brilliant\n"
+	.string "shine of skill that will overcome anything!$"
+
+sText_JuanBattleSpeechPlayerLost::
+# 605 "data/text/factory_boss_texts.pory"
+	.string "Ahahaha, you lost!\p"
+	.string "You could still learn a\n"
+	.string "thing or two from me!$"
+
+sText_DebugBossName_Juan::
+# 612 "data/text/factory_boss_texts.pory"
+	.string "Juan$"
+
 sText_RedScoutHint::
-# 548 "data/text/factory_boss_texts.pory"
+# 619 "data/text/factory_boss_texts.pory"
 	.string "Rumour has it that a truly legendary\n"
 	.string "TRAINER has come to the FACTORY.$"
 
 sText_RedPreBattleCall::
-# 553 "data/text/factory_boss_texts.pory"
+# 624 "data/text/factory_boss_texts.pory"
 	.string "A truly LEGENDARY TRAINER awaits!$"
 
 sText_RedBattleRoomPrompt::
-# 557 "data/text/factory_boss_texts.pory"
+# 628 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleIntro::
-# 561 "data/text/factory_boss_texts.pory"
+# 632 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedLastMonSlide::
-# 565 "data/text/factory_boss_texts.pory"
+# 636 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedLastMonLowHpSlide::
-# 569 "data/text/factory_boss_texts.pory"
+# 640 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattlePostWin::
-# 573 "data/text/factory_boss_texts.pory"
+# 644 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleSpeechPlayerWon::
-# 577 "data/text/factory_boss_texts.pory"
+# 648 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_RedBattleSpeechPlayerLost::
-# 581 "data/text/factory_boss_texts.pory"
+# 652 "data/text/factory_boss_texts.pory"
 	.string "...$"
 
 sText_DebugBossName_Red::
-# 585 "data/text/factory_boss_texts.pory"
+# 656 "data/text/factory_boss_texts.pory"
 	.string "Red$"

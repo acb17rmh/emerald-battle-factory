@@ -2,16 +2,20 @@
 #define GUARD_CONSTANTS_FACTORY_BOSS_H
 
 #define FACTORY_BOSS_NONE     0
-#define FACTORY_BOSS_STEVEN   1
-#define FACTORY_BOSS_WALLY    2
-#define FACTORY_BOSS_NORMAN   3
-#define FACTORY_BOSS_RED      4
-#define FACTORY_BOSS_ROXANNE  5
-#define FACTORY_BOSS_BRAWLY   6
-#define FACTORY_BOSS_WATTSON  7
-#define FACTORY_BOSS_FLANNERY 8
-#define FACTORY_BOSS_WINONA   9
-#define FACTORY_BOSS_COUNT    10
+// Hoenn Gym Leaders (no Tate & Liza yet, since they are a double battle only)
+#define FACTORY_BOSS_ROXANNE  1
+#define FACTORY_BOSS_BRAWLY   2
+#define FACTORY_BOSS_WATTSON  3
+#define FACTORY_BOSS_FLANNERY 4
+#define FACTORY_BOSS_NORMAN   5
+#define FACTORY_BOSS_WINONA   6
+#define FACTORY_BOSS_JUAN     7
+
+// Other bosses
+#define FACTORY_BOSS_STEVEN   8
+#define FACTORY_BOSS_WALLY    9
+#define FACTORY_BOSS_RED      10
+#define FACTORY_BOSS_COUNT    11
 
 enum FactoryBossAcePolicy
 {

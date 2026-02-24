@@ -543,6 +543,77 @@ text sText_DebugBossName_Winona {
 }
 
 // --------------------
+// Juan
+// --------------------
+
+text sText_JuanScoutHint {
+    "Breaking news!
+
+     Graceful JUAN was spotted with
+     his SWAMPERT near the FACTORY."
+}
+
+text sText_JuanPreBattleCall {
+    "JUAN has a score to settle with you!"
+}
+
+text sText_JuanBattleRoomPrompt {
+    "Greetings, {PLAYER}!"
+}
+
+text sText_JuanBattleIntro {
+     "I am glad we have another chance to
+     battle. My eye for appraising talent
+     wasn't mistaken.
+
+     Though little did I know, you would
+     defeat dear WALLACE, and become the
+     POK\eMON LEAGUE CHAMPION.
+
+     And now you've become the HEAD of
+     this place.
+
+     Who better than me to dethrone you?
+
+     Let us begin our match, shall we?
+     Please, you shall bear witness to our
+     artistry.
+
+     A grand illusion of water sculpted
+     by POK\eMON and myself!"
+}
+
+text sText_JuanLastMonSlide {
+    "Dance with me, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_JuanLastMonLowHpSlide {
+    "We can still turn this around,
+     can't we, {B_OPPONENT_MON1_NAME}"
+}
+
+text sText_JuanBattlePostWin {
+    "Ahahaha, excellent!
+     Very well, you are the winner."
+}
+
+text sText_JuanBattleSpeechPlayerWon {
+    "From you, I sense the brilliant
+     shine of skill that will overcome anything!"
+}
+
+text sText_JuanBattleSpeechPlayerLost {
+    "Ahahaha, you lost!
+
+     You could still learn a
+     thing or two from me!"
+}
+
+text sText_DebugBossName_Juan {
+    "Juan"
+}
+
+// --------------------
 // Red
 // --------------------
 text sText_RedScoutHint {
