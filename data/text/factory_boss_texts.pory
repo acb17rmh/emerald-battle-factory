@@ -1,0 +1,658 @@
+// Factory boss dialogue.
+// Keep the boss section order aligned with:
+// src/data/battle_factory/factory_boss_profiles.h
+//
+// Current order: Roxanne, Brawly, Wattson, Flannery, Norman, Winona, Juan, Wally, Steven, Red.
+
+// --------------------
+// Roxanne
+// --------------------
+
+text sText_RoxanneScoutHint {
+    "Update from the city desk!
+     ROXANNE has been spotted nearby,
+     sharpening her strategy."
+}
+
+text sText_RoxannePreBattleCall {
+    "Report from the floor:
+     ROXANNE has entered the arena.
+
+     She says she's ready whenever you are."
+}
+
+text sText_RoxanneBattleRoomPrompt {
+    "It's been a while, {PLAYER}!"
+}
+
+text sText_RoxanneBattleIntro {
+     "I'm so glad to see you again.
+      I'm sure we've had many, many
+      battles since we've last met.
+
+      I remember first facing you
+      not long after you started your
+      journey! Now look at
+      everything you've achieved.
+
+      Would you kindly demonstrate how
+      you battle, and with what POK\eMON?"
+}
+
+text sText_RoxanneLastMonSlide {
+    "Oh wow!
+     I didn't know you were quite this strong."
+}
+
+text sText_RoxanneLastMonLowHpSlide {
+    "This has been a great lesson!"
+}
+
+text sText_RoxanneBattlePostWin {
+    "I still have much to learn when it
+    comes to battling POK\eMON. But
+    that only makes me love battling more!"
+}
+
+text sText_RoxanneBattleSpeechPlayerWon {
+    "I learned lots from our battle."
+}
+
+text sText_RoxanneBattleSpeechPlayerLost {
+    "Back to class with you!"
+}
+
+text sText_DebugBossName_Roxanne {
+    "Roxanne"
+}
+
+// --------------------
+// Brawly
+// --------------------
+
+text sText_BrawlyScoutHint {
+    "Heads up! BRAWLY's in town,
+     itching for a match."
+}
+
+text sText_BrawlyPreBattleCall {
+    "BRAWLY is ready to throw down!"
+}
+
+text sText_BrawlyBattleRoomPrompt {
+    "Hey, hurry up!"
+}
+
+text sText_BrawlyBattleIntro {
+     "I haven't seen you in a while,
+      {PLAYER}!
+
+      Where have I been? Well,
+      I've travelled the seas of HOENN
+      and beyond.
+
+      I've learned first hand how
+      you need to be tough to survive
+      in this world.
+
+      Do you have what it takes to
+      beat me this time?
+
+      I'd like to see you try!"
+}
+
+text sText_BrawlyLastMonSlide {
+    "Come on, {B_OPPONENT_MON1_NAME}!
+     Lend me your strength."
+}
+
+text sText_BrawlyLastMonLowHpSlide {
+    "I've been raised in the rough seas!
+     I can handle anything."
+}
+
+text sText_BrawlyBattlePostWin {
+    "Argh...
+     I thought I had you beat there!"
+}
+
+text sText_BrawlyBattleSpeechPlayerWon {
+    "Whoa! You made a much bigger
+    splash than I expected"
+}
+
+text sText_BrawlyBattleSpeechPlayerLost {
+    "Wow! I swamped you again!"
+}
+
+text sText_DebugBossName_Brawly {
+    "Brawly"
+}
+
+// --------------------
+// Wattson
+// --------------------
+
+text sText_WattsonScoutHint {
+    "Flash bulletin! WATTSON's been seen
+     tinkering with a new battle plan."
+}
+
+text sText_WattsonPreBattleCall {
+    "WATTSON is ready to face you!"
+}
+
+text sText_WattsonBattleRoomPrompt {
+    "Hello there!"
+}
+
+text sText_WattsonBattleIntro {
+     "I haven't seen you in a while,
+      {PLAYER}!
+
+      I never forget a face. I remember
+      when you came to the gym in MAUVILLE,
+      before it became the CITY that it
+      is today.
+
+      I achieved my dreams building that CITY.
+      In that time, you became the
+      POK\eMON LEAGUE CHAMPION.
+
+      I knew you were a special TRAINER
+      after our first battle.
+
+      And now you've gone and defeated
+      the FACTORY HEAD!
+
+      Ah, I'm old now, but I can still fight.
+
+      Give me one last electrifying battle!"
+}
+
+text sText_WattsonLastMonSlide {
+    "I will electrify you with my POK\emon!
+     Go, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_WattsonLastMonLowHpSlide {
+    "I've been around the block long
+     enough to know I can still win this one."
+}
+
+text sText_WattsonBattlePostWin {
+    "Oof...
+     Our batteries ran dry."
+}
+
+text sText_WattsonBattleSpeechPlayerWon {
+    "You sure gave me shock!
+     Well played."
+}
+
+text sText_WattsonBattleSpeechPlayerLost {
+    "Wahahahaha!
+     Well, I won!"
+}
+
+text sText_DebugBossName_Wattson {
+    "Wattson"
+}
+
+// --------------------
+// Flannery
+// --------------------
+
+text sText_FlanneryScoutHint {
+    "Hot scoop! FLANNERY's in the area,
+     and she's fired up for a challenge."
+}
+
+text sText_FlanneryPreBattleCall {
+    "FLANNERY has a score to settle with you!"
+}
+
+text sText_FlanneryBattleRoomPrompt {
+    "Hey there, {PLAYER}!"
+}
+
+text sText_FlanneryBattleIntro {
+     "It's so good to see how far
+      you've come.
+
+      I've also been on a journey of my
+      own.
+
+      I remember how immature I was when
+      you first came to the LAVARIDGE GYM.
+
+      I had only recently become a GYM LEADER,
+      so I was still getting used to my
+      duties.
+
+      Since then, I've become much more
+      grown up. I discovered who I really
+      am, instead of trying to be someone
+      that I'm not.
+
+      Now let's have some fun!
+      Get ready to feel the heat!"
+}
+
+text sText_FlanneryLastMonSlide {
+    "Burn em' alive, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_FlanneryLastMonLowHpSlide {
+    "Oh no! Hang in there, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_FlanneryBattlePostWin {
+    "Losing a battle isn't going to deflate me.
+     I love POK\eMON, and I love to battle!"
+}
+
+text sText_FlanneryBattleSpeechPlayerWon {
+    "You did it again!
+     One day I'll be as strong as you!"
+}
+
+text sText_FlanneryBattleSpeechPlayerLost {
+    "I won!
+     I guess my well-honed moves worked."
+}
+
+text sText_DebugBossName_Flannery {
+    "Flannery"
+}
+
+// --------------------
+// Norman
+// --------------------
+text sText_NormanScoutHint {
+    "Big headline! Your old man NORMAN
+     was just spotted arriving at the
+     FACTORY."
+}
+
+text sText_NormanPreBattleCall {
+    "Your father NORMAN is in the building
+     and looking fired up!"
+}
+
+text sText_NormanBattleRoomPrompt {
+    "{PLAYER}!
+
+    Let's get moving!
+    I've been waiting for you!"
+}
+
+text sText_NormanBattleIntro {
+    "Didn't expect to see me here, huh?
+
+     Your old man still has a few tricks
+     up his sleeve.
+
+     You've always been a strong battler,
+     but do you have the know-how
+     to assemble a winning team?
+
+     Show me everything you've learned!
+     Don't hold back!"
+}
+
+text sText_NormanLastMonSlide {
+    "You're no match for my {B_OPPONENT_MON1_NAME}!
+     Let's end this!"
+}
+
+text sText_NormanLastMonLowHpSlide {
+    "Well battled.
+     Now finish it!"
+}
+
+text sText_NormanBattlePostWin {
+    "Hah! That's the spirit.
+
+     You fought with nerve and discipline.
+     That's what wins tough matches."
+}
+
+text sText_NormanBattleSpeechPlayerWon {
+    "Wow! What a battle!
+     Well fought."
+}
+
+text sText_NormanBattleSpeechPlayerLost {
+    "I'm disappointed, {PLAYER}...
+     You could do far better!"
+}
+
+text sText_DebugBossName_Norman {
+    "Norman"
+}
+
+// --------------------
+// Winona
+// --------------------
+
+text sText_WinonaScoutHint {
+    "Breaking news! WINONA's been spotted
+     circling the FACTORY, watching closely."
+}
+
+text sText_WinonaPreBattleCall {
+    "WINONA has a score to settle with you!"
+}
+
+text sText_WinonaBattleRoomPrompt {
+    "Hey there, {PLAYER}!"
+}
+
+text sText_WinonaBattleIntro {
+     "You will remember me as the one and
+     only WINONA, LEADER of the FORTREE GYM!
+
+     I have become one with bird POK\eMON
+     and have soared the skies!
+
+     However grueling the battle, we will
+     triumph with grace.
+
+     A little birdie told me you became the
+     CHAMPION, but in all my years, never
+     have I seen a TRAINER command POK\eMON
+     with more grace than I.
+
+     Now witness the elegant choreography
+     of BIRD POK\eMON and I!"
+}
+
+text sText_WinonaLastMonSlide {
+    "Dance with me, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_WinonaLastMonLowHpSlide {
+    "Keep going, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_WinonaBattlePostWin {
+    "Though I fell to you, my wings
+     will never break!"
+}
+
+text sText_WinonaBattleSpeechPlayerWon {
+    "You truly are a graceful TRAINER.
+     Not just a TRAINER, but a CHAMPION!"
+}
+
+text sText_WinonaBattleSpeechPlayerLost {
+    "Our elegant dance is finished."
+}
+
+text sText_DebugBossName_Winona {
+    "Winona"
+}
+
+// --------------------
+// Juan
+// --------------------
+
+text sText_JuanScoutHint {
+    "Breaking news!
+
+     Graceful JUAN was spotted with
+     his SWAMPERT near the FACTORY."
+}
+
+text sText_JuanPreBattleCall {
+    "JUAN has a score to settle with you!"
+}
+
+text sText_JuanBattleRoomPrompt {
+    "Greetings, {PLAYER}!"
+}
+
+text sText_JuanBattleIntro {
+     "I am glad we have another chance to
+     battle. My eye for appraising talent
+     wasn't mistaken.
+
+     Though little did I know, you would
+     defeat dear WALLACE, and become the
+     POK\eMON LEAGUE CHAMPION.
+
+     And now you've become the HEAD of
+     this place.
+
+     Who better than me to dethrone you?
+
+     Let us begin our match, shall we?
+     Please, you shall bear witness to our
+     artistry.
+
+     A grand illusion of water sculpted
+     by POK\eMON and myself!"
+}
+
+text sText_JuanLastMonSlide {
+    "Dance with me, {B_OPPONENT_MON1_NAME}!"
+}
+
+text sText_JuanLastMonLowHpSlide {
+    "We can still turn this around,
+     can't we, {B_OPPONENT_MON1_NAME}"
+}
+
+text sText_JuanBattlePostWin {
+    "Ahahaha, excellent!
+     Very well, you are the winner."
+}
+
+text sText_JuanBattleSpeechPlayerWon {
+    "From you, I sense the brilliant
+     shine of skill that will overcome anything!"
+}
+
+text sText_JuanBattleSpeechPlayerLost {
+    "Ahahaha, you lost!
+
+     You could still learn a
+     thing or two from me!"
+}
+
+text sText_DebugBossName_Juan {
+    "Juan"
+}
+
+// --------------------
+// Wally
+// --------------------
+text sText_WallyScoutHint {
+    "Fresh report! WALLY's back,
+     and he says he's ready to show
+     everyone how far he's come."
+}
+
+text sText_WallyPreBattleCall {
+    "A call just came in from WALLY.
+     He's waiting in the arena for you."
+}
+
+text sText_WallyBattleRoomPrompt {
+    "I'm ready... Please come forward!"
+}
+
+text sText_WallyBattleIntro {
+    "It's me, WALLY.
+
+    Did you ever believe, back when
+    we first met, that I would become
+    an elite TRAINER?
+
+    No one did.
+    No one apart from me.
+
+    I've been training hard so I can
+    stand here with confidence.
+
+    I've been on such a journey with my
+    POK\eMON. I've traveled through many
+    regions and battled my way through
+    all of them.
+
+    Don't you see?
+    Fate has led me here, to battle
+    against you, {PLAYER}.
+
+    This time, I really think things
+    will go my way.
+
+    I haven't come all this way just
+    to lose again!
+     
+    Let's do this!"
+}
+
+text sText_WallyLastMonSlide {
+    "Here we go, {B_OPPONENT_MON1_NAME}!
+     Don't let me down now!"
+}
+
+text sText_WallyLastMonLowHpSlide {
+    "Not again...
+     I won't lose again!"
+}
+
+text sText_WallyBattlePostWin {
+    "That was amazing...
+
+    Battling you teaches me something
+    new every time."
+}
+
+text sText_WallyBattleSpeechPlayerWon {
+    "I gave it everything... But like
+     always, you were one step ahead."
+}
+
+text sText_WallyBattleSpeechPlayerLost {
+    "I did it...!
+     I've gotten so much stronger!"
+}
+
+text sText_DebugBossName_Wally {
+    "Wally"
+}
+
+// --------------------
+// Steven
+// --------------------
+
+text sText_StevenScoutHint {
+    "Breaking news! STEVEN is in the area,
+     and he's aiming straight for the
+     FACTORY floor."
+}
+
+text sText_StevenPreBattleCall {
+    "Report from the floor:
+     STEVEN has entered the arena.
+
+     He says he's ready whenever you are."
+}
+
+text sText_StevenBattleRoomPrompt {
+    "So we meet again, {PLAYER}!"
+}
+
+text sText_StevenBattleIntro {
+    "I heard you've done very well in here.
+     I would expect nothing less from you!
+
+     Battles fought with borrowed teams
+     demand even sharper judgment.
+
+     But I don't believe you've had
+     a real test in the FACTORY yet.
+
+     I am on a different level to the
+     TRAINERS in this place,
+     without exception.
+     
+     Let's see how you deal with a real test!
+     I'm ready. Now face me, {PLAYER}!"
+}
+
+text sText_StevenLastMonSlide {
+    "You're forcing me into a corner,
+    but I'm just getting started!"
+}
+
+text sText_StevenLastMonLowHpSlide {
+    "Outstanding... Here we go!
+     I'll answer with everything I've got!"
+}
+
+text sText_StevenBattlePostWin {
+    "Excellent battle.
+     You stayed calm, read the battlefield,
+     and made every turn count."
+}
+
+text sText_StevenBattleSpeechPlayerWon {
+    "{PLAYER}!
+    You are truly a remarkable TRAINER..."
+}
+
+text sText_StevenBattleSpeechPlayerLost {
+    "Ha! Not on my watch!"
+}
+
+text sText_DebugBossName_Steven {
+    "Steven"
+}
+
+// --------------------
+// Red
+// --------------------
+text sText_RedScoutHint {
+    "Rumour has it that a truly legendary
+     TRAINER has come to the FACTORY."
+}
+
+text sText_RedPreBattleCall {
+    "A truly LEGENDARY TRAINER awaits!"
+}
+
+text sText_RedBattleRoomPrompt {
+    "..."
+}
+
+text sText_RedBattleIntro {
+    "..."
+}
+
+text sText_RedLastMonSlide {
+    "..."
+}
+
+text sText_RedLastMonLowHpSlide {
+    "..."
+}
+
+text sText_RedBattlePostWin {
+    "..."
+}
+
+text sText_RedBattleSpeechPlayerWon {
+    "..."
+}
+
+text sText_RedBattleSpeechPlayerLost {
+    "..."
+}
+
+text sText_DebugBossName_Red {
+    "Red"
+}

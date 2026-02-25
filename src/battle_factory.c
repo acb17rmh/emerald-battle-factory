@@ -70,8 +70,6 @@ void DebugAction_TriggerNolandBattle(void);
 void DebugAction_TriggerStevenBattle(void);
 void DebugAction_TriggerFactoryBoss(u8 bossId);
 const u8 *GetFacilityClassTypeWhitelist(u8 facilityClass, u8 *count);
-static void GetOpponentFrontierClass();
-void GetOpponentFrontierClassInternal(u8 trainerId);
 static void SelectRewardMonFromParty();
 static void GiveRewardMonFromParty();
 static void CB2_GiveReward();
@@ -175,21 +173,25 @@ static void (*const sBattleFactoryFunctions[])(void) =
     [BATTLE_FACTORY_FUNC_GET_OPPONENT_MON_TYPE]  = GetOpponentMostCommonMonType,
     [BATTLE_FACTORY_FUNC_GET_OPPONENT_STYLE]     = GetOpponentBattleStyle,
     [BATTLE_FACTORY_FUNC_RESET_HELD_ITEMS]       = RestorePlayerPartyHeldItems,
-    [BATTLE_FACTORY_FUNC_GET_OPPONENT_CLASS]     = GetOpponentFrontierClass,
     [BATTLE_FACTORY_FUNC_SELECT_REWARD_MON]      = SelectRewardMonFromParty,
     [BATTLE_FACTORY_FUNC_GIVE_REWARD_MON]        = GiveRewardMonFromParty
 };
 
-static const u32 sWinStreakFlags[][2] =
+static const u32 sWinStreakFlags[FRONTIER_MODE_COUNT][2] =
 {
-    {STREAK_FACTORY_SINGLES_50, STREAK_FACTORY_SINGLES_OPEN},
-    {STREAK_FACTORY_DOUBLES_50, STREAK_FACTORY_DOUBLES_OPEN},
+    [FRONTIER_MODE_SINGLES] = {STREAK_FACTORY_SINGLES_50, STREAK_FACTORY_SINGLES_OPEN},
+    [FRONTIER_MODE_DOUBLES] = {STREAK_FACTORY_DOUBLES_50, STREAK_FACTORY_DOUBLES_OPEN},
+    // Not supported for the Factory, but keep safe values for any debug/incorrect state.
+    [FRONTIER_MODE_MULTIS] = {0, 0},
+    [FRONTIER_MODE_LINK_MULTIS] = {0, 0},
 };
 
-static const u32 sWinStreakMasks[][2] =
+static const u32 sWinStreakMasks[FRONTIER_MODE_COUNT][2] =
 {
-    {~(STREAK_FACTORY_SINGLES_50), ~(STREAK_FACTORY_SINGLES_OPEN)},
-    {~(STREAK_FACTORY_DOUBLES_50), ~(STREAK_FACTORY_DOUBLES_OPEN)},
+    [FRONTIER_MODE_SINGLES] = {~(STREAK_FACTORY_SINGLES_50), ~(STREAK_FACTORY_SINGLES_OPEN)},
+    [FRONTIER_MODE_DOUBLES] = {~(STREAK_FACTORY_DOUBLES_50), ~(STREAK_FACTORY_DOUBLES_OPEN)},
+    [FRONTIER_MODE_MULTIS] = {~0u, ~0u},
+    [FRONTIER_MODE_LINK_MULTIS] = {~0u, ~0u},
 };
 
 static const u8 sFixedIVTable[][2] =
@@ -369,7 +371,6 @@ static void GenerateOpponentMons(void)
     u16 species[FRONTIER_PARTY_SIZE];
     u16 heldItems[FRONTIER_PARTY_SIZE];
     u16 trainerId = 0;
-    u8 facilityClass = 0;
     u32 lvlMode = gSaveBlock2Ptr->frontier.lvlMode;
     u32 battleMode = VarGet(VAR_FRONTIER_BATTLE_MODE);
     u32 winStreak = gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode];
@@ -391,39 +392,10 @@ static void GenerateOpponentMons(void)
     if (gSaveBlock2Ptr->frontier.curChallengeBattleNum < FRONTIER_STAGES_PER_CHALLENGE - 1)
         gSaveBlock2Ptr->frontier.trainerIds[gSaveBlock2Ptr->frontier.curChallengeBattleNum] = trainerId;
 
-    facilityClass = gFacilityTrainers[trainerId].facilityClass;
-
     i = 0;
-
-    u8 typeCount;
-    const u8 *whitelist = GetFacilityClassTypeWhitelist(facilityClass, &typeCount);
-    //
-    // DebugPrintf("📋 Facility class: %d", facilityClass);
-    // DebugPrintf("📦 Allowed types:");
-    //
-    // for (int t = 0; t < typeCount; t++)
-    // {
-    //     DebugPrintf(" - Type %d", whitelist[t]);
-    // }
     while (i != FRONTIER_PARTY_SIZE)
     {
         u16 monId = GetFactoryMonId(lvlMode, challengeNum, FALSE);
-
-        u16 speciesId = gFacilityTrainerMons[monId].species;
-        u8 type1 = gSpeciesInfo[speciesId].types[0];
-        u8 type2 = gSpeciesInfo[speciesId].types[1];
-
-
-        bool8 matchesType = FALSE;
-        for (int t = 0; t < typeCount; t++) {
-            if (whitelist[t] == type1 || whitelist[t] == type2) {
-                matchesType = TRUE;
-                break;
-            }
-        }
-
-        if (!matchesType)
-            continue; // Doesn't fit this trainer's theme
 
         // Unown (FRONTIER_MON_UNOWN) is forbidden on opponent Factory teams.
         if (gFacilityTrainerMons[monId].species == SPECIES_UNOWN)
@@ -1094,167 +1066,6 @@ void MarkAllFactorySpeciesAsSeen(void)
             GetSetPokedexFlag(nationalDexNo, FLAG_SET_SEEN);
     }
 }
-
-const u8 *GetFacilityClassTypeWhitelist(u8 facilityClass, u8 *count)
-{
-    switch (facilityClass)
-    {
-        case FACILITY_CLASS_YOUNGSTER:
-            *count = FACILITY_CLASS_YOUNGSTER_TYPE_COUNT;
-            return gSpeciesListFacilityClassYoungsterType;
-        case FACILITY_CLASS_LASS:
-            *count = FACILITY_CLASS_LASS_TYPE_COUNT;
-            return gSpeciesListFacilityClassLassType;
-        case FACILITY_CLASS_SCHOOL_KID_M:
-        case FACILITY_CLASS_SCHOOL_KID_F:
-            *count = FACILITY_CLASS_SCHOOL_KID_TYPE_COUNT;
-            return gSpeciesListFacilityClassSchoolKidType;
-        case FACILITY_CLASS_RICH_BOY:
-            *count = FACILITY_CLASS_RICH_BOY_TYPE_COUNT;
-            return gSpeciesListFacilityClassRichBoyType;
-        case FACILITY_CLASS_LADY:
-            *count = FACILITY_CLASS_LADY_TYPE_COUNT;
-            return gSpeciesListFacilityClassLadyType;
-        case FACILITY_CLASS_CAMPER:
-            *count = FACILITY_CLASS_CAMPER_TYPE_COUNT;
-            return gSpeciesListFacilityClassCamperType;
-        case FACILITY_CLASS_PICNICKER:
-            *count = FACILITY_CLASS_PICNICKER_TYPE_COUNT;
-            return gSpeciesListFacilityClassPicnickerType;
-        case FACILITY_CLASS_TUBER_M:
-            *count = FACILITY_CLASS_TUBER_M_TYPE_COUNT;
-            return gSpeciesListFacilityClassTuberMType;
-        case FACILITY_CLASS_TUBER_F:
-            *count = FACILITY_CLASS_TUBER_F_TYPE_COUNT;
-            return gSpeciesListFacilityClassTuberFType;
-        case FACILITY_CLASS_SWIMMER_M:
-            *count = FACILITY_CLASS_SWIMMER_M_TYPE_COUNT;
-            return gSpeciesListFacilityClassSwimmerMType;
-        case FACILITY_CLASS_SWIMMER_F:
-            *count = FACILITY_CLASS_SWIMMER_F_TYPE_COUNT;
-            return gSpeciesListFacilityClassSwimmerFType;
-        case FACILITY_CLASS_POKEFAN_M:
-            *count = FACILITY_CLASS_POKEFAN_TYPE_COUNT;
-            return gSpeciesListFacilityClassPokefanType;
-        case FACILITY_CLASS_POKEFAN_F:
-            *count = FACILITY_CLASS_POKEFAN_TYPE_COUNT;
-            return gSpeciesListFacilityClassPokefanType;
-        case FACILITY_CLASS_PARASOL_LADY:
-            *count = FACILITY_CLASS_PARASOL_LADY_TYPE_COUNT;
-            return gSpeciesListFacilityClassParasolLadyType;
-        case FACILITY_CLASS_GUITARIST:
-            *count = FACILITY_CLASS_GUITARIST_TYPE_COUNT;
-            return gSpeciesListFacilityClassGuitaristType;
-        case FACILITY_CLASS_BIRD_KEEPER:
-            *count = FACILITY_CLASS_BIRD_KEEPER_TYPE_COUNT;
-            return gSpeciesListFacilityClassBirdKeeperType;
-        case FACILITY_CLASS_HIKER:
-            *count = FACILITY_CLASS_HIKER_TYPE_COUNT;
-            return gSpeciesListFacilityClassHikerType;
-        case FACILITY_CLASS_KINDLER:
-            *count = FACILITY_CLASS_KINDLER_TYPE_COUNT;
-            return gSpeciesListFacilityClassKindlerType;
-        case FACILITY_CLASS_CYCLING_TRIATHLETE_M:
-        case FACILITY_CLASS_CYCLING_TRIATHLETE_F:
-        case FACILITY_CLASS_RUNNING_TRIATHLETE_M:
-        case FACILITY_CLASS_RUNNING_TRIATHLETE_F:
-        case FACILITY_CLASS_SWIMMING_TRIATHLETE_M:
-        case FACILITY_CLASS_SWIMMING_TRIATHLETE_F:
-            *count = FACILITY_CLASS_TRIATHLETE_TYPE_COUNT;
-            return gSpeciesListFacilityClassTriathleteType;
-        case FACILITY_CLASS_BLACK_BELT:
-            *count = FACILITY_CLASS_BLACK_BELT_TYPE_COUNT;
-            return gSpeciesListFacilityClassBlackBeltType;
-        case FACILITY_CLASS_EXPERT_M:
-        case FACILITY_CLASS_EXPERT_F:
-            *count = FACILITY_CLASS_EXPERT_TYPE_COUNT;
-            return gSpeciesListFacilityClassExpertType;
-        case FACILITY_CLASS_PSYCHIC_M:
-        case FACILITY_CLASS_PSYCHIC_F:
-            *count = FACILITY_CLASS_PSYCHIC_TYPE_COUNT;
-            return gSpeciesListFacilityClassPsychicType;
-        case FACILITY_CLASS_POKEMANIAC:
-            *count = FACILITY_CLASS_POKEMANIAC_TYPE_COUNT;
-            return gSpeciesListFacilityClassPokemaniacType;
-        case FACILITY_CLASS_GENTLEMAN:
-            *count = FACILITY_CLASS_GENTLEMAN_TYPE_COUNT;
-            return gSpeciesListFacilityClassGentlemanType;
-        case FACILITY_CLASS_COLLECTOR:
-            *count = FACILITY_CLASS_COLLECTOR_TYPE_COUNT;
-            return gSpeciesListFacilityClassCollectorType;
-        case FACILITY_CLASS_BEAUTY:
-            *count = FACILITY_CLASS_BEAUTY_TYPE_COUNT;
-            return gSpeciesListFacilityClassBeautyType;
-        case FACILITY_CLASS_COOLTRAINER_M:
-        case FACILITY_CLASS_COOLTRAINER_F:
-            *count = FACILITY_CLASS_COOLTRAINER_TYPE_COUNT;
-            return gSpeciesListFacilityClassCooltrainerType;
-        case FACILITY_CLASS_PKMN_RANGER_M:
-        case FACILITY_CLASS_PKMN_RANGER_F:
-            *count = FACILITY_CLASS_PKMN_RANGER_TYPE_COUNT;
-            return gSpeciesListFacilityClassPkmnRangerType;
-        case FACILITY_CLASS_PKMN_BREEDER_M:
-        case FACILITY_CLASS_PKMN_BREEDER_F:
-            *count = FACILITY_CLASS_PKMN_BREEDER_TYPE_COUNT;
-            return gSpeciesListFacilityClassPkmnBreederType;
-        case FACILITY_CLASS_FISHERMAN:
-            *count = FACILITY_CLASS_FISHERMAN_TYPE_COUNT;
-            return gSpeciesListFacilityClassFishermanType;
-        case FACILITY_CLASS_RUIN_MANIAC:
-            *count = FACILITY_CLASS_RUIN_MANIAC_TYPE_COUNT;
-            return gSpeciesListFacilityClassRuinManiacType;
-        case FACILITY_CLASS_SAILOR:
-            *count = FACILITY_CLASS_SAILOR_TYPE_COUNT;
-            return gSpeciesListFacilityClassSailorType;
-        case FACILITY_CLASS_DRAGON_TAMER:
-            *count = FACILITY_CLASS_DRAGON_TAMER_TYPE_COUNT;
-            return gSpeciesListFacilityClassDragonTamerType;
-        case FACILITY_CLASS_BUG_CATCHER:
-            *count = FACILITY_CLASS_BUG_CATCHER_TYPE_COUNT;
-            return gSpeciesListFacilityClassBugCatcherType;
-        case FACILITY_CLASS_BUG_MANIAC:
-            *count = FACILITY_CLASS_BUG_MANIAC_TYPE_COUNT;
-            return gSpeciesListFacilityClassBugManiacType;
-        case FACILITY_CLASS_AROMA_LADY:
-            *count = FACILITY_CLASS_AROMA_LADY_TYPE_COUNT;
-            return gSpeciesListFacilityClassAromaLadyType;
-        case FACILITY_CLASS_HEX_MANIAC:
-            *count = FACILITY_CLASS_HEX_MANIAC_TYPE_COUNT;
-            return gSpeciesListFacilityClassHexManiacType;
-        case FACILITY_CLASS_NINJA_BOY:
-            *count = FACILITY_CLASS_NINJA_BOY_TYPE_COUNT;
-            return gSpeciesListFacilityClassNinjaBoyType;
-        case FACILITY_CLASS_BATTLE_GIRL:
-            *count = FACILITY_CLASS_BATTLE_GIRL_TYPE_COUNT;
-            return gSpeciesListFacilityClassBattleGirlType;
-        default:
-            DebugPrintf("facilityClass not found: %d", facilityClass);
-            *count = FACILITY_CLASS_DEFAULT_TYPE_COUNT;
-            return gSpeciesListFacilityClassDefaultType;
-    }
-}
-
-static void GetOpponentFrontierClass(void)
-{
-    DebugPrintf("🚩 CallBattleFactoryFunction: index = %d", gSpecialVar_0x8008);
-    GetOpponentFrontierClassInternal(TRAINER_BATTLE_PARAM.opponentA);
-}
-
-void GetOpponentFrontierClassInternal(u8 trainerId)
-{
-    u8 facilityClass = gFacilityTrainers[trainerId].facilityClass;
-    DebugPrintf("Trainer ID: %d, Facility Class: %d", trainerId, gFacilityTrainers[trainerId].facilityClass);
-
-    if (trainerId < FRONTIER_TRAINERS_COUNT)
-    {
-        gSpecialVar_Result = facilityClass;
-    }
-    else {
-        gSpecialVar_Result = 0;
-    }
-
-}
-
 static void SelectRewardMonFromParty(void)
 {
     u8 resolvedBossId = FACTORY_BOSS_NONE;

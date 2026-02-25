@@ -112,9 +112,15 @@ static u8 GetNextFactoryTier1BossId(void);
 
 static const u8 sFactoryBossTier1Rotation[] =
 {
-    FACTORY_BOSS_STEVEN,
-    FACTORY_BOSS_WALLY,
+    FACTORY_BOSS_ROXANNE,
+    FACTORY_BOSS_BRAWLY,
+    FACTORY_BOSS_WATTSON,
+    FACTORY_BOSS_FLANNERY,
     FACTORY_BOSS_NORMAN,
+    FACTORY_BOSS_WINONA,
+    FACTORY_BOSS_JUAN,
+    FACTORY_BOSS_WALLY,
+    FACTORY_BOSS_STEVEN,
     FACTORY_BOSS_RED,
 };
 
@@ -2668,6 +2674,18 @@ u8 GetFrontierBrainTrainerPicIndex(void)
     return GetTrainerPicFromId(GetActiveFrontierBrainTrainerId(facility));
 }
 
+u16 GetCurrentFrontierBrainTrainerId(void)
+{
+    s32 facility;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
+        facility = GetRecordedBattleFrontierFacility();
+    else
+        facility = VarGet(VAR_FRONTIER_FACILITY);
+
+    return GetActiveFrontierBrainTrainerId(facility);
+}
+
 enum TrainerClassID GetFrontierBrainTrainerClass(void)
 {
     s32 facility;
@@ -2890,51 +2908,98 @@ static const u8 sText_DefaultFactoryBossCall[] = COMPOUND_STRING(
     "Come to the battle room right now.");
 static const u8 sText_DefaultFactoryBossIntro[] = COMPOUND_STRING(
     "A powerful TRAINER appears before you!");
-static const u8 sText_DefaultFactoryBossStart[] = COMPOUND_STRING(
-    "Let's battle!");
+static const u8 sText_DefaultFactoryBossBattleRoomPrompt[] = COMPOUND_STRING(
+    "Hey, hey!\n"
+    "Get a move on!");
 static const u8 sText_DefaultFactoryBossPostWin[] = COMPOUND_STRING(
     "Well done.\n"
     "That was an excellent battle.");
 static const u8 sText_FactoryBossName_None[] = COMPOUND_STRING("No one");
+static const u8 sText_DefaultFactoryBossScoutHint[] = COMPOUND_STRING(
+    "Breaking news!\p"
+    "{STR_VAR_1} is the next major challenger\n"
+    "headed to the BATTLE FACTORY.");
+
+static void CopyFrontierTextSafe(u8 *dst, u32 dstSize, const u8 *src)
+{
+    u32 i = 0;
+
+    if (dstSize == 0)
+        return;
+
+    // Copy bytes until EOS or the destination is full, always guaranteeing an EOS.
+    while (i + 1 < dstSize)
+    {
+        u8 c = *src++;
+        dst[i++] = c;
+        if (c == EOS)
+            return;
+
+        // CHAR_EXTRA_SYMBOL consumes an additional parameter byte.
+        if (c == CHAR_EXTRA_SYMBOL)
+        {
+            if (i + 1 >= dstSize)
+                break;
+            dst[i++] = *src++;
+        }
+    }
+
+    dst[dstSize - 1] = EOS;
+}
 
 void BufferFactoryBossCallText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+    const u8 *src;
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->preBattleCallText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->preBattleCallText);
+    if (bossProfile != NULL && bossProfile->preBattleCallText != NULL)
+        src = bossProfile->preBattleCallText;
     else
-        StringCopy(gStringVar4, sText_DefaultFactoryBossCall);
+        src = sText_DefaultFactoryBossCall;
+
+    // gStringVar4 is later used as the *source* to ShowFieldMessage via `msgbox gStringVar4`.
+    // ShowFieldMessage always expands placeholders into gStringVar4, which is unsafe if the
+    // source is also gStringVar4 and contains placeholders (src/dest overlap). Pre-expand here.
+    StringExpandPlaceholders(gStringVar4, src);
 }
 
 void BufferFactoryBossBattleIntroText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+    const u8 *src;
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleIntroText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->battleIntroText);
+    if (bossProfile != NULL && bossProfile->battleIntroText != NULL)
+        src = bossProfile->battleIntroText;
     else
-        StringCopy(gStringVar4, sText_DefaultFactoryBossIntro);
+        src = sText_DefaultFactoryBossIntro;
+
+    StringExpandPlaceholders(gStringVar4, src);
 }
 
-void BufferFactoryBossBattleStartText(void)
+void BufferFactoryBossBattleRoomPromptText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+    const u8 *src;
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleStartText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->battleStartText);
+    if (bossProfile != NULL && bossProfile->battleRoomPromptText != NULL)
+        src = bossProfile->battleRoomPromptText;
     else
-        StringCopy(gStringVar4, sText_DefaultFactoryBossStart);
+        src = sText_DefaultFactoryBossBattleRoomPrompt;
+
+    StringExpandPlaceholders(gStringVar4, src);
 }
 
 void BufferFactoryBossBattlePostWinText(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+    const u8 *src;
 
-    if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battlePostWinText != NULL)
-        StringCopy(gStringVar4, bossProfile->text->battlePostWinText);
+    if (bossProfile != NULL && bossProfile->battlePostWinText != NULL)
+        src = bossProfile->battlePostWinText;
     else
-        StringCopy(gStringVar4, sText_DefaultFactoryBossPostWin);
+        src = sText_DefaultFactoryBossPostWin;
+
+    StringExpandPlaceholders(gStringVar4, src);
 }
 
 void PlayFactoryBossPreBattleRoomBgmIfSet(void)
@@ -2967,9 +3032,29 @@ void BufferFactoryBossNameFromVar(void)
     const struct FactoryBossProfile *bossProfile = GetFactoryBossProfile(VarGet(VAR_0x8004));
 
     if (bossProfile != NULL && bossProfile->debugMenuName != NULL)
-        StringCopy(gStringVar1, bossProfile->debugMenuName);
+        CopyFrontierTextSafe(gStringVar1, sizeof(gStringVar1), bossProfile->debugMenuName);
     else
-        StringCopy(gStringVar1, sText_FactoryBossName_None);
+        CopyFrontierTextSafe(gStringVar1, sizeof(gStringVar1), sText_FactoryBossName_None);
+}
+
+void BufferFactoryBossScoutHintTextFromVar(void)
+{
+    const struct FactoryBossProfile *bossProfile = GetFactoryBossProfile(VarGet(VAR_0x8004));
+    const u8 *hintSrc;
+
+    // Ensure {STR_VAR_1} is always usable by hint text (or the default fallback).
+    if (bossProfile != NULL && bossProfile->debugMenuName != NULL)
+        CopyFrontierTextSafe(gStringVar1, sizeof(gStringVar1), bossProfile->debugMenuName);
+    else
+        CopyFrontierTextSafe(gStringVar1, sizeof(gStringVar1), sText_FactoryBossName_None);
+
+    if (bossProfile != NULL && bossProfile->scoutHintText != NULL)
+        hintSrc = bossProfile->scoutHintText;
+    else
+        hintSrc = sText_DefaultFactoryBossScoutHint;
+
+    // Pre-expand {STR_VAR_1} etc into gStringVar4 for the same reason as above.
+    StringExpandPlaceholders(gStringVar4, hintSrc);
 }
 
 // Called for intro speech as well despite the fact that its handled in the map scripts files instead
@@ -2996,16 +3081,16 @@ static void CopyFrontierBrainText(bool8 playerWonText)
     switch (playerWonText)
     {
     case FALSE:
-        if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleSpeechPlayerLost != NULL)
-            StringCopy(gStringVar4, bossProfile->text->battleSpeechPlayerLost);
+        if (bossProfile != NULL && bossProfile->battleSpeechPlayerLost != NULL)
+            StringExpandPlaceholders(gStringVar4, bossProfile->battleSpeechPlayerLost);
         else
-            StringCopy(gStringVar4, gFrontierBrainInfo[facility].wonTexts[symbol]);
+            StringExpandPlaceholders(gStringVar4, gFrontierBrainInfo[facility].wonTexts[symbol]);
         break;
     case TRUE:
-        if (bossProfile != NULL && bossProfile->text != NULL && bossProfile->text->battleSpeechPlayerWon != NULL)
-            StringCopy(gStringVar4, bossProfile->text->battleSpeechPlayerWon);
+        if (bossProfile != NULL && bossProfile->battleSpeechPlayerWon != NULL)
+            StringExpandPlaceholders(gStringVar4, bossProfile->battleSpeechPlayerWon);
         else
-            StringCopy(gStringVar4, gFrontierBrainInfo[facility].lostTexts[symbol]);
+            StringExpandPlaceholders(gStringVar4, gFrontierBrainInfo[facility].lostTexts[symbol]);
         break;
     }
 }

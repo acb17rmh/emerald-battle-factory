@@ -21,6 +21,8 @@
 #include "trig.h"
 #include "util.h"
 #include "battle_setup.h"
+#include "frontier_util.h"
+#include "factory_boss.h"
 #include "data.h"
 #include "constants/field_effects.h"
 #include "constants/songs.h"
@@ -258,6 +260,8 @@ static bool8 Mugshot_InitFadeWhiteToBlack(struct Task *);
 static bool8 Mugshot_FadeToBlack(struct Task *);
 static bool8 Mugshot_End(struct Task *);
 static void Mugshots_CreateTrainerPics(struct Task *);
+static u16 GetMugshotTrainerId(void);
+static u8 GetMugshotColor(void);
 static void VBlankCB_Mugshots(void);
 static void VBlankCB_MugshotsFadeOut(void);
 static void HBlankCB_Mugshots(void);
@@ -2280,7 +2284,7 @@ static bool8 Mugshot_SetGfx(struct Task *task)
     s16 i, j;
     u16 *tilemap, *tileset;
     const u16 *mugshotsMap = sMugshotsTilemap;
-    enum MugshotColor mugshotColor = GetTrainerMugshotColorFromId(TRAINER_BATTLE_PARAM.opponentA);
+    enum MugshotColor mugshotColor = GetMugshotColor();
 
     GetBg0TilesDst(&tilemap, &tileset);
     CpuSet(sEliteFour_Tileset, tileset, 0xF0);
@@ -2585,7 +2589,7 @@ static void Mugshots_CreateTrainerPics(struct Task *task)
 {
     struct Sprite *opponentSpriteA, *opponentSpriteB=0, *playerSprite, *partnerSprite=0;
 
-    u8 trainerAPicId = GetTrainerPicFromId(TRAINER_BATTLE_PARAM.opponentA);
+    u8 trainerAPicId = GetTrainerPicFromId(GetMugshotTrainerId());
     u8 trainerBPicId = GetTrainerPicFromId(TRAINER_BATTLE_PARAM.opponentB);
     u8 partnerPicId = GetTrainerPicFromId(gPartnerTrainerId);
     s16 opponentARotationScales = 0;
@@ -2661,6 +2665,27 @@ static void Mugshots_CreateTrainerPics(struct Task *task)
 
     SetOamMatrixRotationScaling(opponentSpriteA->oam.matrixNum, opponentARotationScales, opponentARotationScales, 0);
     SetOamMatrixRotationScaling(playerSprite->oam.matrixNum, -512, 512, 0);
+}
+
+static u16 GetMugshotTrainerId(void)
+{
+    u16 trainerId;
+
+    if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FRONTIER_BRAIN)
+        trainerId = SanitizeTrainerId(GetCurrentFrontierBrainTrainerId());
+    else
+        trainerId = SanitizeTrainerId(TRAINER_BATTLE_PARAM.opponentA);
+
+    return trainerId;
+}
+
+static u8 GetMugshotColor(void)
+{
+    if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_FRONTIER_BRAIN
+     && IsActiveFactoryBossUsingMugshot())
+        return GetActiveFactoryBossMugshotColour();
+
+    return GetTrainerMugshotColorFromId(GetMugshotTrainerId());
 }
 
 static void SpriteCB_MugshotTrainerPic(struct Sprite *sprite)

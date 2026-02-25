@@ -569,11 +569,12 @@ gSpecials::
 	def_special ObjectEventInteractionPickApricornTree
 	def_special BufferFactoryBossCallText
 	def_special BufferFactoryBossBattleIntroText
-	def_special BufferFactoryBossBattleStartText
+	def_special BufferFactoryBossBattleRoomPromptText
 	def_special BufferFactoryBossBattlePostWinText
 	def_special PlayFactoryBossPreBattleRoomBgmIfSet
 	def_special GetNextFactoryBossIdForScout
 	def_special BufferFactoryBossNameFromVar
+	def_special BufferFactoryBossScoutHintTextFromVar
 	def_special PrepareFactoryBossForNextBattle
 	def_special RecordFactoryBossDefeat
 	def_special SetPendingFactoryRewardBossFromActive

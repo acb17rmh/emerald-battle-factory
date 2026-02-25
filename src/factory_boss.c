@@ -1,6 +1,9 @@
 #include "global.h"
 #include "event_data.h"
 #include "factory_boss.h"
+#include "../include/factory_boss.h"
+
+#include "battle_transition.h"
 #include "constants/flags.h"
 #include "constants/vars.h"
 #include "constants/battle_frontier.h"
@@ -9,12 +12,7 @@
 #include "constants/songs.h"
 #include "constants/species.h"
 
-#include "data/battle_factory/factory_boss_text_sets.h"
-
-static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] =
-{
 #include "data/battle_factory/factory_boss_profiles.h"
-};
 
 static bool8 IsFactoryBossModeSupported(void)
 {
@@ -52,4 +50,21 @@ const struct FactoryBossProfile *GetFactoryBossProfile(u8 bossId)
 const struct FactoryBossProfile *GetActiveFactoryBossProfile(void)
 {
     return GetFactoryBossProfile(GetActiveFactoryBossId());
+}
+
+bool8 IsActiveFactoryBossUsingMugshot(void)
+{
+    const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+
+    return (bossProfile != NULL && bossProfile->mugshotColour != MUGSHOT_COLOR_NONE);
+}
+
+u8 GetActiveFactoryBossMugshotColour(void)
+{
+    const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+
+    if (bossProfile == NULL)
+        return MUGSHOT_COLOR_NONE;
+
+    return bossProfile->mugshotColour;
 }

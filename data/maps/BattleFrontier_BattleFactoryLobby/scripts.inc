@@ -2929,21 +2929,10 @@ BattleFrontier_BattleFactoryLobby_EventScript_BossScout::
 # 1316 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setorcopyvar VAR_0x8004, VAR_RESULT
 # 1317 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	switch VAR_0x8004
+	special BufferFactoryBossScoutHintTextFromVar
 # 1318 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 1, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_9
-# 1320 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 2, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_10
-# 1322 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 4, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_11
-# 1324 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	case 3, BattleFrontier_BattleFactoryLobby_EventScript_BossScout_12
-# 1327 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	special BufferFactoryBossNameFromVar
-# 1328 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_6
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7:
-# 1330 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+	msgbox gStringVar4
+# 1319 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	release
 	end
 
@@ -2961,139 +2950,119 @@ BattleFrontier_BattleFactoryLobby_EventScript_BossScout_5:
 	release
 	end
 
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_9:
-# 1319 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_2
-	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
-
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_10:
-# 1321 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_3
-	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
-
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_11:
-# 1323 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_4
-	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
-
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_12:
-# 1325 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_5
-	goto BattleFrontier_BattleFactoryLobby_EventScript_BossScout_7
-
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossReporter::
-# 1335 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1324 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_EventScript_BossReporter_Text_0
 	end
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter::
-# 1340 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1329 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_2
 BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_1:
-# 1343 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1332 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_5
 BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_4:
-# 1346 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1335 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	clearflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
-# 1347 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1336 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	addobject LOCALID_FACTORY_BOSS_REPORTER
 	end
 
 BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_2:
-# 1341 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1330 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide
 	goto BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_5:
-# 1344 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1333 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide
 	goto BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_4
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_PrepareScoutReporter_Hide::
-# 1352 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1341 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
 	end
 
 
 BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview::
-# 1357 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1346 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_set FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_2
 BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_1:
-# 1360 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1349 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto_if_set FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN, BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_5
 BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_4:
-# 1363 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1352 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	lockall
-# 1364 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1353 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
-# 1365 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1354 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	applymovement LOCALID_FACTORY_BOSS_REPORTER, Common_Movement_ExclamationMark
-# 1366 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1355 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitmovement 0
-# 1367 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1356 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	playbgm MUS_ENCOUNTER_INTERVIEWER, FALSE
-# 1368 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1357 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer
-# 1369 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1358 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitmovement 0
-# 1370 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1359 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	turnobject LOCALID_PLAYER, DIR_EAST
-# 1371 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1360 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro
-# 1372 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1361 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera
-# 1373 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1362 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera
-# 1374 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1363 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitmovement 0
-# 1375 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1364 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	turnobject LOCALID_FACTORY_BOSS_REPORTER, DIR_SOUTH
-# 1376 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1365 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	turnobject LOCALID_PLAYER, DIR_NORTH
-# 1377 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1366 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne
-# 1378 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1367 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo
-# 1379 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1368 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree
-# 1380 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1369 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor
-# 1381 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1370 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut
-# 1382 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1371 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	fadedefaultbgm
-# 1383 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1372 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp
-# 1384 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1373 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	closemessage
-# 1385 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1374 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	applymovement LOCALID_FACTORY_BOSS_REPORTER, BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview
-# 1386 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1375 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	waitmovement 0
-# 1387 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1376 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	turnobject LOCALID_FACTORY_BOSS_SCOUT, DIR_SOUTH
-# 1388 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1377 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	msgbox BattleFrontier_BattleFactoryLobby_Text_CameramanHint
-# 1389 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1378 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	closemessage
-# 1390 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1379 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER
-# 1391 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1380 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	setflag FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN
-# 1392 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1381 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	releaseall
 	return
 
 BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_2:
-# 1358 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1347 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
 	goto BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_1
 
 BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_5:
-# 1361 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1350 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	goto BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done
 	goto BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_4
 
@@ -3102,67 +3071,67 @@ BattleFrontier_BattleFactoryLobby_EventScript_MaybeScoutInterview_Done::
 	end
 
 
-# 1431 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1420 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 BattleFrontier_BattleFactoryLobby_Movement_ReporterApproachPlayer:
-# 1432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1421 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_left
-# 1432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1421 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_left
 	step_end
 
-# 1435 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1424 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 BattleFrontier_BattleFactoryLobby_Movement_ReporterLeadToCamera:
-# 1436 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1425 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_down
-# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1426 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1426 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1427 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_up
 	step_end
 
-# 1441 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1430 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 BattleFrontier_BattleFactoryLobby_Movement_PlayerFollowReporterToCamera:
-# 1442 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1431 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_down
-# 1443 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1443 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1443 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1443 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1432 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1444 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1433 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	face_up
 	step_end
 
-# 1447 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1436 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 BattleFrontier_BattleFactoryLobby_Movement_ReporterExitAfterInterview:
-# 1448 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_down
-# 1448 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_down
-# 1448 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1437 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_down
-# 1449 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1449 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1449 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1449 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1449 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1449 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1438 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	walk_right
-# 1450 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1439 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	face_down
-# 1451 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1440 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	delay_8
-# 1452 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1441 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	set_invisible
 	step_end
 
@@ -3737,11 +3706,8 @@ BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse_Text_0:
 
 BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints_Text_0:
 # 1297 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "As a reward for your display of skill,\n"
-	.string "you will be able to select one of the\l"
-	.string "POKéMON in your party to keep forever,\l"
-	.string "for use in other BATTLE FRONTIER\l"
-	.string "facilities.$"
+	.string "As a reward for your display of skill, you will be able to select one of the POKéMON in your party to keep\n"
+	.string "forever, for use in other BATTLE FRONTIER facilities.$"
 
 BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_0:
 # 1306 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
@@ -3757,68 +3723,40 @@ BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_1:
 	.string "If new contenders show up, I'll let you\n"
 	.string "know right away.$"
 
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_2:
-# 1319 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Breaking news! STEVEN is in the area,\n"
-	.string "and he's aiming straight for the\l"
-	.string "FACTORY floor.$"
-
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_3:
-# 1321 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Fresh report! WALLY's back, and he says\n"
-	.string "he's ready to show everyone how far\l"
-	.string "he's come.$"
-
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_4:
-# 1323 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Big headline! Your old man NORMAN was\n"
-	.string "just spotted arriving at the FACTORY.$"
-
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_5:
-# 1325 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Rumour has it that a truly legendary\n"
-	.string "TRAINER has come to the FACTORY.$"
-
-BattleFrontier_BattleFactoryLobby_EventScript_BossScout_Text_6:
-# 1328 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
-	.string "Breaking news! {STR_VAR_1} is the\n"
-	.string "next major challenger headed to the\l"
-	.string "BATTLE FACTORY.$"
-
 BattleFrontier_BattleFactoryLobby_EventScript_BossReporter_Text_0:
-# 1335 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1324 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "I'm with the FACTORY EXCLUSIVE team.\p"
 	.string "Talk to my cameraman partner if you\n"
 	.string "want the latest on incoming top\l"
 	.string "TRAINERS.$"
 
 BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewIntro::
-# 1399 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1388 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "REPORTER: Thank you for joining us.\p"
 	.string "How does it feel to be the new HEAD of\n"
 	.string "the BATTLE FACTORY?$"
 
 BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionOne::
-# 1403 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1392 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "REPORTER: That battle had the whole\n"
 	.string "FRONTIER on its feet! How did you\l"
 	.string "maintain your composure?$"
 
 BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionTwo::
-# 1407 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1396 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "REPORTER: Do you have any advice for\n"
 	.string "our audience on picking a strong team\l"
 	.string "of rental POKeMON in the FACTORY?$"
 
 BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewQuestionThree::
-# 1411 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1400 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "REPORTER: Last question. Will you\n"
 	.string "defend your title?\p"
 	.string "There's bound to be huge interest in\n"
 	.string "the BATTLE FACTORY after this victory.$"
 
 BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor::
-# 1415 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1404 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "CAMERAMAN: Big scoop time! Powerful\n"
 	.string "TRAINERS from far and wide are already\l"
 	.string "en route to the FACTORY.\p"
@@ -3826,18 +3764,18 @@ BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewRumor::
 	.string "clock to cover all the action.$"
 
 BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewCameramanCut::
-# 1419 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1408 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "CAMERAMAN: And... cut! Great take!$"
 
 BattleFrontier_BattleFactoryLobby_Text_ScoutInterviewWrapUp::
-# 1423 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1412 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "REPORTER: Thanks for your time! I've\n"
 	.string "got to rush to another facility for the\l"
 	.string "next big interview.\p"
 	.string "See you on the FRONTIER feed!$"
 
 BattleFrontier_BattleFactoryLobby_Text_CameramanHint::
-# 1427 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
+# 1416 "data/maps/BattleFrontier_BattleFactoryLobby/scripts.pory"
 	.string "CAMERAMAN: Psst, champ! I'm out here all\n"
 	.string "day, so if you wanna know which\l"
 	.string "powerful TRAINERS I've seen nearby,\l"

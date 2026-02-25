@@ -1294,8 +1294,8 @@ script BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse {
 }
 
 script BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints {
-    msgbox(format("As a reward for your display of skill, you will be able to select one of the POKéMON in your party to keep
-                   forever, for use in other BATTLE FRONTIER facilities."))
+    msgbox("As a reward for your display of skill, you will be able to select one of the POKéMON in your party to keep
+            forever, for use in other BATTLE FRONTIER facilities.")
     factory_selectrewardmon
 }
 
@@ -1314,19 +1314,8 @@ script BattleFrontier_BattleFactoryLobby_EventScript_BossScout {
         end
     }
     setorcopyvar(VAR_0x8004, VAR_RESULT)
-    switch(var(VAR_0x8004)) {
-        case 1:
-            msgbox(format("Breaking news! STEVEN is in the area, and he's aiming straight for the FACTORY floor."))
-        case 2:
-            msgbox(format("Fresh report! WALLY's back, and he says he's ready to show everyone how far he's come."))
-        case 4:
-            msgbox(format("Big headline! Your old man NORMAN was just spotted arriving at the FACTORY."))
-        case 3:
-            msgbox(format("Rumour has it that a truly legendary TRAINER has come to the FACTORY."))
-        default:
-            special(BufferFactoryBossNameFromVar)
-            msgbox(format("Breaking news! {STR_VAR_1} is the next major challenger headed to the BATTLE FACTORY."))
-    }
+    special(BufferFactoryBossScoutHintTextFromVar)
+    msgbox(gStringVar4)
     release
     end
 }
