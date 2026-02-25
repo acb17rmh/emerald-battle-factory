@@ -177,16 +177,21 @@ static void (*const sBattleFactoryFunctions[])(void) =
     [BATTLE_FACTORY_FUNC_GIVE_REWARD_MON]        = GiveRewardMonFromParty
 };
 
-static const u32 sWinStreakFlags[][2] =
+static const u32 sWinStreakFlags[FRONTIER_MODE_COUNT][2] =
 {
-    {STREAK_FACTORY_SINGLES_50, STREAK_FACTORY_SINGLES_OPEN},
-    {STREAK_FACTORY_DOUBLES_50, STREAK_FACTORY_DOUBLES_OPEN},
+    [FRONTIER_MODE_SINGLES] = {STREAK_FACTORY_SINGLES_50, STREAK_FACTORY_SINGLES_OPEN},
+    [FRONTIER_MODE_DOUBLES] = {STREAK_FACTORY_DOUBLES_50, STREAK_FACTORY_DOUBLES_OPEN},
+    // Not supported for the Factory, but keep safe values for any debug/incorrect state.
+    [FRONTIER_MODE_MULTIS] = {0, 0},
+    [FRONTIER_MODE_LINK_MULTIS] = {0, 0},
 };
 
-static const u32 sWinStreakMasks[][2] =
+static const u32 sWinStreakMasks[FRONTIER_MODE_COUNT][2] =
 {
-    {~(STREAK_FACTORY_SINGLES_50), ~(STREAK_FACTORY_SINGLES_OPEN)},
-    {~(STREAK_FACTORY_DOUBLES_50), ~(STREAK_FACTORY_DOUBLES_OPEN)},
+    [FRONTIER_MODE_SINGLES] = {~(STREAK_FACTORY_SINGLES_50), ~(STREAK_FACTORY_SINGLES_OPEN)},
+    [FRONTIER_MODE_DOUBLES] = {~(STREAK_FACTORY_DOUBLES_50), ~(STREAK_FACTORY_DOUBLES_OPEN)},
+    [FRONTIER_MODE_MULTIS] = {~0u, ~0u},
+    [FRONTIER_MODE_LINK_MULTIS] = {~0u, ~0u},
 };
 
 static const u8 sFixedIVTable[][2] =
