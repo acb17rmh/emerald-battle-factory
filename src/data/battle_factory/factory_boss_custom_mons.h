@@ -266,9 +266,6 @@ static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_JuanSwampert =
 static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FACTORY_BOSS_COUNT] =
 {
     [FACTORY_BOSS_NONE] = NULL,
-    [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
-    [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
-    [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
     [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
@@ -276,14 +273,14 @@ static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FAC
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
     [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
     [FACTORY_BOSS_JUAN] = &sFactoryCustomMonBuild_JuanSwampert,
+    [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
+    [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
+    [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
 };
 
 static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTORY_BOSS_COUNT] =
 {
     [FACTORY_BOSS_NONE] = NULL,
-    [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
-    [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
-    [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
     [FACTORY_BOSS_ROXANNE] = &sFactoryCustomMonBuild_RoxanneDiancie,
     [FACTORY_BOSS_BRAWLY] = &sFactoryCustomMonBuild_BrawlyMedicham,
     [FACTORY_BOSS_WATTSON] = &sFactoryCustomMonBuild_WattsonManectric,
@@ -291,4 +288,7 @@ static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTOR
     [FACTORY_BOSS_NORMAN] = &sFactoryCustomMonBuild_NormanKangaskhan,
     [FACTORY_BOSS_WINONA] = &sFactoryCustomMonBuild_WinonaAltaria,
     [FACTORY_BOSS_JUAN] = &sFactoryCustomMonBuild_JuanSwampert,
+    [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
+    [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
+    [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
 };

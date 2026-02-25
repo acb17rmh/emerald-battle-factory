@@ -2,155 +2,7 @@
 // Keep the boss section order aligned with:
 // src/data/battle_factory/factory_boss_profiles.h
 //
-// Current order: Steven, Wally, Norman, Red.
-
-// --------------------
-// Steven
-// --------------------
-
-text sText_StevenScoutHint {
-    "Breaking news! STEVEN is in the area,
-     and he's aiming straight for the
-     FACTORY floor."
-}
-
-text sText_StevenPreBattleCall {
-    "Report from the floor:
-     STEVEN has entered the arena.
-
-     He says he's ready whenever you are."
-}
-
-text sText_StevenBattleRoomPrompt {
-    "So we meet again, {PLAYER}!"
-}
-
-text sText_StevenBattleIntro {
-    "I heard you've done very well in here.
-     I would expect nothing less from you!
-
-     Battles fought with borrowed teams
-     demand even sharper judgment.
-
-     But I don't believe you've had
-     a real test in the FACTORY yet.
-
-     I am on a different level to the
-     TRAINERS in this place,
-     without exception.
-     
-     Let's see how you deal with a real test!
-     I'm ready. Now face me, {PLAYER}!"
-}
-
-text sText_StevenLastMonSlide {
-    "You're forcing me into a corner,
-    but I'm just getting started!"
-}
-
-text sText_StevenLastMonLowHpSlide {
-    "Outstanding... Here we go!
-     I'll answer with everything I've got!"
-}
-
-text sText_StevenBattlePostWin {
-    "Excellent battle.
-     You stayed calm, read the battlefield,
-     and made every turn count."
-}
-
-text sText_StevenBattleSpeechPlayerWon {
-    "{PLAYER}!
-    You are truly a remarkable TRAINER..."
-}
-
-text sText_StevenBattleSpeechPlayerLost {
-    "Ha! Not on my watch!"
-}
-
-text sText_DebugBossName_Steven {
-    "Steven"
-}
-
-// --------------------
-// Wally
-// --------------------
-text sText_WallyScoutHint {
-    "Fresh report! WALLY's back,
-     and he says he's ready to show
-     everyone how far he's come."
-}
-
-text sText_WallyPreBattleCall {
-    "A call just came in from WALLY.
-     He's waiting in the arena for you."
-}
-
-text sText_WallyBattleRoomPrompt {
-    "I'm ready... Please come forward!"
-}
-
-text sText_WallyBattleIntro {
-    "It's me, WALLY.
-
-    Did you ever believe, back when
-    we first met, that I would become
-    an elite TRAINER?
-
-    No one did.
-    No one apart from me.
-
-    I've been training hard so I can
-    stand here with confidence.
-
-    I've been on such a journey with my
-    POK\eMON. I've traveled through many
-    regions and battled my way through
-    all of them.
-
-    Don't you see?
-    Fate has led me here, to battle
-    against you, {PLAYER}.
-
-    This time, I really think things
-    will go my way.
-
-    I haven't come all this way just
-    to lose again!
-     
-    Let's do this!"
-}
-
-text sText_WallyLastMonSlide {
-    "Here we go, {B_OPPONENT_MON1_NAME}!
-     Don't let me down now!"
-}
-
-text sText_WallyLastMonLowHpSlide {
-    "Not again...
-     I won't lose again!"
-}
-
-text sText_WallyBattlePostWin {
-    "That was amazing...
-
-    Battling you teaches me something
-    new every time."
-}
-
-text sText_WallyBattleSpeechPlayerWon {
-    "I gave it everything... But like
-     always, you were one step ahead."
-}
-
-text sText_WallyBattleSpeechPlayerLost {
-    "I did it...!
-     I've gotten so much stronger!"
-}
-
-text sText_DebugBossName_Wally {
-    "Wally"
-}
+// Current order: Roxanne, Brawly, Wattson, Flannery, Norman, Winona, Juan, Wally, Steven, Red.
 
 // --------------------
 // Roxanne
@@ -611,6 +463,154 @@ text sText_JuanBattleSpeechPlayerLost {
 
 text sText_DebugBossName_Juan {
     "Juan"
+}
+
+// --------------------
+// Wally
+// --------------------
+text sText_WallyScoutHint {
+    "Fresh report! WALLY's back,
+     and he says he's ready to show
+     everyone how far he's come."
+}
+
+text sText_WallyPreBattleCall {
+    "A call just came in from WALLY.
+     He's waiting in the arena for you."
+}
+
+text sText_WallyBattleRoomPrompt {
+    "I'm ready... Please come forward!"
+}
+
+text sText_WallyBattleIntro {
+    "It's me, WALLY.
+
+    Did you ever believe, back when
+    we first met, that I would become
+    an elite TRAINER?
+
+    No one did.
+    No one apart from me.
+
+    I've been training hard so I can
+    stand here with confidence.
+
+    I've been on such a journey with my
+    POK\eMON. I've traveled through many
+    regions and battled my way through
+    all of them.
+
+    Don't you see?
+    Fate has led me here, to battle
+    against you, {PLAYER}.
+
+    This time, I really think things
+    will go my way.
+
+    I haven't come all this way just
+    to lose again!
+     
+    Let's do this!"
+}
+
+text sText_WallyLastMonSlide {
+    "Here we go, {B_OPPONENT_MON1_NAME}!
+     Don't let me down now!"
+}
+
+text sText_WallyLastMonLowHpSlide {
+    "Not again...
+     I won't lose again!"
+}
+
+text sText_WallyBattlePostWin {
+    "That was amazing...
+
+    Battling you teaches me something
+    new every time."
+}
+
+text sText_WallyBattleSpeechPlayerWon {
+    "I gave it everything... But like
+     always, you were one step ahead."
+}
+
+text sText_WallyBattleSpeechPlayerLost {
+    "I did it...!
+     I've gotten so much stronger!"
+}
+
+text sText_DebugBossName_Wally {
+    "Wally"
+}
+
+// --------------------
+// Steven
+// --------------------
+
+text sText_StevenScoutHint {
+    "Breaking news! STEVEN is in the area,
+     and he's aiming straight for the
+     FACTORY floor."
+}
+
+text sText_StevenPreBattleCall {
+    "Report from the floor:
+     STEVEN has entered the arena.
+
+     He says he's ready whenever you are."
+}
+
+text sText_StevenBattleRoomPrompt {
+    "So we meet again, {PLAYER}!"
+}
+
+text sText_StevenBattleIntro {
+    "I heard you've done very well in here.
+     I would expect nothing less from you!
+
+     Battles fought with borrowed teams
+     demand even sharper judgment.
+
+     But I don't believe you've had
+     a real test in the FACTORY yet.
+
+     I am on a different level to the
+     TRAINERS in this place,
+     without exception.
+     
+     Let's see how you deal with a real test!
+     I'm ready. Now face me, {PLAYER}!"
+}
+
+text sText_StevenLastMonSlide {
+    "You're forcing me into a corner,
+    but I'm just getting started!"
+}
+
+text sText_StevenLastMonLowHpSlide {
+    "Outstanding... Here we go!
+     I'll answer with everything I've got!"
+}
+
+text sText_StevenBattlePostWin {
+    "Excellent battle.
+     You stayed calm, read the battlefield,
+     and made every turn count."
+}
+
+text sText_StevenBattleSpeechPlayerWon {
+    "{PLAYER}!
+    You are truly a remarkable TRAINER..."
+}
+
+text sText_StevenBattleSpeechPlayerLost {
+    "Ha! Not on my watch!"
+}
+
+text sText_DebugBossName_Steven {
+    "Steven"
 }
 
 // --------------------
