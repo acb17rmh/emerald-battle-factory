@@ -73,10 +73,38 @@
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/layouts.h"
+#include "constants/map_groups.h"
 #include "constants/region_map_sections.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
+#include "constants/vars.h"
 #include "constants/weather.h"
+
+u8 OverworldSpeedup_AdditionalIterations(u16 speed, bool32 overworld)
+{
+    if (!overworld)
+        return OPTIONS_OVERWORLD_SPEED_1X_EXTRA_ITERATIONS;
+
+    // Disable overworld speedup in the Battle Factory boss battle room until the boss battle is resolved.
+    // (Scripts clear VAR_FACTORY_ACTIVE_BOSS after the battle, and/or the player warps out.)
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM)
+     && VarGet(VAR_FACTORY_ACTIVE_BOSS) != 0)
+        return OPTIONS_OVERWORLD_SPEED_1X_EXTRA_ITERATIONS;
+
+    switch (speed)
+    {
+    case OPTIONS_OVERWORLD_SPEED_8X:
+        return OPTIONS_OVERWORLD_SPEED_8X_EXTRA_ITERATIONS;
+    case OPTIONS_OVERWORLD_SPEED_4X:
+        return OPTIONS_OVERWORLD_SPEED_4X_EXTRA_ITERATIONS;
+    case OPTIONS_OVERWORLD_SPEED_2X:
+        return OPTIONS_OVERWORLD_SPEED_2X_EXTRA_ITERATIONS;
+    case OPTIONS_OVERWORLD_SPEED_1X:
+    default:
+        return OPTIONS_OVERWORLD_SPEED_1X_EXTRA_ITERATIONS;
+    }
+}
 
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
@@ -1740,9 +1768,16 @@ void CB2_OverworldBasic(void)
 void CB2_Overworld(void)
 {
     bool32 fading = (gPaletteFade.active != 0);
+    u8 loops;
     if (fading)
         SetVBlankCallback(NULL);
     OverworldBasic();
+    for (loops = 0; loops < OverworldSpeedup_AdditionalIterations(VarGet(VAR_OVERWORLD_SPEEDUP), TRUE); loops++)
+    {
+        AnimateSprites();
+        CameraUpdate();
+        UpdateCameraPanning();
+    }
     if (fading)
     {
         SetFieldVBlankCallback();

@@ -31,6 +31,8 @@
 #include "constants/item_effects.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
+#include "constants/maps.h"
+#include "constants/vars.h"
 #include "test/battle.h"
 #include "test/test.h"
 #include "test/test_runner_battle.h"
@@ -3166,6 +3168,13 @@ void BtlController_HandleSwitchInTryShinyAnim(u32 battler)
 u32 Rogue_GetBattleSpeedScale(bool32 forHealthbar)
 {
     u8 battleSceneOption = VarGet(VAR_BATTLE_SPEED); // Originally GetBattleSceneOption() with a saveblock stored value;
+
+    // Disable battle speedup in the Battle Factory boss battle room until the boss battle is resolved.
+    // (Scripts clear VAR_FACTORY_ACTIVE_BOSS after the battle, and/or the player warps out.)
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_BATTLE_ROOM)
+     && VarGet(VAR_FACTORY_ACTIVE_BOSS) != 0)
+        return 1;
 
     if (IsBossBattleForSpeedup())
         return 1;

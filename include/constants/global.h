@@ -181,6 +181,17 @@
 #define OPTIONS_BATTLE_SCENE_DISABLED   4
 #define OPTIONS_BATTLE_SCENE_COUNT      5
 
+// Overworld speedup (animates sprites multiple times per frame)
+#define OPTIONS_OVERWORLD_SPEED_1X                          0
+#define OPTIONS_OVERWORLD_SPEED_2X                          1
+#define OPTIONS_OVERWORLD_SPEED_4X                          2
+#define OPTIONS_OVERWORLD_SPEED_8X                          3
+
+#define OPTIONS_OVERWORLD_SPEED_1X_EXTRA_ITERATIONS         0
+#define OPTIONS_OVERWORLD_SPEED_2X_EXTRA_ITERATIONS         1
+#define OPTIONS_OVERWORLD_SPEED_4X_EXTRA_ITERATIONS         3
+#define OPTIONS_OVERWORLD_SPEED_8X_EXTRA_ITERATIONS         7
+
 #define DIR_NONE        0
 #define DIR_SOUTH       1
 #define DIR_NORTH       2

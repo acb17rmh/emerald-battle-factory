@@ -149,6 +149,7 @@ bool32 CurrentMapHasShadows(void);
 void UpdateAltBgPalettes(u16 palettes);
 void UpdatePalettesWithTime(u32);
 void CB2_Overworld(void);
+u8 OverworldSpeedup_AdditionalIterations(u16 speed, bool32 overworld);
 void SetMainCallback1(void (*cb)(void));
 void SetUnusedCallback(void *func);
 void CB2_NewGame(void);
