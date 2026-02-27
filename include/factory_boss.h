@@ -2,7 +2,9 @@
 #define GUARD_FACTORY_BOSS_H
 
 #include "global.h"
+#include "constants/pokemon.h"
 #include "constants/factory_boss.h"
+#include "constants/trainer_slide.h"
 
 struct FactoryBossProfile
 {
@@ -12,8 +14,7 @@ struct FactoryBossProfile
     const u8 *preBattleCallText;
     const u8 *battleIntroText;
     const u8 *battleRoomPromptText;
-    const u8 *lastSwitchInSlideText;
-    const u8 *lastLowHpSlideText;
+    const u8 *slideTexts[TRAINER_SLIDE_COUNT];
     const u8 *battlePostWinText;
     const u8 *battleSpeechPlayerWon;
     const u8 *battleSpeechPlayerLost;
@@ -24,6 +25,7 @@ struct FactoryBossProfile
     bool8 awardSymbol;
     u8 acePolicy;
     u16 aceSpecies;
+    enum Type allowedTypes[2];
     u8 mugshotColour;
 };
 

@@ -258,32 +258,7 @@ enum TrainerSlideTargets ShouldDoTrainerSlide(u32 battler, enum TrainerSlideType
         bossProfile = GetActiveFactoryBossProfile();
     }
 
-    if (slideId == TRAINER_SLIDE_LAST_SWITCHIN
-        && bossProfile != NULL
-        && bossProfile->lastSwitchInSlideText != NULL
-        && !IsTrainerSlidePlayed(slideId)
-        && ShouldRunTrainerSlideLastSwitchIn(battler))
-    {
-        gBattleStruct->trainerSlideMsg = bossProfile->lastSwitchInSlideText;
-        MarkTrainerSlideAsPlayed(slideId);
-        return retValue;
-    }
-
-    if (slideId == TRAINER_SLIDE_LAST_LOW_HP
-        && bossProfile != NULL
-        && bossProfile->lastLowHpSlideText != NULL
-        && !IsTrainerSlidePlayed(slideId)
-        && ShouldRunTrainerSlideLastLowHp(firstId, lastId, battler))
-    {
-        gBattleStruct->trainerSlideMsg = bossProfile->lastLowHpSlideText;
-        MarkTrainerSlideAsPlayed(slideId);
-        return retValue;
-    }
-
     if (IsTrainerSlidePlayed(slideId))
-        return TRAINER_SLIDE_TARGET_NONE;
-
-    if (!DoesTrainerHaveSlideMessage(difficulty,trainerId,slideId))
         return TRAINER_SLIDE_TARGET_NONE;
 
     switch (slideId)
@@ -326,6 +301,18 @@ enum TrainerSlideTargets ShouldDoTrainerSlide(u32 battler, enum TrainerSlideType
     }
 
     if (shouldRun == FALSE)
+        return TRAINER_SLIDE_TARGET_NONE;
+
+    if (bossProfile != NULL
+        && slideId < TRAINER_SLIDE_COUNT
+        && bossProfile->slideTexts[slideId] != NULL)
+    {
+        gBattleStruct->trainerSlideMsg = bossProfile->slideTexts[slideId];
+        MarkTrainerSlideAsPlayed(slideId);
+        return retValue;
+    }
+
+    if (!DoesTrainerHaveSlideMessage(difficulty, trainerId, slideId))
         return TRAINER_SLIDE_TARGET_NONE;
 
     MarkTrainerSlideAsPlayed(slideId);

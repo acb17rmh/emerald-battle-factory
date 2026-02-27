@@ -12,6 +12,7 @@
 #include "battle_tower.h"
 #include "random.h"
 #include "pokedex.h"
+#include "pokemon.h"
 #include "constants/battle_ai.h"
 #include "constants/battle_factory.h"
 
@@ -746,6 +747,26 @@ u8 GetFactoryMonFixedIV(u8 challengeNum, bool8 isLastBattle)
     return sFixedIVTable[ivSet][useHigherIV];
 }
 
+static bool8 DoesSpeciesMatchAllowedBossTypes(u16 species, const enum Type allowedTypes[static 2])
+{
+    enum Type type1, type2;
+
+    if (allowedTypes[0] == TYPE_NONE && allowedTypes[1] == TYPE_NONE)
+        return TRUE;
+
+    species = SanitizeSpeciesId(species);
+    type1 = gSpeciesInfo[species].types[0];
+    type2 = gSpeciesInfo[species].types[1];
+
+    if (allowedTypes[0] != TYPE_NONE && (type1 == allowedTypes[0] || type2 == allowedTypes[0]))
+        return TRUE;
+
+    if (allowedTypes[1] != TYPE_NONE && (type1 == allowedTypes[1] || type2 == allowedTypes[1]))
+        return TRUE;
+
+    return FALSE;
+}
+
 void FillFactoryBrainParty(void)
 {
     int i;
@@ -754,6 +775,9 @@ void FillFactoryBrainParty(void)
     u16 species[FRONTIER_PARTY_SIZE];
     u16 heldItems[FRONTIER_PARTY_SIZE];
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
+    bool8 enforceBossTypes = (bossProfile != NULL
+        && (bossProfile->allowedTypes[0] != TYPE_NONE || bossProfile->allowedTypes[1] != TYPE_NONE));
+    u32 typeEnforcementAttempts = 0;
     sLastGeneratedFactoryBossId = GetActiveFactoryBossId();
     const bool8 hasBossAce = (bossProfile != NULL
         && (bossProfile->acePolicy == FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST
@@ -778,7 +802,19 @@ void FillFactoryBrainParty(void)
     {
         u16 monId;
 
+        if (enforceBossTypes && ++typeEnforcementAttempts > 5000)
+        {
+            // Avoid extremely long generation loops if a type theme is too restrictive for the active pool.
+            enforceBossTypes = FALSE;
+            typeEnforcementAttempts = 0;
+            DebugPrintf("Boss type restriction fallback: disabling type filter for bossId=%d", sLastGeneratedFactoryBossId);
+        }
+
         monId = GetFactoryMonId(lvlMode, challengeNum, FALSE);
+
+        if (enforceBossTypes
+            && !DoesSpeciesMatchAllowedBossTypes(gFacilityTrainerMons[monId].species, bossProfile->allowedTypes))
+            continue;
 
         if (!CanUseFactoryBrainMonId(monId, i, species, heldItems))
             continue;

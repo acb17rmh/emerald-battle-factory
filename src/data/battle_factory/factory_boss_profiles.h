@@ -4,8 +4,10 @@
 #include "../../../include/constants/event_objects.h"
 #include "../../../include/constants/factory_boss.h"
 #include "../../../include/constants/opponents.h"
+#include "../../../include/constants/pokemon.h"
 #include "../../../include/constants/songs.h"
 #include "../../../include/constants/species.h"
+#include "../../../include/constants/trainer_slide.h"
 // Steven
 extern const u8 sText_DebugBossName_Steven[],
         sText_StevenScoutHint[],
@@ -141,8 +143,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_StevenPreBattleCall,
         .battleIntroText = sText_StevenBattleIntro,
         .battleRoomPromptText = sText_StevenBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_StevenLastMonSlide,
-        .lastLowHpSlideText = sText_StevenLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_StevenLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_StevenLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_StevenBattlePostWin,
         .battleSpeechPlayerWon = sText_StevenBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_StevenBattleSpeechPlayerLost,
@@ -153,6 +158,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_METAGROSS,
+        .allowedTypes = { TYPE_NONE, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_WALLY] =
@@ -163,8 +169,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_WallyPreBattleCall,
         .battleIntroText = sText_WallyBattleIntro,
         .battleRoomPromptText = sText_WallyBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_WallyLastMonSlide,
-        .lastLowHpSlideText = sText_WallyLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_WallyLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_WallyLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_WallyBattlePostWin,
         .battleSpeechPlayerWon = sText_WallyBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_WallyBattleSpeechPlayerLost,
@@ -175,6 +184,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_GALLADE,
+        .allowedTypes = { TYPE_NONE, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_GREEN,
     },
     [FACTORY_BOSS_ROXANNE] =
@@ -185,8 +195,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_RoxannePreBattleCall,
         .battleIntroText = sText_RoxanneBattleIntro,
         .battleRoomPromptText = sText_RoxanneBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_RoxanneLastMonSlide,
-        .lastLowHpSlideText = sText_RoxanneLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_RoxanneLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_RoxanneLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_RoxanneBattlePostWin,
         .battleSpeechPlayerWon = sText_RoxanneBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_RoxanneBattleSpeechPlayerLost,
@@ -197,6 +210,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_FIRST,
         .aceSpecies = SPECIES_TYRANITAR,
+        .allowedTypes = { TYPE_ROCK, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_GREEN,
     },
     [FACTORY_BOSS_BRAWLY] =
@@ -207,8 +221,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_BrawlyPreBattleCall,
         .battleIntroText = sText_BrawlyBattleIntro,
         .battleRoomPromptText = sText_BrawlyBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_BrawlyLastMonSlide,
-        .lastLowHpSlideText = sText_BrawlyLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_BrawlyLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_BrawlyLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_BrawlyBattlePostWin,
         .battleSpeechPlayerWon = sText_BrawlyBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_BrawlyBattleSpeechPlayerLost,
@@ -219,6 +236,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_MEDICHAM,
+        .allowedTypes = { TYPE_FIGHTING, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_BLUE
     },
     [FACTORY_BOSS_WATTSON] =
@@ -229,8 +247,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_WattsonPreBattleCall,
         .battleIntroText = sText_WattsonBattleIntro,
         .battleRoomPromptText = sText_WattsonBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_WattsonLastMonSlide,
-        .lastLowHpSlideText = sText_WattsonLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_WattsonLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_WattsonLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_WattsonBattlePostWin,
         .battleSpeechPlayerWon = sText_WattsonBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_WattsonBattleSpeechPlayerLost,
@@ -241,6 +262,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_MANECTRIC,
+        .allowedTypes = { TYPE_ELECTRIC, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_YELLOW
     },
     [FACTORY_BOSS_FLANNERY] =
@@ -251,8 +273,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_FlanneryPreBattleCall,
         .battleIntroText = sText_FlanneryBattleIntro,
         .battleRoomPromptText = sText_FlanneryBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_FlanneryLastMonSlide,
-        .lastLowHpSlideText = sText_FlanneryLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_FlanneryLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_FlanneryLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_FlanneryBattlePostWin,
         .battleSpeechPlayerWon = sText_FlanneryBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_FlanneryBattleSpeechPlayerLost,
@@ -263,6 +288,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_MANECTRIC,
+        .allowedTypes = { TYPE_FIRE, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_PINK
     },
     [FACTORY_BOSS_NORMAN] =
@@ -273,8 +299,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_NormanPreBattleCall,
         .battleIntroText = sText_NormanBattleIntro,
         .battleRoomPromptText = sText_NormanBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_NormanLastMonSlide,
-        .lastLowHpSlideText = sText_NormanLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_NormanLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_NormanLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_NormanBattlePostWin,
         .battleSpeechPlayerWon = sText_NormanBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_NormanBattleSpeechPlayerLost,
@@ -285,6 +314,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_KANGASKHAN,
+        .allowedTypes = { TYPE_NORMAL, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_PURPLE,
     },
     [FACTORY_BOSS_WINONA] =
@@ -295,8 +325,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_WinonaPreBattleCall,
         .battleIntroText = sText_WinonaBattleIntro,
         .battleRoomPromptText = sText_WinonaBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_WinonaLastMonSlide,
-        .lastLowHpSlideText = sText_WinonaLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_WinonaLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_WinonaLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_WinonaBattlePostWin,
         .battleSpeechPlayerWon = sText_WinonaBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_WinonaBattleSpeechPlayerLost,
@@ -307,6 +340,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_ALTARIA,
+        .allowedTypes = { TYPE_FLYING, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_JUAN] =
@@ -317,8 +351,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_JuanPreBattleCall,
         .battleIntroText = sText_JuanBattleIntro,
         .battleRoomPromptText = sText_JuanBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_JuanLastMonSlide,
-        .lastLowHpSlideText = sText_JuanLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_JuanLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_JuanLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_JuanBattlePostWin,
         .battleSpeechPlayerWon = sText_JuanBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_JuanBattleSpeechPlayerLost,
@@ -329,6 +366,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_ALTARIA,
+        .allowedTypes = { TYPE_WATER, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_RED] =
@@ -339,8 +377,11 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .preBattleCallText = sText_RedPreBattleCall,
         .battleIntroText = sText_RedBattleIntro,
         .battleRoomPromptText = sText_RedBattleRoomPrompt,
-        .lastSwitchInSlideText = sText_RedLastMonSlide,
-        .lastLowHpSlideText = sText_RedLastMonLowHpSlide,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_RedLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_RedLastMonLowHpSlide,
+        },
         .battlePostWinText = sText_RedBattlePostWin,
         .battleSpeechPlayerWon = sText_RedBattleSpeechPlayerWon,
         .battleSpeechPlayerLost = sText_RedBattleSpeechPlayerLost,
@@ -351,6 +392,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_FIRST,
         .aceSpecies = SPECIES_PIKACHU,
+        .allowedTypes = { TYPE_NONE, TYPE_NONE },
         .mugshotColour = MUGSHOT_COLOR_YELLOW,
     },
 };
