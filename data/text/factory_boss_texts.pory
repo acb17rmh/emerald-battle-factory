@@ -656,3 +656,162 @@ text sText_RedBattleSpeechPlayerLost {
 text sText_DebugBossName_Red {
     "Red"
 }
+
+// --------------------
+// Blue
+// --------------------
+text sText_BlueScoutHint {
+    "The former CHAMPION of KANTO has been
+     spotted at the BATTLE FRONTIER gates!"
+}
+
+text sText_BluePreBattleCall {
+    "A former CHAMPION awaits!"
+}
+
+text sText_BlueBattleRoomPrompt {
+    "Hey, {PLAYER}."
+}
+
+text sText_BlueBattleIntro {
+    "I was looking forward to meeting you,
+    {PLAYER}.
+
+    After becoming the CHAMPION in KANTO,
+    I continued to catch POK\eMON and
+    learn new strategies.
+
+    I trained even harder and even smarter
+    than before. I assembled teams that
+    would beat any POK\eMON type.
+
+    It was simple for me to win the BADGES
+    of every GYM I ever stepped in.
+
+    That's why I came to the BATTLE FACTORY.
+    Here, you can't hide behind what's
+    familiar to you.
+
+    You win with good preparation, strong
+    instincts, and clinical decision-making.
+    That's how I beat the HEAD of this place,
+    and became the strongest TRAINER here!
+
+    {PLAYER}!
+    Do you know what that all means?
+
+    I'll tell you!
+
+    I am the most powerful TRAINER in
+    the world!"
+}
+
+text sText_BlueLastMonSlide {
+    "Not yet! I still have my most
+    powerful POK\eMON left!"
+}
+
+text sText_BlueLastMonLowHpSlide {
+    "No way! I never lose!"
+}
+
+text sText_BlueMegaEvolutionSlide {
+    "Behold, my Mega {B_OPPONENT_MON1_NAME}!
+     I'll rip your POK\eMON to shreds!"
+}
+
+text sText_BlueEnemyMonUnaffectedSlide {
+    "Pffft!
+     Do you think I was born yesterday?"
+}
+
+text sText_BlueBattlePostWin {
+    "..."
+}
+
+text sText_BlueBattleSpeechPlayerWon {
+    "No!
+     I never lose... how is that possible?"
+}
+
+text sText_BlueBattleSpeechPlayerLost {
+    "Hahaha! I won, I won!
+    I'm too good for you, {PLAYER}!
+
+    You did well to even reach me,
+    BLUE, the POK\eMON genius!"
+}
+
+text sText_DebugBossName_Blue {
+    "Blue"
+}
+
+// --------------------
+// Cynthia
+// --------------------
+text sText_CynthiaScoutHint {
+    "The CHAMPION from SINNOH has
+     been spotted near the FACTORY..."
+}
+
+text sText_CynthiaPreBattleCall {
+    "A CHAMPION awaits!"
+}
+
+text sText_CynthiaBattleRoomPrompt {
+    "{PLAYER}!
+     It's a pleasure to finally meet you."
+}
+
+text sText_CynthiaBattleIntro {
+    "Whenever a TRAINER comes to challenge
+     me, I know that they carry with them
+     all of their hopes and dreams.
+
+     And so, I respect their passion by giving
+     my all in battle.
+
+     The power you learned... I can feel it
+     emanating from you. It reminds me of a
+     TRAINER I once knew from SINNOH.
+
+     That's enough talk. Let's get on with
+     why you're here.
+
+     As the SINNOH POK\eMON LEAGUE CHAMPION,
+     I accept your challenge!"
+}
+
+text sText_CynthiaLastMonSlide {
+    "When was the last time I was driven
+     into a corner like this?"
+}
+
+text sText_CynthiaLastMonLowHpSlide {
+    "You haven't won yet! I won let such
+     a fun battle end so easily!"
+}
+
+text sText_CynthiaBattlePostWin {
+    "My heart is pounding because I had such
+     a heated battle with you.
+
+     You are a really great TRAINER!"
+}
+
+text sText_CynthiaBattleSpeechPlayerWon {
+    "My heart is pounding because I had such
+     a heated battle with you.
+
+     You are a really great TRAINER!"
+}
+
+text sText_CynthiaBattleSpeechPlayerLost {
+    "What's necessary to become stronger?
+     I think it's important to never lose
+     your love of POK\eMON."
+}
+
+text sText_DebugBossName_Cynthia {
+    "Cynthia"
+}

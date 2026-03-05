@@ -3,84 +3,10 @@
 #include "../../../include/constants/moves.h"
 #include "../../../include/constants/pokemon.h"
 #include "../../../include/constants/species.h"
-static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_StevenAceMetagross =
-{
-    .species = SPECIES_METAGROSS,
-    .nature = NATURE_JOLLY,
-    .heldItem = ITEM_METAGROSSITE,
-    .abilityNum = 0, // Clear Body
-    .hasTeraType = FALSE,
-    .teraType = TYPE_NONE,
-    .evs =
-    {
-        [STAT_HP] = 232,
-        [STAT_ATK] = 60,
-        [STAT_DEF] = 0,
-        [STAT_SPATK] = 0,
-        [STAT_SPDEF] = 40,
-        [STAT_SPEED] = 176,
-    },
-    .moves =
-    {
-        MOVE_METEOR_MASH,
-        MOVE_ICE_PUNCH,
-        MOVE_ROCK_SLIDE,
-        MOVE_BULLET_PUNCH,
-    },
-};
 
-static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_WallyGallade =
-{
-    .species = SPECIES_GALLADE,
-    .nature = NATURE_JOLLY,
-    .heldItem = ITEM_GALLADITE,
-    .abilityNum = 2, // Justified
-    .hasTeraType = FALSE,
-    .teraType = TYPE_NONE,
-    .evs =
-    {
-        [STAT_HP] = 0,
-        [STAT_ATK] = 252,
-        [STAT_DEF] = 4,
-        [STAT_SPATK] = 0,
-        [STAT_SPDEF] = 0,
-        [STAT_SPEED] = 252,
-    },
-    .moves =
-    {
-        MOVE_SWORDS_DANCE,
-        MOVE_CLOSE_COMBAT,
-        MOVE_ZEN_HEADBUTT,
-        MOVE_KNOCK_OFF,
-    },
-};
-
-static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_RedPikachu =
-{
-    .species = SPECIES_PIKACHU,
-    .nature = NATURE_HASTY,
-    .heldItem = ITEM_LIGHT_BALL,
-    .abilityNum = 0, // Static
-    .hasTeraType = TRUE,
-    .teraType = TYPE_ELECTRIC,
-    .evs =
-    {
-        [STAT_HP] = 0,
-        [STAT_ATK] = 252,
-        [STAT_DEF] = 0,
-        [STAT_SPATK] = 4,
-        [STAT_SPDEF] = 0,
-        [STAT_SPEED] = 252,
-    },
-    .moves =
-    {
-        MOVE_FAKE_OUT,
-        MOVE_EXTREME_SPEED,
-        MOVE_VOLT_SWITCH,
-        MOVE_SURF,
-    },
-};
-
+/////////////////////
+//// Hoenn Gym Leaders
+/////////////////////
 static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_RoxanneDiancie =
 {
     .species = SPECIES_DIANCIE,
@@ -263,6 +189,140 @@ static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_JuanSwampert =
     },
 };
 
+/////////////////////
+//// Special Bosses
+/////////////////////
+
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_StevenAceMetagross =
+{
+    .species = SPECIES_METAGROSS,
+    .nature = NATURE_JOLLY,
+    .heldItem = ITEM_METAGROSSITE,
+    .abilityNum = 0, // Clear Body
+    .hasTeraType = FALSE,
+    .teraType = TYPE_NONE,
+    .evs =
+    {
+        [STAT_HP] = 232,
+        [STAT_ATK] = 60,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 0,
+        [STAT_SPDEF] = 40,
+        [STAT_SPEED] = 176,
+    },
+    .moves =
+    {
+        MOVE_METEOR_MASH,
+        MOVE_ICE_PUNCH,
+        MOVE_ROCK_SLIDE,
+        MOVE_BULLET_PUNCH,
+    },
+};
+
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_WallyGallade =
+{
+    .species = SPECIES_GALLADE,
+    .nature = NATURE_JOLLY,
+    .heldItem = ITEM_GALLADITE,
+    .abilityNum = 2, // Justified
+    .hasTeraType = FALSE,
+    .teraType = TYPE_NONE,
+    .evs =
+    {
+        [STAT_HP] = 0,
+        [STAT_ATK] = 252,
+        [STAT_DEF] = 4,
+        [STAT_SPATK] = 0,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_SWORDS_DANCE,
+        MOVE_CLOSE_COMBAT,
+        MOVE_ZEN_HEADBUTT,
+        MOVE_KNOCK_OFF,
+    },
+};
+
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_RedPikachu =
+{
+    .species = SPECIES_PIKACHU,
+    .nature = NATURE_HASTY,
+    .heldItem = ITEM_LIGHT_BALL,
+    .abilityNum = 0, // Static
+    .hasTeraType = TRUE,
+    .teraType = TYPE_ELECTRIC,
+    .evs =
+    {
+        [STAT_HP] = 0,
+        [STAT_ATK] = 252,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 4,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_FAKE_OUT,
+        MOVE_EXTREME_SPEED,
+        MOVE_VOLT_SWITCH,
+        MOVE_SURF,
+    },
+};
+
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_BlueAerodactyl =
+{
+    .species = SPECIES_AERODACTYL,
+    .nature = NATURE_ADAMANT,
+    .heldItem = ITEM_AERODACTYLITE,
+    .abilityNum = 2, // Unnverve
+    .hasTeraType = TRUE,
+    .teraType = TYPE_GROUND,
+    .evs =
+    {
+        [STAT_HP] = 0,
+        [STAT_ATK] = 252,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 0,
+        [STAT_SPDEF] = 4,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_STONE_EDGE,
+        MOVE_DUAL_WINGBEAT,
+        MOVE_PURSUIT,
+        MOVE_ROOST,
+    },
+};
+
+static const struct FactoryCustomMonBuild sFactoryCustomMonBuild_CynthiaGarchomp =
+{
+    .species = SPECIES_GARCHOMP,
+    .nature = NATURE_MILD,
+    .heldItem = ITEM_GARCHOMPITE,
+    .abilityNum = 2, // Rough Skin
+    .hasTeraType = TRUE,
+    .teraType = TYPE_FIRE,
+    .evs =
+    {
+        [STAT_HP] = 0,
+        [STAT_ATK] = 4,
+        [STAT_DEF] = 0,
+        [STAT_SPATK] = 252,
+        [STAT_SPDEF] = 0,
+        [STAT_SPEED] = 252,
+    },
+    .moves =
+    {
+        MOVE_DRACO_METEOR,
+        MOVE_EARTHQUAKE,
+        MOVE_FIRE_BLAST,
+        MOVE_ICE_FANG,
+    },
+};
+
 static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FACTORY_BOSS_COUNT] =
 {
     [FACTORY_BOSS_NONE] = NULL,
@@ -276,6 +336,8 @@ static const struct FactoryCustomMonBuild *const sFactoryBossRewardMonBuilds[FAC
     [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
     [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
     [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
+    [FACTORY_BOSS_BLUE] = &sFactoryCustomMonBuild_BlueAerodactyl,
+    [FACTORY_BOSS_CYNTHIA] = &sFactoryCustomMonBuild_CynthiaGarchomp,
 };
 
 static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTORY_BOSS_COUNT] =
@@ -291,4 +353,6 @@ static const struct FactoryCustomMonBuild *const sFactoryBossAceMonBuilds[FACTOR
     [FACTORY_BOSS_WALLY] = &sFactoryCustomMonBuild_WallyGallade,
     [FACTORY_BOSS_STEVEN] = &sFactoryCustomMonBuild_StevenAceMetagross,
     [FACTORY_BOSS_RED] = &sFactoryCustomMonBuild_RedPikachu,
+    [FACTORY_BOSS_BLUE] = &sFactoryCustomMonBuild_BlueAerodactyl,
+    [FACTORY_BOSS_CYNTHIA] = &sFactoryCustomMonBuild_CynthiaGarchomp,
 };

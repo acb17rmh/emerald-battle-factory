@@ -565,3 +565,141 @@ sText_RedBattleSpeechPlayerLost::
 sText_DebugBossName_Red::
 # 656 "data/text/factory_boss_texts.pory"
 	.string "Red$"
+
+sText_BlueScoutHint::
+# 663 "data/text/factory_boss_texts.pory"
+	.string "The former CHAMPION of KANTO has been\n"
+	.string "spotted at the BATTLE FRONTIER gates!$"
+
+sText_BluePreBattleCall::
+# 668 "data/text/factory_boss_texts.pory"
+	.string "A former CHAMPION awaits!$"
+
+sText_BlueBattleRoomPrompt::
+# 672 "data/text/factory_boss_texts.pory"
+	.string "Hey, {PLAYER}.$"
+
+sText_BlueBattleIntro::
+# 676 "data/text/factory_boss_texts.pory"
+	.string "I was looking forward to meeting you,\n"
+	.string "{PLAYER}.\p"
+	.string "After becoming the CHAMPION in KANTO,\n"
+	.string "I continued to catch POKéMON and\l"
+	.string "learn new strategies.\p"
+	.string "I trained even harder and even smarter\n"
+	.string "than before. I assembled teams that\l"
+	.string "would beat any POKéMON type.\p"
+	.string "It was simple for me to win the BADGES\n"
+	.string "of every GYM I ever stepped in.\p"
+	.string "That's why I came to the BATTLE FACTORY.\n"
+	.string "Here, you can't hide behind what's\l"
+	.string "familiar to you.\p"
+	.string "You win with good preparation, strong\n"
+	.string "instincts, and clinical decision-making.\l"
+	.string "That's how I beat the HEAD of this place,\l"
+	.string "and became the strongest TRAINER here!\p"
+	.string "{PLAYER}!\n"
+	.string "Do you know what that all means?\p"
+	.string "I'll tell you!\p"
+	.string "I am the most powerful TRAINER in\n"
+	.string "the world!$"
+
+sText_BlueLastMonSlide::
+# 709 "data/text/factory_boss_texts.pory"
+	.string "Not yet! I still have my most\n"
+	.string "powerful POKéMON left!$"
+
+sText_BlueLastMonLowHpSlide::
+# 714 "data/text/factory_boss_texts.pory"
+	.string "No way! I never lose!$"
+
+sText_BlueMegaEvolutionSlide::
+# 718 "data/text/factory_boss_texts.pory"
+	.string "Behold, my Mega {B_OPPONENT_MON1_NAME}!\n"
+	.string "I'll rip your POKéMON to shreds!$"
+
+sText_BlueEnemyMonUnaffectedSlide::
+# 723 "data/text/factory_boss_texts.pory"
+	.string "Pffft!\n"
+	.string "Do you think I was born yesterday?$"
+
+sText_BlueBattlePostWin::
+# 728 "data/text/factory_boss_texts.pory"
+	.string "...$"
+
+sText_BlueBattleSpeechPlayerWon::
+# 732 "data/text/factory_boss_texts.pory"
+	.string "No!\n"
+	.string "I never lose... how is that possible?$"
+
+sText_BlueBattleSpeechPlayerLost::
+# 737 "data/text/factory_boss_texts.pory"
+	.string "Hahaha! I won, I won!\n"
+	.string "I'm too good for you, {PLAYER}!\p"
+	.string "You did well to even reach me,\n"
+	.string "BLUE, the POKéMON genius!$"
+
+sText_DebugBossName_Blue::
+# 745 "data/text/factory_boss_texts.pory"
+	.string "Blue$"
+
+sText_CynthiaScoutHint::
+# 752 "data/text/factory_boss_texts.pory"
+	.string "The CHAMPION from SINNOH has\n"
+	.string "been spotted near the FACTORY...$"
+
+sText_CynthiaPreBattleCall::
+# 757 "data/text/factory_boss_texts.pory"
+	.string "A CHAMPION awaits!$"
+
+sText_CynthiaBattleRoomPrompt::
+# 761 "data/text/factory_boss_texts.pory"
+	.string "{PLAYER}!\n"
+	.string "It's a pleasure to finally meet you.$"
+
+sText_CynthiaBattleIntro::
+# 766 "data/text/factory_boss_texts.pory"
+	.string "Whenever a TRAINER comes to challenge\n"
+	.string "me, I know that they carry with them\l"
+	.string "all of their hopes and dreams.\p"
+	.string "And so, I respect their passion by giving\n"
+	.string "my all in battle.\p"
+	.string "The power you learned... I can feel it\n"
+	.string "emanating from you. It reminds me of a\l"
+	.string "TRAINER I once knew from SINNOH.\p"
+	.string "That's enough talk. Let's get on with\n"
+	.string "why you're here.\p"
+	.string "As the SINNOH POKéMON LEAGUE CHAMPION,\n"
+	.string "I accept your challenge!$"
+
+sText_CynthiaLastMonSlide::
+# 785 "data/text/factory_boss_texts.pory"
+	.string "When was the last time I was driven\n"
+	.string "into a corner like this?$"
+
+sText_CynthiaLastMonLowHpSlide::
+# 790 "data/text/factory_boss_texts.pory"
+	.string "You haven't won yet! I won let such\n"
+	.string "a fun battle end so easily!$"
+
+sText_CynthiaBattlePostWin::
+# 795 "data/text/factory_boss_texts.pory"
+	.string "My heart is pounding because I had such\n"
+	.string "a heated battle with you.\p"
+	.string "You are a really great TRAINER!$"
+
+sText_CynthiaBattleSpeechPlayerWon::
+# 802 "data/text/factory_boss_texts.pory"
+	.string "My heart is pounding because I had such\n"
+	.string "a heated battle with you.\p"
+	.string "You are a really great TRAINER!$"
+
+sText_CynthiaBattleSpeechPlayerLost::
+# 809 "data/text/factory_boss_texts.pory"
+	.string "What's necessary to become stronger?\n"
+	.string "I think it's important to never lose\l"
+	.string "your love of POKéMON.$"
+
+sText_DebugBossName_Cynthia::
+# 815 "data/text/factory_boss_texts.pory"
+	.string "Cynthia$"

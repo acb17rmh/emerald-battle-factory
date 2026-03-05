@@ -15,7 +15,9 @@
 #define FACTORY_BOSS_STEVEN   8
 #define FACTORY_BOSS_WALLY    9
 #define FACTORY_BOSS_RED      10
-#define FACTORY_BOSS_COUNT    11
+#define FACTORY_BOSS_BLUE     11
+#define FACTORY_BOSS_CYNTHIA  12
+#define FACTORY_BOSS_COUNT    13
 
 enum FactoryBossAcePolicy
 {

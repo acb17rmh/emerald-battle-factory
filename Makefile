@@ -521,6 +521,12 @@ endif
 $(DATA_ASM_BUILDDIR)/%.o: $(DATA_ASM_SUBDIR)/%.s
 	$(PREPROC) $< charmap.txt | $(CPP) $(CPPFLAGS) $(INCLUDE_SCANINC_ARGS) - | $(PREPROC) -ie $< charmap.txt | $(AS) $(ASFLAGS) -o $@
 
+# `data/map_events.s` includes many constants (notably `constants/event_objects.h` and
+# `constants/vars.h`) that can change without touching the `.s` itself (e.g. adding
+# new overworld gfx shifts `OBJ_EVENT_GFX_VAR_*`). Because we don't include dependency
+# files for `map_events.s`, ensure it still rebuilds when these change.
+$(DATA_ASM_BUILDDIR)/map_events.o: include/constants/event_objects.h include/constants/vars.h
+
 $(DATA_ASM_BUILDDIR)/%.d: $(DATA_ASM_SUBDIR)/%.s
 	$(SCANINC) -M $@ $(INCLUDE_SCANINC_ARGS) -I "" $<
 

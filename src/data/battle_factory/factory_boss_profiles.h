@@ -128,6 +128,33 @@ extern const u8 sText_DebugBossName_Red[],
         sText_RedBattleSpeechPlayerWon[],
         sText_RedBattleSpeechPlayerLost[];
 
+// Blue
+extern const u8 sText_DebugBossName_Blue[],
+        sText_BlueScoutHint[],
+        sText_BluePreBattleCall[],
+        sText_BlueBattleIntro[],
+        sText_BlueBattleRoomPrompt[],
+        sText_BlueLastMonSlide[],
+        sText_BlueLastMonLowHpSlide[],
+        sText_BlueMegaEvolutionSlide[],
+        sText_BlueEnemyMonUnaffectedSlide[],
+        sText_BlueBattlePostWin[],
+        sText_BlueBattleSpeechPlayerWon[],
+        sText_BlueBattleSpeechPlayerLost[];
+
+// Cynthia
+extern const u8 sText_DebugBossName_Cynthia[],
+        sText_CynthiaScoutHint[],
+        sText_CynthiaPreBattleCall[],
+        sText_CynthiaBattleIntro[],
+        sText_CynthiaBattleRoomPrompt[],
+        sText_CynthiaLastMonSlide[],
+        sText_CynthiaLastMonLowHpSlide[],
+        sText_CynthiaBattlePostWin[],
+        sText_CynthiaBattleSpeechPlayerWon[],
+        sText_CynthiaBattleSpeechPlayerLost[];
+
+
 static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] =
 {
     [FACTORY_BOSS_NONE] =
@@ -158,7 +185,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_METAGROSS,
-        .allowedTypes = { TYPE_NONE, TYPE_NONE },
+        .allowedTypes = {TYPE_NONE, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_WALLY] =
@@ -184,7 +211,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_GALLADE,
-        .allowedTypes = { TYPE_NONE, TYPE_NONE },
+        .allowedTypes = {TYPE_NONE, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_GREEN,
     },
     [FACTORY_BOSS_ROXANNE] =
@@ -210,7 +237,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_FIRST,
         .aceSpecies = SPECIES_TYRANITAR,
-        .allowedTypes = { TYPE_ROCK, TYPE_NONE },
+        .allowedTypes = {TYPE_ROCK, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_GREEN,
     },
     [FACTORY_BOSS_BRAWLY] =
@@ -236,7 +263,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_MEDICHAM,
-        .allowedTypes = { TYPE_FIGHTING, TYPE_NONE },
+        .allowedTypes = {TYPE_FIGHTING, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_BLUE
     },
     [FACTORY_BOSS_WATTSON] =
@@ -262,7 +289,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_MANECTRIC,
-        .allowedTypes = { TYPE_ELECTRIC, TYPE_NONE },
+        .allowedTypes = {TYPE_ELECTRIC, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_YELLOW
     },
     [FACTORY_BOSS_FLANNERY] =
@@ -288,7 +315,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_MANECTRIC,
-        .allowedTypes = { TYPE_FIRE, TYPE_NONE },
+        .allowedTypes = {TYPE_FIRE, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_PINK
     },
     [FACTORY_BOSS_NORMAN] =
@@ -314,7 +341,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_KANGASKHAN,
-        .allowedTypes = { TYPE_NORMAL, TYPE_NONE },
+        .allowedTypes = {TYPE_NORMAL, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_PURPLE,
     },
     [FACTORY_BOSS_WINONA] =
@@ -340,7 +367,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_ALTARIA,
-        .allowedTypes = { TYPE_FLYING, TYPE_NONE },
+        .allowedTypes = {TYPE_FLYING, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_JUAN] =
@@ -366,7 +393,7 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
         .aceSpecies = SPECIES_ALTARIA,
-        .allowedTypes = { TYPE_WATER, TYPE_NONE },
+        .allowedTypes = {TYPE_WATER, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_BLUE,
     },
     [FACTORY_BOSS_RED] =
@@ -392,7 +419,61 @@ static const struct FactoryBossProfile sFactoryBossProfiles[FACTORY_BOSS_COUNT] 
         .awardSymbol = FALSE,
         .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_FIRST,
         .aceSpecies = SPECIES_PIKACHU,
-        .allowedTypes = { TYPE_NONE, TYPE_NONE },
+        .allowedTypes = {TYPE_NONE, TYPE_NONE},
         .mugshotColour = MUGSHOT_COLOR_YELLOW,
+    },
+    [FACTORY_BOSS_BLUE] =
+    {
+        .enabled = TRUE,
+        .debugMenuName = sText_DebugBossName_Blue,
+        .scoutHintText = sText_BlueScoutHint,
+        .preBattleCallText = sText_BluePreBattleCall,
+        .battleIntroText = sText_BlueBattleIntro,
+        .battleRoomPromptText = sText_BlueBattleRoomPrompt,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_BlueLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_BlueLastMonLowHpSlide,
+            [TRAINER_SLIDE_MEGA_EVOLUTION] = sText_BlueMegaEvolutionSlide,
+            [TRAINER_SLIDE_ENEMY_MON_UNAFFECTED] = sText_BlueEnemyMonUnaffectedSlide
+        },
+        .battlePostWinText = sText_BlueBattlePostWin,
+        .battleSpeechPlayerWon = sText_BlueBattleSpeechPlayerWon,
+        .battleSpeechPlayerLost = sText_BlueBattleSpeechPlayerLost,
+        .trainerId = TRAINER_BLUE,
+        .objEventGfx = OBJ_EVENT_GFX_BLUE,
+        .battleBgm = MUS_RG_VS_CHAMPION,
+        .preBattleRoomBgm = MUS_RG_VICTORY_ROAD,
+        .awardSymbol = FALSE,
+        .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_FIRST,
+        .aceSpecies = SPECIES_AERODACTYL,
+        .allowedTypes = {TYPE_NONE, TYPE_NONE},
+        .mugshotColour = MUGSHOT_COLOR_BLUE,
+    },
+    [FACTORY_BOSS_CYNTHIA] =
+    {
+        .enabled = TRUE,
+        .debugMenuName = sText_DebugBossName_Cynthia,
+        .scoutHintText = sText_CynthiaScoutHint,
+        .preBattleCallText = sText_CynthiaPreBattleCall,
+        .battleIntroText = sText_CynthiaBattleIntro,
+        .battleRoomPromptText = sText_CynthiaBattleRoomPrompt,
+        .slideTexts =
+        {
+            [TRAINER_SLIDE_LAST_SWITCHIN] = sText_CynthiaLastMonSlide,
+            [TRAINER_SLIDE_LAST_LOW_HP] = sText_CynthiaLastMonLowHpSlide,
+        },
+        .battlePostWinText = sText_CynthiaBattlePostWin,
+        .battleSpeechPlayerWon = sText_CynthiaBattleSpeechPlayerWon,
+        .battleSpeechPlayerLost = sText_CynthiaBattleSpeechPlayerLost,
+        .trainerId = TRAINER_CYNTHIA,
+        .objEventGfx = OBJ_EVENT_GFX_CYNTHIA,
+        .battleBgm = MUS_DP_VS_CHAMPION,
+        .preBattleRoomBgm = MUS_BW_CYNTHIA,
+        .awardSymbol = FALSE,
+        .acePolicy = FACTORY_BOSS_ACE_SPECIES_ANCHOR_LAST,
+        .aceSpecies = SPECIES_GARCHOMP,
+        .allowedTypes = {TYPE_NONE, TYPE_NONE},
+        .mugshotColour = MUGSHOT_COLOR_PURPLE,
     },
 };
