@@ -216,10 +216,10 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedCustomBoss::
 	special RecordFactoryBossDefeat
 	special SetPendingFactoryRewardBossFromActive
 	copyvar VAR_FACTORY_LAST_DEFEATED_BOSS, VAR_FACTORY_ACTIVE_BOSS
-	setvar VAR_FACTORY_ACTIVE_BOSS, 0
-	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
 	special BufferFactoryBossBattlePostWinText
 	msgbox gStringVar4, MSGBOX_DEFAULT
+	setvar VAR_FACTORY_ACTIVE_BOSS, 0
+	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
 
 BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland::

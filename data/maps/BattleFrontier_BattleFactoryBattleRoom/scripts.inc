@@ -435,13 +435,13 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedCustomBoss::
 # 218 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	copyvar VAR_FACTORY_LAST_DEFEATED_BOSS, VAR_FACTORY_ACTIVE_BOSS
 # 219 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	setvar VAR_FACTORY_ACTIVE_BOSS, 0
-# 220 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
-# 221 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	special BufferFactoryBossBattlePostWinText
-# 222 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 220 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	msgbox gStringVar4, MSGBOX_DEFAULT
+# 221 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	setvar VAR_FACTORY_ACTIVE_BOSS, 0
+# 222 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
 # 223 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
 # 224 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
