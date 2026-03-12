@@ -3020,19 +3020,6 @@ void BufferFactoryBossBattleRoomPromptText(void)
     StringExpandPlaceholders(gStringVar4, src);
 }
 
-void BufferFactoryBossBattlePostWinText(void)
-{
-    const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();
-    const u8 *src;
-
-    if (bossProfile != NULL && bossProfile->battlePostWinText != NULL)
-        src = bossProfile->battlePostWinText;
-    else
-        src = sText_DefaultFactoryBossPostWin;
-
-    StringExpandPlaceholders(gStringVar4, src);
-}
-
 void PlayFactoryBossPreBattleRoomBgmIfSet(void)
 {
     const struct FactoryBossProfile *bossProfile = GetActiveFactoryBossProfile();

@@ -30,7 +30,6 @@ bool8 IsFactoryDebugStevenBossEnabled(void);
 void BufferFactoryBossCallText(void);
 void BufferFactoryBossBattleIntroText(void);
 void BufferFactoryBossBattleRoomPromptText(void);
-void BufferFactoryBossBattlePostWinText(void);
 void PlayFactoryBossPreBattleRoomBgmIfSet(void);
 u8 GetNextFactoryBossId(void);
 void GetNextFactoryBossIdForScout(void);

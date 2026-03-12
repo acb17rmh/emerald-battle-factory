@@ -15,7 +15,6 @@ struct FactoryBossProfile
     const u8 *battleIntroText;
     const u8 *battleRoomPromptText;
     const u8 *slideTexts[TRAINER_SLIDE_COUNT];
-    const u8 *battlePostWinText;
     const u8 *battleSpeechPlayerWon;
     const u8 *battleSpeechPlayerLost;
     u16 trainerId;
