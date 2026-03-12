@@ -48,15 +48,10 @@ text sText_RoxanneLastMonLowHpSlide {
     "This has been a great lesson!"
 }
 
-text sText_RoxanneBattlePostWin {
+text sText_RoxanneBattleSpeechPlayerWon {
     "I still have much to learn when it
     comes to battling POK\eMON. But
-    that only makes me love battling more!"
-}
-
-text sText_RoxanneBattleSpeechPlayerWon {
-    "I learned lots from our battle."
-}
+    that only makes me love battling more!"}
 
 text sText_RoxanneBattleSpeechPlayerLost {
     "Back to class with you!"
@@ -109,11 +104,6 @@ text sText_BrawlyLastMonSlide {
 text sText_BrawlyLastMonLowHpSlide {
     "I've been raised in the rough seas!
      I can handle anything."
-}
-
-text sText_BrawlyBattlePostWin {
-    "Argh...
-     I thought I had you beat there!"
 }
 
 text sText_BrawlyBattleSpeechPlayerWon {
@@ -180,13 +170,9 @@ text sText_WattsonLastMonLowHpSlide {
      enough to know I can still win this one."
 }
 
-text sText_WattsonBattlePostWin {
-    "Oof...
-     Our batteries ran dry."
-}
 
 text sText_WattsonBattleSpeechPlayerWon {
-    "You sure gave me shock!
+    "You sure gave me a shock!
      Well played."
 }
 
@@ -247,14 +233,12 @@ text sText_FlanneryLastMonLowHpSlide {
     "Oh no! Hang in there, {B_OPPONENT_MON1_NAME}!"
 }
 
-text sText_FlanneryBattlePostWin {
-    "Losing a battle isn't going to deflate me.
-     I love POK\eMON, and I love to battle!"
-}
-
 text sText_FlanneryBattleSpeechPlayerWon {
     "You did it again!
-     One day I'll be as strong as you!"
+     One day I'll be as strong as you!
+
+     Losing a battle isn't going to deflate me.
+     I love POK\eMON, and I love to battle!"
 }
 
 text sText_FlanneryBattleSpeechPlayerLost {
@@ -311,16 +295,11 @@ text sText_NormanLastMonLowHpSlide {
      Now finish it!"
 }
 
-text sText_NormanBattlePostWin {
+text sText_NormanBattleSpeechPlayerWon {
     "Hah! That's the spirit.
 
      You fought with nerve and discipline.
      That's what wins tough matches."
-}
-
-text sText_NormanBattleSpeechPlayerWon {
-    "Wow! What a battle!
-     Well fought."
 }
 
 text sText_NormanBattleSpeechPlayerLost {
@@ -376,13 +355,11 @@ text sText_WinonaLastMonLowHpSlide {
     "Keep going, {B_OPPONENT_MON1_NAME}!"
 }
 
-text sText_WinonaBattlePostWin {
-    "Though I fell to you, my wings
-     will never break!"
-}
-
 text sText_WinonaBattleSpeechPlayerWon {
-    "You truly are a graceful TRAINER.
+    "Though I fell to you, my wings
+     will never break!
+
+     You truly are a graceful TRAINER.
      Not just a TRAINER, but a CHAMPION!"
 }
 
@@ -444,13 +421,11 @@ text sText_JuanLastMonLowHpSlide {
      can't we, {B_OPPONENT_MON1_NAME}"
 }
 
-text sText_JuanBattlePostWin {
-    "Ahahaha, excellent!
-     Very well, you are the winner."
-}
-
 text sText_JuanBattleSpeechPlayerWon {
-    "From you, I sense the brilliant
+    "Ahahaha, excellent!
+     Very well, you are the winner.
+
+     From you, I sense the brilliant
      shine of skill that will overcome anything!"
 }
 
@@ -532,7 +507,12 @@ text sText_WallyBattlePostWin {
 }
 
 text sText_WallyBattleSpeechPlayerWon {
-    "I gave it everything... But like
+    "That was amazing...
+
+     Battling you teaches me something
+     new every time.
+
+     I gave it everything... But like
      always, you were one step ahead."
 }
 
@@ -594,15 +574,12 @@ text sText_StevenLastMonLowHpSlide {
      I'll answer with everything I've got!"
 }
 
-text sText_StevenBattlePostWin {
-    "Excellent battle.
-     You stayed calm, read the battlefield,
-     and made every turn count."
-}
-
 text sText_StevenBattleSpeechPlayerWon {
     "{PLAYER}!
-    You are truly a remarkable TRAINER..."
+    You are truly a remarkable TRAINER...
+
+    You stayed calm, read the battlefield,
+    and made every turn count."
 }
 
 text sText_StevenBattleSpeechPlayerLost {
@@ -638,10 +615,6 @@ text sText_RedLastMonSlide {
 }
 
 text sText_RedLastMonLowHpSlide {
-    "..."
-}
-
-text sText_RedBattlePostWin {
     "..."
 }
 
@@ -725,13 +698,9 @@ text sText_BlueEnemyMonUnaffectedSlide {
      Do you think I was born yesterday?"
 }
 
-text sText_BlueBattlePostWin {
-    "..."
-}
-
 text sText_BlueBattleSpeechPlayerWon {
     "No!
-     I never lose... how is that possible?"
+     I never lose... how is that possible?!"
 }
 
 text sText_BlueBattleSpeechPlayerLost {
@@ -790,13 +759,6 @@ text sText_CynthiaLastMonSlide {
 text sText_CynthiaLastMonLowHpSlide {
     "You haven't won yet! I won let such
      a fun battle end so easily!"
-}
-
-text sText_CynthiaBattlePostWin {
-    "My heart is pounding because I had such
-     a heated battle with you.
-
-     You are a really great TRAINER!"
 }
 
 text sText_CynthiaBattleSpeechPlayerWon {
