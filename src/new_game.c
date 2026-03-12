@@ -262,6 +262,6 @@ static void SetUsefulFlags(void) {
 }
 
 static void AddDummyPokemonToParty(void) {
-    CreateMon(&gPlayerParty[0], SPECIES_BULBASAUR, 5, 32, 0, 0, OT_ID_PLAYER_ID, 0);
+    CreateRandomMonWithIVs(&gPlayerParty[0], SPECIES_BULBASAUR, 5, USE_RANDOM_IVS);
     gPlayerPartyCount = 1;
 }
