@@ -243,6 +243,8 @@ static inline u16 SanitizeTrainerId(u16 trainerId)
 {
     switch (trainerId)
     {
+    case TRAINER_FRONTIER_BRAIN:
+    case TRAINER_PLAYER:
     case TRAINER_SECRET_BASE:
     case TRAINER_LINK_OPPONENT:
     case TRAINER_UNION_ROOM:
