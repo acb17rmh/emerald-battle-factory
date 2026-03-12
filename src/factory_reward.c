@@ -33,7 +33,7 @@ bool8 BuildFactoryBossRewardMon(u8 bossId, u8 lvlMode, struct Pokemon *outMon)
     if (bossId >= FACTORY_BOSS_COUNT || sFactoryBossRewardMonBuilds[bossId] == NULL)
         return FALSE;
 
-    CreateFactoryCustomMon(outMon, sFactoryBossRewardMonBuilds[bossId], level, fixedIv);
+    CreateFactoryCustomMonWithOtId(outMon, sFactoryBossRewardMonBuilds[bossId], level, fixedIv, OTID_STRUCT_PLAYER_ID);
     return TRUE;
 }
 
@@ -42,7 +42,7 @@ bool8 BuildFactoryBossAceMon(u8 bossId, u8 level, u8 fixedIV, struct Pokemon *ou
     if (bossId >= FACTORY_BOSS_COUNT || sFactoryBossAceMonBuilds[bossId] == NULL)
         return FALSE;
 
-    CreateFactoryCustomMon(outMon, sFactoryBossAceMonBuilds[bossId], level, fixedIV);
+    CreateFactoryCustomMonWithOtId(outMon, sFactoryBossAceMonBuilds[bossId], level, fixedIV, OTID_STRUCT_RANDOM_NO_SHINY);
     return TRUE;
 }
 

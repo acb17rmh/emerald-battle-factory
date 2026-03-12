@@ -8,7 +8,7 @@ ASSUMPTIONS
 
 SINGLE_BATTLE_TEST("Foul Play uses physical attack stat of target", s16 damage)
 {
-    u32 move;
+    enum Move move;
 
     PARAMETRIZE { move = MOVE_HIGH_HORSEPOWER; }
     PARAMETRIZE { move = MOVE_FOUL_PLAY; }

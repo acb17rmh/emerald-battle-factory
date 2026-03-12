@@ -2,6 +2,7 @@
 #define GUARD_FACTORY_CUSTOM_MON_H
 
 #include "global.h"
+#include "pokemon.h"
 #include "constants/pokemon.h"
 
 struct FactoryCustomMonBuild
@@ -17,5 +18,6 @@ struct FactoryCustomMonBuild
 };
 
 void CreateFactoryCustomMon(struct Pokemon *mon, const struct FactoryCustomMonBuild *build, u8 level, u8 fixedIV);
+void CreateFactoryCustomMonWithOtId(struct Pokemon *mon, const struct FactoryCustomMonBuild *build, u8 level, u8 fixedIV, struct OriginalTrainerId otId);
 
 #endif // GUARD_FACTORY_CUSTOM_MON_H

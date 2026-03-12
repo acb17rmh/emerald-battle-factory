@@ -19,7 +19,7 @@ ASSUMPTIONS
 
 SINGLE_BATTLE_TEST("Future Sight uses Sp. Atk stat of the original user without modifiers")
 {
-    u32 item;
+    enum Item item;
     s16 seedFlareDmg;
     s16 futureSightDmg;
 
@@ -114,7 +114,6 @@ SINGLE_BATTLE_TEST("Future Sight is affected by type effectiveness")
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, FUTURE_SIGHT_EQUIVALENT, player);
         HP_BAR(opponent);
-        ANIMATION(ANIM_TYPE_MOVE, MOVE_FUTURE_SIGHT, player);
         MESSAGE("The opposing Houndoom took the Future Sight attack!");
         MESSAGE("It doesn't affect the opposing Houndoom…");
         NOT HP_BAR(opponent);
