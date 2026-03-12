@@ -66,7 +66,7 @@ SINGLE_BATTLE_TEST("Fling fails for Pokémon with Klutz ability (Gen5+)")
     PARAMETRIZE { ability = ABILITY_KLUTZ;    config = GEN_5; }
 
     GIVEN {
-        WITH_CONFIG(CONFIG_KLUTZ_FLING_INTERACTION, config);
+        WITH_CONFIG(B_KLUTZ_FLING_INTERACTION, config);
         PLAYER(SPECIES_BUNEARY) { Item(ITEM_RAZOR_CLAW); Ability(ability); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -199,7 +199,7 @@ SINGLE_BATTLE_TEST("Fling - Item does not get blocked by Unnerve if it isn't a b
     }
 }
 
-SINGLE_BATTLE_TEST("Fling doesn't consume the item if Pokémon is asleep/frozen/paralyzed")
+SINGLE_BATTLE_TEST("Fling doesn't consume the item if the user is asleep/frozen/paralyzed")
 {
     u32 status;
     enum Item item;
@@ -539,5 +539,37 @@ SINGLE_BATTLE_TEST("Fling deals damage based on a TM's move power if reusable or
     } THEN {
         if (GetItemImportance(ITEM_TM_EARTHQUAKE) == 0)
             EXPECT_EQ(damage[0], damage[1]);
+    }
+}
+
+SINGLE_BATTLE_TEST("Fling fails when a Paradox mon holds a Booster Energy")
+{
+    GIVEN {
+        ASSUME(GetItemHoldEffect(ITEM_BOOSTER_ENERGY) == HOLD_EFFECT_BOOSTER_ENERGY);
+        ASSUME(gSpeciesInfo[SPECIES_RAGING_BOLT].isParadox == TRUE);
+        PLAYER(SPECIES_RAGING_BOLT) { Item(ITEM_BOOSTER_ENERGY); Ability(ABILITY_PROTOSYNTHESIS); }
+        OPPONENT(SPECIES_TORKOAL) { Ability(ABILITY_DROUGHT); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_FLING); }
+    } SCENE {
+        MESSAGE("But it failed!");
+    } THEN {
+        EXPECT(player->item == ITEM_BOOSTER_ENERGY);
+    }
+}
+
+SINGLE_BATTLE_TEST("Fling doesn't fail when holding a Booster Energy and the target is a Paradox mon")
+{
+    GIVEN {
+        ASSUME(GetItemHoldEffect(ITEM_BOOSTER_ENERGY) == HOLD_EFFECT_BOOSTER_ENERGY);
+        ASSUME(gSpeciesInfo[SPECIES_RAGING_BOLT].isParadox == TRUE);
+        PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_BOOSTER_ENERGY); }
+        OPPONENT(SPECIES_RAGING_BOLT) { Ability(ABILITY_PROTOSYNTHESIS); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_FLING); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_FLING, player);
+    } THEN {
+        EXPECT(player->item == ITEM_NONE);
     }
 }

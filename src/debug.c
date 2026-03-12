@@ -65,7 +65,6 @@
 #include "constants/script_commands.h"
 #include "constants/songs.h"
 #include "constants/species.h"
-#include "constants/vars.h"
 #include "constants/weather.h"
 #include "siirtc.h"
 #include "rtc.h"
@@ -268,7 +267,6 @@ static void DebugAction_Util_Weather(u8 taskId);
 static void DebugAction_Util_Weather_SelectId(u8 taskId);
 static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
-static void DebugAction_Util_TriggerFactoryScoutIntro(u8 taskId);
 
 static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId);
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId);
@@ -346,9 +344,6 @@ static void DebugAction_Give_Decoration_SelectId(u8 taskId);
 static void DebugAction_Give_MaxMoney(u8 taskId);
 static void DebugAction_Give_MaxCoins(u8 taskId);
 static void DebugAction_Give_MaxBattlePoints(u8 taskId);
-static void DebugAction_Give_FactoryWinsAdd1(u8 taskId);
-static void DebugAction_Give_FactoryWinsAdd10(u8 taskId);
-static void DebugAction_Give_FactoryWinsReset(u8 taskId);
 static void DebugAction_Give_DayCareEgg(u8 taskId);
 
 static void DebugAction_Sound_SE(u8 taskId);
@@ -573,7 +568,6 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Time Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
     { COMPOUND_STRING("Watch credits…"),    DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),       DebugAction_Util_CheatStart },
-    { COMPOUND_STRING("Trigger Scout Intro"), DebugAction_Util_TriggerFactoryScoutIntro },
     { COMPOUND_STRING("Berry Functions…"),  DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
     { COMPOUND_STRING("EWRAM Counters…"),   DebugAction_ExecuteScript, Debug_EventScript_EWRAMCounters },
     { COMPOUND_STRING("Follower NPC…"),     DebugAction_OpenSubMenu, sDebugMenu_Actions_FollowerNPCMenu },
@@ -640,9 +634,6 @@ static const struct DebugMenuOption sDebugMenu_Actions_Give[] =
     { COMPOUND_STRING("Max Money"),         DebugAction_Give_MaxMoney },
     { COMPOUND_STRING("Max Coins"),         DebugAction_Give_MaxCoins },
     { COMPOUND_STRING("Max Battle Points"), DebugAction_Give_MaxBattlePoints },
-    { COMPOUND_STRING("Factory Wins +1"),   DebugAction_Give_FactoryWinsAdd1 },
-    { COMPOUND_STRING("Factory Wins +10"),  DebugAction_Give_FactoryWinsAdd10 },
-    { COMPOUND_STRING("Factory Wins Reset"), DebugAction_Give_FactoryWinsReset },
     { COMPOUND_STRING("Daycare Egg"),       DebugAction_Give_DayCareEgg },
     { NULL }
 };
@@ -1172,75 +1163,75 @@ static u8 Debug_CheckToggleFlags(u8 id)
 
     switch (id)
     {
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX:
-            result = FlagGet(FLAG_SYS_POKEDEX_GET);
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX:
-            result = IsNationalPokedexEnabled();
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKENAV:
-            result = FlagGet(FLAG_SYS_POKENAV_GET);
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_MATCH_CALL:
-            result = FlagGet(FLAG_ADDED_MATCH_CALL_TO_POKENAV) && FlagGet(FLAG_HAS_MATCH_CALL);
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES:
-            result = FlagGet(FLAG_SYS_B_DASH);
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS:
-            result = TRUE;
-            for (u32 i = 0; i < ARRAY_COUNT(sLocationFlags); i++)
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX:
+        result = FlagGet(FLAG_SYS_POKEDEX_GET);
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_NATDEX:
+        result = IsNationalPokedexEnabled();
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKENAV:
+        result = FlagGet(FLAG_SYS_POKENAV_GET);
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_MATCH_CALL:
+        result = FlagGet(FLAG_ADDED_MATCH_CALL_TO_POKENAV) && FlagGet(FLAG_HAS_MATCH_CALL);
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_RUN_SHOES:
+        result = FlagGet(FLAG_SYS_B_DASH);
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_LOCATIONS:
+        result = TRUE;
+        for (u32 i = 0; i < ARRAY_COUNT(sLocationFlags); i++)
+        {
+            if (!FlagGet(sLocationFlags[i]))
             {
-                if (!FlagGet(sLocationFlags[i]))
-                {
-                    result = FALSE;
-                    break;
-                }
+                result = FALSE;
+                break;
             }
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL:
-            result = TRUE;
-            for (u32 i = 0; i < ARRAY_COUNT(gBadgeFlags); i++)
+        }
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BADGES_ALL:
+        result = TRUE;
+        for (u32 i = 0; i < ARRAY_COUNT(gBadgeFlags); i++)
+        {
+            if (!FlagGet(gBadgeFlags[i]))
             {
-                if (!FlagGet(gBadgeFlags[i]))
-                {
-                    result = FALSE;
-                    break;
-                }
+                result = FALSE;
+                break;
             }
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR:
-            result = FlagGet(FLAG_SYS_GAME_CLEAR);
-            break;
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS:
-            result = FlagGet(FLAG_SYS_FRONTIER_PASS);
-            break;
+        }
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_GAME_CLEAR:
+        result = FlagGet(FLAG_SYS_GAME_CLEAR);
+        break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FRONTIER_PASS:
+        result = FlagGet(FLAG_SYS_FRONTIER_PASS);
+        break;
     #if OW_FLAG_NO_COLLISION != 0
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION:
-            result = FlagGet(OW_FLAG_NO_COLLISION);
-            break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_COLLISION:
+        result = FlagGet(OW_FLAG_NO_COLLISION);
+        break;
     #endif
     #if OW_FLAG_NO_ENCOUNTER != 0
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER:
-            result = FlagGet(OW_FLAG_NO_ENCOUNTER);
-            break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_ENCOUNTER:
+        result = FlagGet(OW_FLAG_NO_ENCOUNTER);
+        break;
     #endif
     #if OW_FLAG_NO_TRAINER_SEE != 0
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE:
-            result = FlagGet(OW_FLAG_NO_TRAINER_SEE);
-            break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE:
+        result = FlagGet(OW_FLAG_NO_TRAINER_SEE);
+        break;
     #endif
     #if B_FLAG_NO_CATCHING != 0
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING:
-            result = FlagGet(B_FLAG_NO_CATCHING);
-            break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING:
+        result = FlagGet(B_FLAG_NO_CATCHING);
+        break;
     #endif
-        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE:
-            result = VarGet(B_VAR_NO_BAG_USE);
-            break;
-        default:
-            result = 0xFF;
-            break;
+    case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE:
+        result = VarGet(B_VAR_NO_BAG_USE);
+        break;
+    default:
+        result = 0xFF;
+        break;
     }
 
     return result;
@@ -1779,23 +1770,6 @@ static void DebugAction_Util_CheatStart(u8 taskId)
         Debug_DestroyMenu_Full_Script(taskId, Debug_CheatStart);
 }
 
-static void DebugAction_Util_TriggerFactoryScoutIntro(u8 taskId)
-{
-    VarSet(VAR_FACTORY_BOSS_UNLOCK_STATE, 1);
-    VarSet(VAR_TEMP_CHALLENGE_STATUS, 255);
-    FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_NOLAND);
-    FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_CAMERAMAN);
-    FlagClear(FLAG_HIDE_BATTLE_FACTORY_LOBBY_REPORTER);
-    FlagClear(FLAG_BATTLE_FACTORY_SCOUT_INTRO_SEEN);
-    SetWarpDestination(MAP_GROUP(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY),
-                       MAP_NUM(MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY),
-                       WARP_ID_NONE, 4, 8);
-
-    DoWarp();
-    ResetInitialPlayerAvatarState();
-    Debug_DestroyMenu_Full(taskId);
-}
-
 void BufferExpansionVersion(struct ScriptContext *ctx)
 {
     static const u8 sText_Released[] = _("\nRelease Build");
@@ -1837,13 +1811,13 @@ void DebugMenu_CalculateTimeOfDay(struct ScriptContext *ctx)
     enum TimeOfDay timeOfDay = GetTimeOfDay();
     switch (timeOfDay)
     {
-        case TIME_MORNING:
-        case TIME_DAY:
-        case TIME_EVENING:
-        case TIME_NIGHT:
-            StringExpandPlaceholders(gStringVar1, gTimeOfDayStringsTable[timeOfDay]);
-            break;
-        case TIMES_OF_DAY_COUNT:
+    case TIME_MORNING:
+    case TIME_DAY:
+    case TIME_EVENING:
+    case TIME_NIGHT:
+        StringExpandPlaceholders(gStringVar1, gTimeOfDayStringsTable[timeOfDay]);
+        break;
+    case TIMES_OF_DAY_COUNT:
             break;
     }
 }
@@ -1904,20 +1878,22 @@ static void Debug_Display_LocalTrainer(u32 localId, u32 digit, u8 windowId)
     WrapFontIdToFit(gStringVar1, end, DEBUG_MENU_FONT, WindowWidthPx(windowId));
     StringCopyPadded(gStringVar1, gStringVar1, CHAR_SPACE, 15);
     ConvertIntToDecimalStringN(gStringVar3, localId, STR_CONV_MODE_LEADING_ZEROS, DEBUG_NUMBER_DIGITS_LOCALID);
-    StringExpandPlaceholders(gStringVar4, COMPOUND_STRING("Trainer ID: {STR_VAR_3}\n{STR_VAR_1}{CLEAR_TO 90}\n\n{STR_VAR_2}{CLEAR_TO 90}"));
+    StringExpandPlaceholders(gStringVar4, COMPOUND_STRING("Local ID: {STR_VAR_3}\n{STR_VAR_1}{CLEAR_TO 90}\n\n{STR_VAR_2}{CLEAR_TO 90}"));
     AddTextPrinterParameterized(windowId, DEBUG_MENU_FONT, gStringVar4, 0, 0, 0, NULL);
 }
 
 static void GetTrainerIdFromLocalId(u32 localId)
 {
     Debug_Trainers_ResetTrainersData();
-    ParseObjectEventScript(gMapHeader.events->objectEvents[localId].script);
+    ParseObjectEventScript(gMapHeader.events->objectEvents[localId - 1].script);
     if (GetTrainerBattleType(sDebugMenuListData->data[0]) == TRAINER_BATTLE_TYPE_DOUBLES)
         sDebugMenuListData->data[5] = TRUE;
 }
 
 #define TRAINER_TAG 0xFDF3
 #define tSpriteId   data[5]
+#define LOCAL_ID_MIN 1
+#define LOCAL_ID_MAX (gMapHeader.events->objectEventCount)
 
 static void DebugAction_ChooseFromMap_Select(u8 taskId)
 {
@@ -1925,23 +1901,29 @@ static void DebugAction_ChooseFromMap_Select(u8 taskId)
     {
         PlaySE(SE_SELECT);
         u32 previousInput = gTasks[taskId].tInput;
+
         do {
-            Debug_HandleInput_Numeric(taskId, 1, gMapHeader.events->objectEventCount, DEBUG_NUMBER_DIGITS_LOCALID);
+            Debug_HandleInput_Numeric(taskId, LOCAL_ID_MIN, LOCAL_ID_MAX, DEBUG_NUMBER_DIGITS_LOCALID);
             GetTrainerIdFromLocalId(gTasks[taskId].tInput);
-        } while (sDebugMenuListData->data[0] == TRAINER_NONE && gTasks[taskId].tInput != 1 && gTasks[taskId].tInput != gMapHeader.events->objectEventCount);
+        } while (sDebugMenuListData->data[0] == TRAINER_NONE && gTasks[taskId].tInput != LOCAL_ID_MIN && gTasks[taskId].tInput != LOCAL_ID_MAX);
 
         if (sDebugMenuListData->data[0] == TRAINER_NONE)
         {
+            s32 sign = previousInput > gTasks[taskId].tInput ? 1 : -1;
+
             PlaySE(SE_FAILURE);
-            gTasks[taskId].tInput = previousInput;
-            GetTrainerIdFromLocalId(gTasks[taskId].tInput);
-            return;
+
+            while (gTasks[taskId].tInput != previousInput && sDebugMenuListData->data[0] == TRAINER_NONE)
+            {
+                gTasks[taskId].tInput += sign;
+                GetTrainerIdFromLocalId(gTasks[taskId].tInput);
+            }
         }
 
         FreeSpritePaletteByTag(TRAINER_TAG);
         DestroySprite(&gSprites[gTasks[taskId].tSpriteId]);
         Debug_Display_LocalTrainer(gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
-        u32 graphicsId = gMapHeader.events->objectEvents[gTasks[taskId].tInput].graphicsId;
+        u32 graphicsId = gMapHeader.events->objectEvents[gTasks[taskId].tInput - 1].graphicsId;
         gTasks[taskId].tSpriteId = CreateObjectGraphicsSprite(graphicsId, SpriteCallbackDummy, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4);
         StartSpriteAnim(&gSprites[gTasks[taskId].tSpriteId], ANIM_STD_GO_SOUTH);
         gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
@@ -1981,7 +1963,7 @@ static void DebugAction_Trainers_ChooseFromMap(u8 taskId)
     CopyWindowToVram(windowId, COPYWIN_FULL);
 
     // Display initial object event
-    u32 localId = 1;
+    u32 localId = LOCAL_ID_MIN;
     GetTrainerIdFromLocalId(localId);
     Debug_Display_LocalTrainer(localId, 0, windowId);
 
@@ -1991,7 +1973,7 @@ static void DebugAction_Trainers_ChooseFromMap(u8 taskId)
     gTasks[taskId].tInput = localId;
     gTasks[taskId].tDigit = 0;
 
-    u32 graphicsId = gMapHeader.events->objectEvents[localId].graphicsId;
+    u32 graphicsId = gMapHeader.events->objectEvents[localId - 1].graphicsId;
     u32 spriteId = CreateObjectGraphicsSprite(graphicsId, SpriteCallbackDummy, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4);
     StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_SOUTH);
     gSprites[spriteId].oam.priority = 0;
@@ -2001,6 +1983,8 @@ static void DebugAction_Trainers_ChooseFromMap(u8 taskId)
 
 #undef TRAINER_TAG
 #undef tSpriteId
+#undef LOCAL_ID_MIN
+#undef LOCAL_ID_MAX
 
 #define tSelection  data[5]
 #define tInitial    data[6]
@@ -2040,7 +2024,7 @@ static void DebugAction_ChooseTrainerID_Select(u8 taskId)
             max = PARTNER_COUNT - 1;
         }
         Debug_HandleInput_Numeric(taskId, min, max, DEBUG_NUMBER_DIGITS_TRAINERS);
-        switch(gTasks[taskId].tSelection)
+        switch (gTasks[taskId].tSelection)
         {
         case TRAINERS_DEBUG_SELECTION_TRAINER1:
             sDebugMenuListData->data[0] = gTasks[taskId].tInput;
@@ -2093,7 +2077,7 @@ static void DebugAction_Trainers_ChooseTrainer(u8 taskId, u32 selection)
     gTasks[taskId].tDigit = 0;
     gTasks[taskId].tSelection = (s32)selection;
 
-    switch(gTasks[taskId].tSelection)
+    switch (gTasks[taskId].tSelection)
     {
     case TRAINERS_DEBUG_SELECTION_TRAINER1:
         gTasks[taskId].tInput = sDebugMenuListData->data[0];
@@ -2856,7 +2840,7 @@ static void DebugAction_Give_PokemonSimple(u8 taskId)
     gTasks[taskId].tIsEgg = FALSE;
 
     FreeMonIconPalettes();
-    LoadMonIconPalette(species);
+    LoadMonIconPalettePersonality(species, 0);
     gTasks[taskId].tSpriteId = CreateMonIcon(species, SpriteCB_MonIcon, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4, 0);
     gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
 }
@@ -2897,7 +2881,7 @@ static void DebugAction_Give_PokemonComplex(u8 taskId)
     gTasks[taskId].tIsEgg = FALSE;
 
     FreeMonIconPalettes();
-    LoadMonIconPalette(species);
+    LoadMonIconPalettePersonality(species, 0);
     gTasks[taskId].tSpriteId = CreateMonIcon(species, SpriteCB_MonIcon, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4, 0);
     gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
     gTasks[taskId].tIterator = 0;
@@ -2966,7 +2950,7 @@ static void DebugAction_Give_Pokemon_SelectId(u8 taskId)
         Debug_Display_SpeciesInfo(species, gTasks[taskId].tInput, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
         FreeAndDestroyMonIconSprite(&gSprites[gTasks[taskId].tSpriteId]);
         FreeMonIconPalettes();
-        LoadMonIconPalette(species);
+        LoadMonIconPalettePersonality(species, 0);
         gTasks[taskId].tSpriteId = CreateMonIcon(species, SpriteCB_MonIcon, DEBUG_NUMBER_ICON_X, DEBUG_NUMBER_ICON_Y, 4, 0);
         gSprites[gTasks[taskId].tSpriteId].oam.priority = 0;
     }
@@ -3097,10 +3081,11 @@ static void DebugAction_Give_Pokemon_SelectShiny(u8 taskId)
     }
 }
 
-static void Debug_Display_Ability(enum Ability abilityId, u32 digit, u8 windowId)//(u32 natureId, u32 digit, u8 windowId)
+static void Debug_Display_Ability(u32 abilityNum, u32 digit, u8 windowId)//(u32 natureId, u32 digit, u8 windowId)
 {
+    enum Ability abilityId = GetAbilityBySpecies(sDebugMonData->species, abilityNum);
     StringCopy(gStringVar2, gText_DigitIndicator[digit]);
-    ConvertIntToDecimalStringN(gStringVar3, abilityId, STR_CONV_MODE_LEADING_ZEROS, 2);
+    ConvertIntToDecimalStringN(gStringVar3, abilityNum, STR_CONV_MODE_LEFT_ALIGN, 2);
     StringCopyPadded(gStringVar3, gStringVar3, CHAR_SPACE, 15);
     u8 *end = StringCopy(gStringVar1, gAbilitiesInfo[abilityId].name);
     WrapFontIdToFit(gStringVar1, end, DEBUG_MENU_FONT, WindowWidthPx(windowId));
@@ -3139,8 +3124,7 @@ static void DebugAction_Give_Pokemon_SelectNature(u8 taskId)
         gTasks[taskId].tInput = 0;
         gTasks[taskId].tDigit = 0;
 
-        enum Ability abilityId = GetAbilityBySpecies(sDebugMonData->species, 0);
-        Debug_Display_Ability(abilityId, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
+        Debug_Display_Ability(0, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
 
         gTasks[taskId].func = DebugAction_Give_Pokemon_SelectAbility;
     }
@@ -3164,8 +3148,7 @@ static void Debug_Display_TeraType(u32 typeId, u32 digit, u8 windowId)
 
 static void DebugAction_Give_Pokemon_SelectAbility(u8 taskId)
 {
-    u8 abilityCount = NUM_ABILITY_SLOTS - 1; //-1 for proper iteration
-    u8 i = 0;
+    s32 abilityNum = -1;
 
     if (JOY_NEW(DPAD_ANY))
     {
@@ -3173,28 +3156,31 @@ static void DebugAction_Give_Pokemon_SelectAbility(u8 taskId)
 
         if (JOY_NEW(DPAD_UP))
         {
-            gTasks[taskId].tInput += sPowersOfTen[gTasks[taskId].tDigit];
-            if (gTasks[taskId].tInput > abilityCount)
-                gTasks[taskId].tInput = abilityCount;
+            abilityNum = gTasks[taskId].tInput + 1;
+            while (GetSpeciesAbility(sDebugMonData->species, abilityNum) == ABILITY_NONE && abilityNum < NUM_ABILITY_SLOTS)
+            {
+                abilityNum++;
+            }
         }
         if (JOY_NEW(DPAD_DOWN))
         {
-            gTasks[taskId].tInput -= sPowersOfTen[gTasks[taskId].tDigit];
-            if (gTasks[taskId].tInput < 0)
-                gTasks[taskId].tInput = 0;
+            abilityNum = gTasks[taskId].tInput - 1;
+            while (GetSpeciesAbility(sDebugMonData->species, abilityNum) == ABILITY_NONE && abilityNum >= 0)
+            {
+                abilityNum--;
+            }
         }
 
-        while (GetAbilityBySpecies(sDebugMonData->species, gTasks[taskId].tInput - i) == ABILITY_NONE && gTasks[taskId].tInput - i < NUM_ABILITY_SLOTS)
+        if (abilityNum >= 0 && abilityNum < NUM_ABILITY_SLOTS)
         {
-            i++;
+            gTasks[taskId].tInput = abilityNum;
+            Debug_Display_Ability(abilityNum, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
         }
-        enum Ability abilityId = GetAbilityBySpecies(sDebugMonData->species, gTasks[taskId].tInput - i);
-        Debug_Display_Ability(abilityId, gTasks[taskId].tDigit, gTasks[taskId].tSubWindowId);
     }
 
     if (JOY_NEW(A_BUTTON))
     {
-        sDebugMonData->abilityNum = gTasks[taskId].tInput - i;
+        sDebugMonData->abilityNum = gTasks[taskId].tInput;
         gTasks[taskId].tInput = 0;
         gTasks[taskId].tDigit = 0;
 
@@ -3699,27 +3685,6 @@ static void DebugAction_Give_MaxBattlePoints(u8 taskId)
     gSaveBlock2Ptr->frontier.battlePoints = MAX_BATTLE_FRONTIER_POINTS;
 }
 
-static void DebugAction_Give_FactoryWinsAdd1(u8 taskId)
-{
-    u16 wins = VarGet(VAR_FACTORY_TOTAL_WINS);
-    if (wins < UINT16_MAX)
-        VarSet(VAR_FACTORY_TOTAL_WINS, wins + 1);
-}
-
-static void DebugAction_Give_FactoryWinsAdd10(u8 taskId)
-{
-    u16 wins = VarGet(VAR_FACTORY_TOTAL_WINS);
-    if (wins > UINT16_MAX - 10)
-        VarSet(VAR_FACTORY_TOTAL_WINS, UINT16_MAX);
-    else
-        VarSet(VAR_FACTORY_TOTAL_WINS, wins + 10);
-}
-
-static void DebugAction_Give_FactoryWinsReset(u8 taskId)
-{
-    VarSet(VAR_FACTORY_TOTAL_WINS, 0);
-}
-
 static void DebugAction_Give_DayCareEgg(u8 taskId)
 {
     s32 emptySlot = Daycare_FindEmptySpot(&gSaveBlock1Ptr->daycare);
@@ -3743,16 +3708,16 @@ static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId)
     DebugAction_DestroyExtraWindow(taskId);
     switch (input)
     {
-        case TIME_MORNING:
-            FakeRtc_ForwardTimeTo(MORNING_HOUR_BEGIN, 0, 0);
-            break;
-        case TIME_DAY:
-            FakeRtc_ForwardTimeTo(DAY_HOUR_BEGIN, 0, 0);
-            break;
-        case TIME_EVENING:
-            FakeRtc_ForwardTimeTo(EVENING_HOUR_BEGIN, 0, 0);
-            break;
-        case TIME_NIGHT:
+    case TIME_MORNING:
+        FakeRtc_ForwardTimeTo(MORNING_HOUR_BEGIN, 0, 0);
+        break;
+    case TIME_DAY:
+        FakeRtc_ForwardTimeTo(DAY_HOUR_BEGIN, 0, 0);
+        break;
+    case TIME_EVENING:
+        FakeRtc_ForwardTimeTo(EVENING_HOUR_BEGIN, 0, 0);
+        break;
+    case TIME_NIGHT:
             FakeRtc_ForwardTimeTo(NIGHT_HOUR_BEGIN, 0, 0);
             break;
     }
@@ -4305,564 +4270,7 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_RG_ENCOUNTER_DEOXYS)      \
     X(MUS_RG_TRAINER_TOWER)         \
     X(MUS_RG_SLOW_PALLET)           \
-    X(MUS_RG_TEACHY_TV_MENU)        \
-    X(MUS_DP_TWINLEAF_DAY) \
-    X(MUS_DP_SANDGEM_DAY) \
-    X(MUS_DP_FLOAROMA_DAY) \
-    X(MUS_DP_SOLACEON_DAY) \
-    X(MUS_DP_ROUTE225_DAY) \
-    X(MUS_DP_VALOR_LAKEFRONT_DAY) \
-    X(MUS_DP_JUBILIFE_DAY) \
-    X(MUS_DP_CANALAVE_DAY) \
-    X(MUS_DP_OREBURGH_DAY) \
-    X(MUS_DP_ETERNA_DAY) \
-    X(MUS_DP_HEARTHOME_DAY) \
-    X(MUS_DP_VEILSTONE_DAY) \
-    X(MUS_DP_SUNYSHORE_DAY) \
-    X(MUS_DP_SNOWPOINT_DAY) \
-    X(MUS_DP_POKEMON_LEAGUE_DAY) \
-    X(MUS_DP_FIGHT_AREA_DAY) \
-    X(MUS_DP_ROUTE201_DAY) \
-    X(MUS_DP_ROAD_B_D) \
-    X(MUS_DP_ROUTE205_DAY) \
-    X(MUS_DP_ROUTE206_DAY) \
-    X(MUS_DP_ROUTE209_DAY) \
-    X(MUS_DP_ROUTE210_DAY) \
-    X(MUS_DP_ROUTE216_DAY) \
-    X(MUS_DP_ROUTE228_DAY) \
-    X(MUS_DP_ROWAN) \
-    X(MUS_DP_TV_BROADCAST) \
-    X(MUS_DP_TWINLEAF_NIGHT) \
-    X(MUS_DP_SANDGEM_NIGHT) \
-    X(MUS_DP_FLOAROMA_NIGHT) \
-    X(MUS_DP_SOLACEON_NIGHT) \
-    X(MUS_DP_ROUTE225_NIGHT) \
-    X(MUS_DP_VALOR_LAKEFRONT_NIGHT) \
-    X(MUS_DP_JUBILIFE_NIGHT) \
-    X(MUS_DP_CANALAVE_NIGHT) \
-    X(MUS_DP_OREBURGH_NIGHT) \
-    X(MUS_DP_ETERNA_NIGHT) \
-    X(MUS_DP_HEARTHOME_NIGHT) \
-    X(MUS_DP_VEILSTONE_NIGHT) \
-    X(MUS_DP_SUNYSHORE_NIGHT) \
-    X(MUS_DP_SNOWPOINT_NIGHT) \
-    X(MUS_DP_POKEMON_LEAGUE_NIGHT) \
-    X(MUS_DP_FIGHT_AREA_NIGHT) \
-    X(MUS_DP_ROUTE201_NIGHT) \
-    X(MUS_DP_ROUTE203_NIGHT) \
-    X(MUS_DP_ROUTE205_NIGHT) \
-    X(MUS_DP_ROUTE206_NIGHT) \
-    X(MUS_DP_ROUTE209_NIGHT) \
-    X(MUS_DP_ROUTE210_NIGHT) \
-    X(MUS_DP_ROUTE216_NIGHT) \
-    X(MUS_DP_ROUTE228_NIGHT) \
-    X(MUS_DP_UNDERGROUND) \
-    X(MUS_DP_FLAG_CAPTURED) \
-    X(MUS_DP_VICTORY_ROAD) \
-    X(MUS_DP_ETERNA_FOREST) \
-    X(MUS_DP_OLD_CHATEAU) \
-    X(MUS_DP_LAKE_CAVERNS) \
-    X(MUS_DP_AMITY_SQUARE) \
-    X(MUS_DP_GALACTIC_HQ) \
-    X(MUS_DP_GALACTIC_ETERNA_BUILDING) \
-    X(MUS_DP_GREAT_MARSH) \
-    X(MUS_DP_LAKE) \
-    X(MUS_DP_MT_CORONET) \
-    X(MUS_DP_SPEAR_PILLAR) \
-    X(MUS_DP_STARK_MOUNTAIN) \
-    X(MUS_DP_OREBURGH_GATE) \
-    X(MUS_DP_OREBURGH_MINE) \
-    X(MUS_DP_INSIDE_POKEMON_LEAGUE) \
-    X(MUS_DP_HALL_OF_FAME_ROOM) \
-    X(MUS_DP_POKE_CENTER_DAY) \
-    X(MUS_DP_POKE_CENTER_NIGHT) \
-    X(MUS_DP_GYM) \
-    X(MUS_DP_ROWAN_LAB) \
-    X(MUS_DP_CONTEST_LOBBY) \
-    X(MUS_DP_POKE_MART) \
-    X(MUS_DP_GAME_CORNER) \
-    X(MUS_DP_B_TOWER) \
-    X(MUS_DP_TV_STATION) \
-    X(MUS_DP_GALACTIC_HQ_BASEMENT) \
-    X(MUS_DP_AZURE_FLUTE) \
-    X(MUS_DP_HALL_OF_ORIGIN) \
-    X(MUS_DP_GTS) \
-    X(MUS_DP_ENCOUNTER_BOY) \
-    X(MUS_DP_ENCOUNTER_TWINS) \
-    X(MUS_DP_ENCOUNTER_INTENSE) \
-    X(MUS_DP_ENCOUNTER_GALACTIC) \
-    X(MUS_DP_ENCOUNTER_LADY) \
-    X(MUS_DP_ENCOUNTER_HIKER) \
-    X(MUS_DP_ENCOUNTER_RICH) \
-    X(MUS_DP_ENCOUNTER_SAILOR) \
-    X(MUS_DP_ENCOUNTER_SUSPICIOUS) \
-    X(MUS_DP_ENCOUNTER_ACE_TRAINER) \
-    X(MUS_DP_ENCOUNTER_GIRL) \
-    X(MUS_DP_ENCOUNTER_CYCLIST) \
-    X(MUS_DP_ENCOUNTER_ARTIST) \
-    X(MUS_DP_ENCOUNTER_ELITE_FOUR) \
-    X(MUS_DP_ENCOUNTER_CHAMPION) \
-    X(MUS_DP_VS_WILD) \
-    X(MUS_DP_VS_GYM_LEADER) \
-    X(MUS_DP_VS_UXIE_MESPRIT_AZELF) \
-    X(MUS_DP_VS_TRAINER) \
-    X(MUS_DP_VS_GALACTIC_BOSS) \
-    X(MUS_DP_VS_DIALGA_PALKIA) \
-    X(MUS_DP_VS_CHAMPION) \
-    X(MUS_DP_VS_GALACTIC) \
-    X(MUS_DP_VS_RIVAL) \
-    X(MUS_DP_VS_ARCEUS) \
-    X(MUS_DP_VS_LEGEND) \
-    X(MUS_DP_VICTORY_WILD) \
-    X(MUS_DP_VICTORY_TRAINER) \
-    X(MUS_DP_VICTORY_GYM_LEADER) \
-    X(MUS_DP_VICTORY_CHAMPION) \
-    X(MUS_DP_VICTORY_GALACTIC) \
-    X(MUS_DP_VICTORY_ELITE_FOUR) \
-    X(MUS_DP_VS_GALACTIC_COMMANDER) \
-    X(MUS_DP_CONTEST) \
-    X(MUS_DP_VS_ELITE_FOUR) \
-    X(MUS_DP_FOLLOW_ME) \
-    X(MUS_DP_RIVAL) \
-    X(MUS_DP_LAKE_EVENT) \
-    X(MUS_DP_EVOLUTION) \
-    X(MUS_DP_LUCAS) \
-    X(MUS_DP_DAWN) \
-    X(MUS_DP_LEGEND_APPEARS) \
-    X(MUS_DP_CATASTROPHE) \
-    X(MUS_DP_POKE_RADAR) \
-    X(MUS_DP_SURF) \
-    X(MUS_DP_CYCLING) \
-    X(MUS_DP_LETS_GO_TOGETHER) \
-    X(MUS_DP_TV_END) \
-    X(MUS_DP_LEVEL_UP) \
-    X(MUS_DP_EVOLVED) \
-    X(MUS_DP_OBTAIN_KEY_ITEM) \
-    X(MUS_DP_OBTAIN_ITEM) \
-    X(MUS_DP_CAUGHT_INTRO) \
-    X(MUS_DP_DEX_RATING) \
-    X(MUS_DP_OBTAIN_BADGE) \
-    X(MUS_DP_POKETCH) \
-    X(MUS_DP_OBTAIN_TMHM) \
-    X(MUS_DP_OBTAIN_ACCESSORY) \
-    X(MUS_DP_MOVE_DELETED) \
-    X(MUS_DP_HEAL) \
-    X(MUS_DP_OBTAIN_BERRY) \
-    X(MUS_DP_CONTEST_DRESS_UP) \
-    X(MUS_DP_HALL_OF_FAME) \
-    X(MUS_DP_INTRO) \
-    X(MUS_DP_TITLE) \
-    X(MUS_DP_MYSTERY_GIFT) \
-    X(MUS_DP_WFC) \
-    X(MUS_DP_DANCE_EASY) \
-    X(MUS_DP_DANCE_DIFFICULT) \
-    X(MUS_DP_CONTEST_RESULTS) \
-    X(MUS_DP_CONTEST_WINNER) \
-    X(MUS_DP_POFFINS) \
-    X(MUS_DP_SLOTS_WIN) \
-    X(MUS_DP_SLOTS_JACKPOT) \
-    X(MUS_DP_CREDITS) \
-    X(MUS_DP_SLOTS_UNUSED) \
-    X(MUS_PL_FIGHT_AREA_DAY) \
-    X(MUS_PL_TV_BROADCAST) \
-    X(MUS_PL_TV_END) \
-    X(MUS_PL_INTRO) \
-    X(MUS_PL_TITLE) \
-    X(MUS_PL_DISTORTION_WORLD) \
-    X(MUS_PL_B_ARCADE) \
-    X(MUS_PL_B_HALL) \
-    X(MUS_PL_B_CASTLE) \
-    X(MUS_PL_B_FACTORY) \
-    X(MUS_PL_GLOBAL_TERMINAL) \
-    X(MUS_PL_LILYCOVE_BOSSA_NOVA) \
-    X(MUS_PL_LOOKER) \
-    X(MUS_PL_VS_GIRATINA) \
-    X(MUS_PL_VS_FRONTIER_BRAIN) \
-    X(MUS_PL_VICTORY_FRONTIER_BRAIN) \
-    X(MUS_PL_VS_REGI) \
-    X(MUS_PL_CONTEST_COOL) \
-    X(MUS_PL_CONTEST_SMART) \
-    X(MUS_PL_CONTEST_CUTE) \
-    X(MUS_PL_CONTEST_TOUGH) \
-    X(MUS_PL_CONTEST_BEAUTY) \
-    X(MUS_PL_SPIN_TRADE) \
-    X(MUS_PL_WIFI_MINIGAMES) \
-    X(MUS_PL_WIFI_PLAZA) \
-    X(MUS_PL_WIFI_PARADE) \
-    X(MUS_PL_GIRATINA_APPEARS_1) \
-    X(MUS_PL_GIRATINA_APPEARS_2) \
-    X(MUS_PL_MYSTERY_GIFT) \
-    X(MUS_PL_TWINLEAF_MUSIC_BOX) \
-    X(MUS_PL_OBTAIN_ARCADE_POINTS) \
-    X(MUS_PL_OBTAIN_CASTLE_POINTS) \
-    X(MUS_PL_OBTAIN_B_POINTS) \
-    X(MUS_PL_WIN_MINIGAME) \
-    X(MUS_HG_INTRO) \
-    X(MUS_HG_TITLE) \
-    X(MUS_HG_NEW_GAME) \
-    X(MUS_HG_EVOLUTION) \
-    X(MUS_HG_EVOLUTION_NO_INTRO) \
-    X(MUS_HG_CYCLING) \
-    X(MUS_HG_SURF) \
-    X(MUS_HG_E_DENDOURIRI) \
-    X(MUS_HG_CREDITS) \
-    X(MUS_HG_END) \
-    X(MUS_HG_NEW_BARK) \
-    X(MUS_HG_CHERRYGROVE) \
-    X(MUS_HG_VIOLET) \
-    X(MUS_HG_AZALEA) \
-    X(MUS_HG_GOLDENROD) \
-    X(MUS_HG_ECRUTEAK) \
-    X(MUS_HG_CIANWOOD) \
-    X(MUS_HG_ROUTE29) \
-    X(MUS_HG_ROUTE30) \
-    X(MUS_HG_ROUTE34) \
-    X(MUS_HG_ROUTE38) \
-    X(MUS_HG_ROUTE42) \
-    X(MUS_HG_VERMILION) \
-    X(MUS_HG_PEWTER) \
-    X(MUS_HG_CERULEAN) \
-    X(MUS_HG_LAVENDER) \
-    X(MUS_HG_CELADON) \
-    X(MUS_HG_PALLET) \
-    X(MUS_HG_CINNABAR) \
-    X(MUS_HG_ROUTE1) \
-    X(MUS_HG_ROUTE3) \
-    X(MUS_HG_ROUTE11) \
-    X(MUS_HG_ROUTE24) \
-    X(MUS_HG_ROUTE26) \
-    X(MUS_HG_POKE_CENTER) \
-    X(MUS_HG_POKE_MART) \
-    X(MUS_HG_GYM) \
-    X(MUS_HG_ELM_LAB) \
-    X(MUS_HG_OAK) \
-    X(MUS_HG_DANCE_THEATER) \
-    X(MUS_HG_GAME_CORNER) \
-    X(MUS_HG_B_TOWER) \
-    X(MUS_HG_B_TOWER_RECEPTION) \
-    X(MUS_HG_SPROUT_TOWER) \
-    X(MUS_HG_UNION_CAVE) \
-    X(MUS_HG_RUINS_OF_ALPH) \
-    X(MUS_HG_NATIONAL_PARK) \
-    X(MUS_HG_BURNED_TOWER) \
-    X(MUS_HG_BELL_TOWER) \
-    X(MUS_HG_LIGHTHOUSE) \
-    X(MUS_HG_TEAM_ROCKET_HQ) \
-    X(MUS_HG_ICE_PATH) \
-    X(MUS_HG_DRAGONS_DEN) \
-    X(MUS_HG_ROCK_TUNNEL) \
-    X(MUS_HG_VIRIDIAN_FOREST) \
-    X(MUS_HG_VICTORY_ROAD) \
-    X(MUS_HG_POKEMON_LEAGUE) \
-    X(MUS_HG_FOLLOW_ME_1) \
-    X(MUS_HG_FOLLOW_ME_2) \
-    X(MUS_HG_ENCOUNTER_RIVAL) \
-    X(MUS_HG_RIVAL_EXIT) \
-    X(MUS_HG_BUG_CONTEST_PREP) \
-    X(MUS_HG_BUG_CATCHING_CONTEST) \
-    X(MUS_HG_RADIO_ROCKET) \
-    X(MUS_HG_ROCKET_TAKEOVER) \
-    X(MUS_HG_MAGNET_TRAIN) \
-    X(MUS_HG_SS_AQUA) \
-    X(MUS_HG_MT_MOON_SQUARE) \
-    X(MUS_HG_RADIO_JINGLE) \
-    X(MUS_HG_RADIO_LULLABY) \
-    X(MUS_HG_RADIO_MARCH) \
-    X(MUS_HG_RADIO_UNOWN) \
-    X(MUS_HG_RADIO_POKE_FLUTE) \
-    X(MUS_HG_RADIO_OAK) \
-    X(MUS_HG_RADIO_BUENA) \
-    X(MUS_HG_EUSINE) \
-    X(MUS_HG_CLAIR) \
-    X(MUS_HG_ENCOUNTER_GIRL_1) \
-    X(MUS_HG_ENCOUNTER_BOY_1) \
-    X(MUS_HG_ENCOUNTER_SUSPICIOUS_1) \
-    X(MUS_HG_ENCOUNTER_SAGE) \
-    X(MUS_HG_ENCOUNTER_KIMONO_GIRL) \
-    X(MUS_HG_ENCOUNTER_ROCKET) \
-    X(MUS_HG_ENCOUNTER_GIRL_2) \
-    X(MUS_HG_ENCOUNTER_BOY_2) \
-    X(MUS_HG_ENCOUNTER_SUSPICIOUS_2) \
-    X(MUS_HG_VS_WILD) \
-    X(MUS_HG_VS_TRAINER) \
-    X(MUS_HG_VS_GYM_LEADER) \
-    X(MUS_HG_VS_RIVAL) \
-    X(MUS_HG_VS_ROCKET) \
-    X(MUS_HG_VS_SUICUNE) \
-    X(MUS_HG_VS_ENTEI) \
-    X(MUS_HG_VS_RAIKOU) \
-    X(MUS_HG_VS_CHAMPION) \
-    X(MUS_HG_VS_WILD_KANTO) \
-    X(MUS_HG_VS_TRAINER_KANTO) \
-    X(MUS_HG_VS_GYM_LEADER_KANTO) \
-    X(MUS_HG_VICTORY_TRAINER) \
-    X(MUS_HG_VICTORY_WILD) \
-    X(MUS_HG_CAUGHT) \
-    X(MUS_HG_VICTORY_GYM_LEADER) \
-    X(MUS_HG_VS_HO_OH) \
-    X(MUS_HG_VS_LUGIA) \
-    X(MUS_HG_POKEATHLON_LOBBY) \
-    X(MUS_HG_POKEATHLON_START) \
-    X(MUS_HG_POKEATHLON_BEFORE) \
-    X(MUS_HG_POKEATHLON_EVENT) \
-    X(MUS_HG_POKEATHLON_FINALS) \
-    X(MUS_HG_POKEATHLON_RESULTS) \
-    X(MUS_HG_POKEATHLON_END) \
-    X(MUS_HG_POKEATHLON_WINNER) \
-    X(MUS_HG_B_FACTORY) \
-    X(MUS_HG_B_HALL) \
-    X(MUS_HG_B_ARCADE) \
-    X(MUS_HG_B_CASTLE) \
-    X(MUS_HG_VS_FRONTIER_BRAIN) \
-    X(MUS_HG_VICTORY_FRONTIER_BRAIN) \
-    X(MUS_HG_WFC) \
-    X(MUS_HG_MYSTERY_GIFT) \
-    X(MUS_HG_WIFI_PLAZA) \
-    X(MUS_HG_WIFI_MINIGAMES) \
-    X(MUS_HG_WIFI_PARADE) \
-    X(MUS_HG_GLOBAL_TERMINAL) \
-    X(MUS_HG_SPIN_TRADE) \
-    X(MUS_HG_GTS) \
-    X(MUS_HG_ROUTE47) \
-    X(MUS_HG_SAFARI_ZONE_GATE) \
-    X(MUS_HG_SAFARI_ZONE) \
-    X(MUS_HG_ETHAN) \
-    X(MUS_HG_LYRA) \
-    X(MUS_HG_GAME_CORNER_WIN) \
-    X(MUS_HG_KIMONO_GIRL_DANCE) \
-    X(MUS_HG_KIMONO_GIRL) \
-    X(MUS_HG_HO_OH_APPEARS) \
-    X(MUS_HG_LUGIA_APPEARS) \
-    X(MUS_HG_SPIKY_EARED_PICHU) \
-    X(MUS_HG_SINJOU_RUINS) \
-    X(MUS_HG_RADIO_ROUTE101) \
-    X(MUS_HG_RADIO_ROUTE201) \
-    X(MUS_HG_RADIO_TRAINER) \
-    X(MUS_HG_RADIO_VARIETY) \
-    X(MUS_HG_VS_KYOGRE_GROUDON) \
-    X(MUS_HG_POKEWALKER) \
-    X(MUS_HG_VS_ARCEUS) \
-    X(MUS_HG_HEAL) \
-    X(MUS_HG_LEVEL_UP) \
-    X(MUS_HG_OBTAIN_ITEM) \
-    X(MUS_HG_OBTAIN_KEY_ITEM) \
-    X(MUS_HG_EVOLVED) \
-    X(MUS_HG_OBTAIN_BADGE) \
-    X(MUS_HG_OBTAIN_TMHM) \
-    X(MUS_HG_OBTAIN_ACCESSORY) \
-    X(MUS_HG_MOVE_DELETED) \
-    X(MUS_HG_OBTAIN_BERRY) \
-    X(MUS_HG_DEX_RATING_1) \
-    X(MUS_HG_DEX_RATING_2) \
-    X(MUS_HG_DEX_RATING_3) \
-    X(MUS_HG_DEX_RATING_4) \
-    X(MUS_HG_DEX_RATING_5) \
-    X(MUS_HG_DEX_RATING_6) \
-    X(MUS_HG_OBTAIN_EGG) \
-    X(MUS_HG_BUG_CONTEST_1ST_PLACE) \
-    X(MUS_HG_BUG_CONTEST_2ND_PLACE) \
-    X(MUS_HG_BUG_CONTEST_3RD_PLACE) \
-    X(MUS_HG_CARD_FLIP) \
-    X(MUS_HG_CARD_FLIP_GAME_OVER) \
-    X(MUS_HG_POKEGEAR_REGISTERED) \
-    X(MUS_HG_LETS_GO_TOGETHER) \
-    X(MUS_HG_POKEATHLON_READY) \
-    X(MUS_HG_POKEATHLON_1ST_PLACE) \
-    X(MUS_HG_RECEIVE_POKEMON) \
-    X(MUS_HG_OBTAIN_ARCADE_POINTS) \
-    X(MUS_HG_OBTAIN_CASTLE_POINTS) \
-    X(MUS_HG_OBTAIN_B_POINTS) \
-    X(MUS_HG_WIN_MINIGAME) \
-    X(MUS_BW_GAME_FREAK) \
-    X(MUS_BW_INTRO) \
-    X(MUS_BW_THE_POKEMON) \
-    X(MUS_BW_TITLE) \
-    X(MUS_BW_NEW_GAME_1) \
-    X(MUS_BW_NEW_GAME_2) \
-    X(MUS_BW_BEGINNING) \
-    X(MUS_BW_NUVEMA) \
-    X(MUS_BW_VS_RIVAL) \
-    X(MUS_BW_FOLLOW_ME_1) \
-    X(MUS_BW_JUNIPER_1) \
-    X(MUS_BW_JUNIPER_LAB) \
-    X(MUS_BW_OBTAIN_KEY_ITEM) \
-    X(MUS_BW_FRIEND) \
-    X(MUS_BW_ROUTE1) \
-    X(MUS_BW_VS_WILD) \
-    X(MUS_BW_VICTORY_WILD) \
-    X(MUS_BW_LEVEL_UP) \
-    X(MUS_BW_ACCUMULA) \
-    X(MUS_BW_FOLLOW_ME_2) \
-    X(MUS_BW_POKE_CENTER) \
-    X(MUS_BW_HEAL) \
-    X(MUS_BW_DEX_RATING_1) \
-    X(MUS_BW_SAGE) \
-    X(MUS_BW_ROUTE2_SPRING) \
-    X(MUS_BW_ROUTE2_SUMMER) \
-    X(MUS_BW_ROUTE2_AUTUMN) \
-    X(MUS_BW_ROUTE2_WINTER) \
-    X(MUS_BW_XTRAN_CALL) \
-    X(MUS_BW_ENCOUNTER_YOUNGSTER) \
-    X(MUS_BW_VS_TRAINER) \
-    X(MUS_BW_VICTORY_TRAINER) \
-    X(MUS_BW_ENCOUNTER_LASS) \
-    X(MUS_BW_OBTAIN_ITEM) \
-    X(MUS_BW_STRIATON) \
-    X(MUS_BW_DEX_RATING_2) \
-    X(MUS_BW_DREAMYARD) \
-    X(MUS_BW_DREAMYARD_B1F) \
-    X(MUS_BW_PLASMA) \
-    X(MUS_BW_VS_PLASMA) \
-    X(MUS_BW_VICTORY_PLASMA) \
-    X(MUS_BW_EVOLUTION) \
-    X(MUS_BW_EVOLUTION_NO_INTRO) \
-    X(MUS_BW_EVOLVED) \
-    X(MUS_BW_ENCOUNTER_TWINS) \
-    X(MUS_BW_CHEREN) \
-    X(MUS_BW_TROUBLE) \
-    X(MUS_BW_NACRENE) \
-    X(MUS_BW_DEX_RATING_3) \
-    X(MUS_BW_GYM) \
-    X(MUS_BW_VS_GYM_LEADER) \
-    X(MUS_BW_VS_WINNING) \
-    X(MUS_BW_VICTORY_GYM_LEADER) \
-    X(MUS_BW_OBTAIN_BADGE) \
-    X(MUS_BW_OBTAIN_TMHM) \
-    X(MUS_BW_GATE) \
-    X(MUS_BW_SKYARROW_BRIDGE) \
-    X(MUS_BW_CASTELIA) \
-    X(MUS_BW_ENCOUNTER_CLERK) \
-    X(MUS_BW_ROUTE4_SPRING) \
-    X(MUS_BW_ROUTE4_SUMMER) \
-    X(MUS_BW_ROUTE4_AUTUMN) \
-    X(MUS_BW_ROUTE4_WINTER) \
-    X(MUS_BW_ENCOUNTER_BACKPACKER) \
-    X(MUS_BW_NIMBASA) \
-    X(MUS_BW_BIANCA) \
-    X(MUS_BW_EMOTION) \
-    X(MUS_BW_N) \
-    X(MUS_BW_VS_N_1) \
-    X(MUS_BW_VS_IN_PINCH) \
-    X(MUS_BW_CYCLING) \
-    X(MUS_BW_ALDER) \
-    X(MUS_BW_DRAWBRIDGE) \
-    X(MUS_BW_DRIFTVEIL) \
-    X(MUS_BW_COLD_STORAGE) \
-    X(MUS_BW_ROUTE6_SPRING) \
-    X(MUS_BW_ROUTE6_SUMMER) \
-    X(MUS_BW_ROUTE6_AUTUMN) \
-    X(MUS_BW_ROUTE6_WINTER) \
-    X(MUS_BW_ENCOUNTER_PARASOL) \
-    X(MUS_BW_ENCOUNTER_SCIENTIST) \
-    X(MUS_BW_CHARGESTONE_CAVE) \
-    X(MUS_BW_CHARGESTONE_CAVE_B1F) \
-    X(MUS_BW_CHARGESTONE_CAVE_B2F) \
-    X(MUS_BW_MISTRALTON) \
-    X(MUS_BW_JUNIPER_2) \
-    X(MUS_BW_DEX_RATING_4) \
-    X(MUS_BW_MOVE_DELETED) \
-    X(MUS_BW_ENCOUNTER_PSYCHIC) \
-    X(MUS_BW_ICIRRUS) \
-    X(MUS_BW_DRAGONSPIRAL_TOWER) \
-    X(MUS_BW_ENCOUNTER_PLASMA) \
-    X(MUS_BW_DRAGONSPIRAL_TOWER_TOP) \
-    X(MUS_BW_RELIC_CASTLE) \
-    X(MUS_BW_OBTAIN_STONE) \
-    X(MUS_BW_TUBELINE_BRIDGE) \
-    X(MUS_BW_POKE_MART) \
-    X(MUS_BW_ENCOUNTER_ROUGHNECK) \
-    X(MUS_BW_OPELUCID_BLACK) \
-    X(MUS_BW_OPELUCID_WHITE) \
-    X(MUS_BW_ROUTE10) \
-    X(MUS_BW_VICTORY_ROAD) \
-    X(MUS_BW_ENCOUNTER_ACE_TRAINER) \
-    X(MUS_BW_POKEMON_LEAGUE) \
-    X(MUS_BW_VS_ELITE_FOUR) \
-    X(MUS_BW_N_CASTLE_APPEARS) \
-    X(MUS_BW_N_CASTLE_BRIDGE) \
-    X(MUS_BW_N_CASTLE) \
-    X(MUS_BW_N_ROOM) \
-    X(MUS_BW_LEGEND_COME) \
-    X(MUS_BW_LEGEND_BORN) \
-    X(MUS_BW_VS_RESHIRAM_ZEKROM) \
-    X(MUS_BW_VS_N_2) \
-    X(MUS_BW_GHETSIS) \
-    X(MUS_BW_VS_GHETSIS) \
-    X(MUS_BW_FAREWELL) \
-    X(MUS_BW_CREDITS) \
-    X(MUS_BW_LOOKER) \
-    X(MUS_BW_OBTAIN_EGG) \
-    X(MUS_BW_ROYAL_UNOVA) \
-    X(MUS_BW_WFC) \
-    X(MUS_BW_GLOBAL_TERMINAL) \
-    X(MUS_BW_GTS) \
-    X(MUS_BW_SPIN_TRADE) \
-    X(MUS_BW_UNITY_TOWER) \
-    X(MUS_BW_DEX_RATING_5) \
-    X(MUS_BW_GEAR_STATION) \
-    X(MUS_BW_BATTLE_SUBWAY) \
-    X(MUS_BW_VS_SUBWAY_TRAINER) \
-    X(MUS_BW_OBTAIN_B_POINTS) \
-    X(MUS_BW_MUSICAL_THEATER) \
-    X(MUS_BW_OBTAIN_ACCESSORY) \
-    X(MUS_BW_MUSICAL_DRESS_UP) \
-    X(MUS_BW_MUSICAL_CURTAIN_RAISES) \
-    X(MUS_BW_MUSICAL_STARDOM) \
-    X(MUS_BW_MUSICAL_FOREST_STROLL) \
-    X(MUS_BW_MUSICAL_A_SWEET_SOIREE) \
-    X(MUS_BW_MUSICAL_EXCITING_NIMBASA) \
-    X(MUS_BW_MUSICAL_DLC_MUNNA) \
-    X(MUS_BW_MUSICAL_DLC_SMASH) \
-    X(MUS_BW_MUSICAL_DLC_FESTA) \
-    X(MUS_BW_MUSICAL_DLC_RELIC) \
-    X(MUS_BW_MUSICAL_DLC_RUNPA) \
-    X(MUS_BW_FERRIS_WHEEL) \
-    X(MUS_BW_FEELING_CHECK) \
-    X(MUS_BW_FEELING_CHECK_HIGH) \
-    X(MUS_BW_FEELING_CHECK_MEDIUM) \
-    X(MUS_BW_FEELING_CHECK_LOW) \
-    X(MUS_BW_VS_LEGEND) \
-    X(MUS_BW_ANVILLE_TOWN) \
-    X(MUS_BW_MARVELOUS_BRIDGE) \
-    X(MUS_BW_ROUTE12_SPRING) \
-    X(MUS_BW_ROUTE12_SUMMER) \
-    X(MUS_BW_ROUTE12_AUTUMN) \
-    X(MUS_BW_ROUTE12_WINTER) \
-    X(MUS_BW_ENCOUNTER_CYCLIST) \
-    X(MUS_BW_POKETRANSFER_LAB) \
-    X(MUS_BW_POKETRANSFER_BOX) \
-    X(MUS_BW_POKETRANSFER_GAME) \
-    X(MUS_BW_ENCOUNTER_POKEFAN) \
-    X(MUS_BW_BLACK_CITY) \
-    X(MUS_BW_WHITE_FOREST) \
-    X(MUS_BW_GAME_SYNC) \
-    X(MUS_BW_ENTRALINK) \
-    X(MUS_BW_FUNFEST_START) \
-    X(MUS_BW_ENTRALINK_VISIT) \
-    X(MUS_BW_FUNFEST_CLEAR) \
-    X(MUS_BW_FUNFEST_FAILED) \
-    X(MUS_BW_ENCOUNTER_GENTLEMAN) \
-    X(MUS_BW_UNDELLA_SPRING) \
-    X(MUS_BW_UNDELLA_SUMMER) \
-    X(MUS_BW_CYNTHIA) \
-    X(MUS_BW_VS_CYNTHIA) \
-    X(MUS_BW_LOSTLORN_FOREST) \
-    X(MUS_BW_VS_WILD_STRONG) \
-    X(MUS_BW_SURF) \
-    X(MUS_BW_ABYSSAL_RUINS) \
-    X(MUS_BW_LACUNOSA) \
-    X(MUS_BW_VILLAGE_BRIDGE) \
-    X(MUS_BW_MYSTERY_GIFT) \
-    X(MUS_BW_BATTLE_COMPETITION) \
-    X(MUS_BW_ROCKET) \
-    X(MUS_BW_VS_KYUREM) \
-    X(MUS_BW_DEX_RATING_6) \
-    X(MUS_BW_VS_CHAMPION) \
-    X(MUS_BW_VICTORY_CHAMPION) \
-    X(MUS_BW_HALL_OF_FAME) \
-    X(MUS_BW_RELIC_SONG) \
-    X(MUS_BW_VS_WCS_CHAMPION) \
-    X(MUS_BW_OBTAIN_BERRY)
+    X(MUS_RG_TEACHY_TV_MENU)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \
