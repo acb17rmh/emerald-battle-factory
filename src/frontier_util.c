@@ -61,7 +61,7 @@ struct FrontierBrainMon
 struct FrontierBrain
 {
     u16 trainerId;
-    u8 objEventGfx;
+    u16 objEventGfx;
     u8 isFemale;
     const u8 *lostTexts[2];
     const u8 *wonTexts[2];
@@ -108,7 +108,7 @@ static u16 *MakeCaughtBannesSpeciesList(u32 totalBannedSpecies);
 static void PrintBannedSpeciesName(u8 windowId, u32 itemId, u8 y);
 static void Task_BannedSpeciesWindowInput(u8 taskId);
 static u16 GetActiveFrontierBrainTrainerId(s32 facility);
-static u8 GetActiveFrontierBrainObjEventGfx(s32 facility);
+static u16 GetActiveFrontierBrainObjEventGfx(s32 facility);
 static bool8 IsFactoryBossCadenceContext(void);
 static bool8 IsFactoryBossCadenceMilestone(u16 winStreakNoModifier);
 static bool8 AreAllFactoryTier1BossesCleared(void);
@@ -142,7 +142,7 @@ static u16 GetActiveFrontierBrainTrainerId(s32 facility)
     return gFrontierBrainInfo[facility].trainerId;
 }
 
-static u8 GetActiveFrontierBrainObjEventGfx(s32 facility)
+static u16 GetActiveFrontierBrainObjEventGfx(s32 facility)
 {
     const struct FactoryBossProfile *bossProfile;
 

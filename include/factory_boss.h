@@ -19,7 +19,7 @@ struct FactoryBossProfile
     const u8 *battleSpeechPlayerWon;
     const u8 *battleSpeechPlayerLost;
     u16 trainerId;
-    u8 objEventGfx;
+    u16 objEventGfx;
     u16 battleBgm;
     u16 preBattleRoomBgm;
     bool8 awardSymbol;
