@@ -22,7 +22,6 @@
 #include "main.h"
 #include "palette.h"
 #include "script_pokemon_util.h"
-#include "starter_choose.h"
 #include "task.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_frontier_mons.h"
