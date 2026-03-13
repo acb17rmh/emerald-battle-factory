@@ -53,6 +53,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge::
 BattleFrontier_BattleFactoryLobby_EventScript_DefeatedFactoryHead::
 	msgbox BattleFrontier_BattleFactoryLobby_Text_CongratsForDefeatingHead, MSGBOX_DEFAULT
 	waitmessage
+	goto BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints
 
 BattleFrontier_BattleFactoryLobby_EventScript_FactoryRewardResumeScript::
 	msgbox BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints, MSGBOX_DEFAULT
@@ -1294,8 +1295,6 @@ script BattleFrontier_BattleFactoryLobby_EventScript_NolandAnythingElse {
 }
 
 script BattleFrontier_BattleFactoryLobby_EventScript_GiveBattlePoints {
-    msgbox("As a reward for your display of skill, you will be able to select one of the POKéMON in your party to keep
-            forever, for use in other BATTLE FRONTIER facilities.")
     factory_selectrewardmon
 }
 
