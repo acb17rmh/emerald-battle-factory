@@ -3,6 +3,10 @@
 
 #include "global.h"
 
+#define BATTLE_FACTORY_INITIAL_OFFER_COUNT 12
+
+extern u16 gBattleFactoryInitialOfferMonIds[BATTLE_FACTORY_INITIAL_OFFER_COUNT];
+
 void CallBattleFactoryFunction(void);
 bool8 InBattleFactory(void);
 u8 GetFactoryMonFixedIV(u8 challengeNum, bool8 isLastBattle);

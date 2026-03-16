@@ -71,11 +71,15 @@ bool8 IsFactoryRewardMonValid(struct Pokemon *mon, u8 activeBossId)
 {
     bool8 isBadEgg = GetMonData(mon, MON_DATA_SANITY_IS_BAD_EGG);
     bool8 hasSpecies = GetMonData(mon, MON_DATA_SANITY_HAS_SPECIES);
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    bool8 speciesValid = (species > SPECIES_NONE
+                       && species < NUM_SPECIES
+                       && IsSpeciesEnabled(species));
 
-    if (!isBadEgg && hasSpecies)
+    if (!isBadEgg && hasSpecies && speciesValid)
         return TRUE;
 
-    DebugPrintfLevel(MGBA_LOG_FATAL, "Factory reward mon failed sanity check (bossId=%d badEgg=%d hasSpecies=%d)", activeBossId, isBadEgg, hasSpecies);
+    DebugPrintf("Factory reward mon failed sanity check (bossId=%d badEgg=%d hasSpecies=%d species=%d speciesValid=%d)", activeBossId, isBadEgg, hasSpecies, species, speciesValid);
     return FALSE;
 }
 
