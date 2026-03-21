@@ -2824,25 +2824,6 @@ void SetFrontierBrainObjEventGfx(u8 facility)
     VarSet(VAR_OBJ_GFX_ID_0, GetActiveFrontierBrainObjEventGfx(facility));
 }
 
-void SetFactoryDebugStevenBossEnabled(bool8 enabled)
-{
-    if (enabled)
-    {
-        VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_STEVEN);
-        FlagSet(FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS);
-    }
-    else
-    {
-        VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_NONE);
-        FlagClear(FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS);
-    }
-}
-
-bool8 IsFactoryDebugStevenBossEnabled(void)
-{
-    return (GetActiveFactoryBossId() == FACTORY_BOSS_STEVEN);
-}
-
 void PrepareFactoryBossForNextBattle(void)
 {
     if (FlagGet(FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND))

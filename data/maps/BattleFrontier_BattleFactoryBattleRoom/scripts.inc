@@ -413,61 +413,61 @@ BattleFrontier_BattleFactoryBattleRoom_EventScript_BattleCustomBoss::
 # 207 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	setvar VAR_FACTORY_ACTIVE_BOSS, 0
 # 208 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
-# 209 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyLost
+# 209 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+
 # 210 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-
-# 211 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedCustomBoss::
-# 212 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 211 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	special RecordFactoryBossDefeat
-# 213 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 212 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	special SetPendingFactoryRewardBossFromActive
-# 214 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 213 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	copyvar VAR_FACTORY_LAST_DEFEATED_BOSS, VAR_FACTORY_ACTIVE_BOSS
-# 215 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 214 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	setvar VAR_FACTORY_ACTIVE_BOSS, 0
-# 216 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	clearflag FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS
-# 217 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 215 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland
-# 218 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 216 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 219 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 217 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_EventScript_DefeatedNoland::
-# 220 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 218 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	addvar VAR_FACTORY_TOTAL_WINS, 1
-# 221 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 219 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	factory_get FACTORY_DATA_WIN_STREAK_SWAPS
-# 222 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 220 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto_if_eq VAR_RESULT, MAX_STREAK, BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementWinStreak
-# 223 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 221 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	addvar VAR_RESULT, 1
-# 224 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 222 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	setorcopyvar VAR_0x8006, VAR_RESULT
-# 225 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 223 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	factory_set FACTORY_DATA_WIN_STREAK_SWAPS  @ uses VAR_0x8006 above
-# 226 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 224 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	factory_get FACTORY_DATA_WIN_STREAK
-# 227 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 225 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto_if_eq VAR_RESULT, MAX_STREAK, BattleFrontier_BattleFactoryBattleRoom_EventScript_IncrementBattleNum
-# 228 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 226 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	addvar VAR_RESULT, 1
-# 229 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 227 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	factory_set FACTORY_DATA_WIN_STREAK, VAR_RESULT
-# 230 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 228 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	frontier_get FRONTIER_DATA_BATTLE_NUM
-# 231 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 229 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	addvar VAR_RESULT, 1
-# 232 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 230 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyWon
-# 233 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 231 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	end
-# 234 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 232 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 235 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 233 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom:
+# 234 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	walk_up
+# 235 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	walk_up
 # 236 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	walk_up
 # 237 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
@@ -475,25 +475,25 @@ BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerEnterRoom:
 # 238 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	walk_up
 # 239 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	walk_up
-# 240 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	walk_up
-# 241 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	face_right
+# 240 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	step_end
+# 241 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+
 # 242 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	step_end
-# 243 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-
-# 244 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Movement_PlayerApproachNoland:
-# 245 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 243 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	walk_right
-# 246 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 244 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	step_end
-# 247 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 245 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 248 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 246 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Movement_OpponentEnter:
+# 247 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	walk_down
+# 248 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	walk_down
 # 249 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	walk_down
 # 250 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
@@ -501,218 +501,214 @@ BattleFrontier_BattleFactoryBattleRoom_Movement_OpponentEnter:
 # 251 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	walk_down
 # 252 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	walk_down
-# 253 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	walk_down
-# 254 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	face_left
-# 255 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 253 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	step_end
-# 256 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 254 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 257 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 255 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Movement_NolandMoveToBattle:
+# 256 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	walk_up
+# 257 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	walk_up
 # 258 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	walk_up
 # 259 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	walk_up
-# 260 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	walk_up
-# 261 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	face_left
-# 262 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 260 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	step_end
-# 263 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 261 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 264 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 262 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobby::
-# 265 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 263 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto_if_set FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE, BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyRandom
-# 266 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 264 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	copyvar VAR_RESULT, VAR_FRONTIER_BATTLE_MODE
-# 267 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 265 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	goto_if_eq VAR_RESULT, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyDoubles
-# 268 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 266 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	warp MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY, 4, 8
+# 267 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	waitstate
+# 268 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	end
 # 269 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	waitstate
+
 # 270 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	end
-# 271 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-
-# 272 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyDoubles::
-# 273 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 271 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	warp MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY, 14, 8
+# 272 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	waitstate
+# 273 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+	end
 # 274 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	waitstate
+
 # 275 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-	end
-# 276 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
-
-# 277 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_EventScript_WarpToLobbyRandom::
-# 278 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 276 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	warp MAP_BATTLE_FRONTIER_BATTLE_FACTORY_LOBBY, 22, 8
-# 279 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 277 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	waitstate
-# 280 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 278 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	end
-# 281 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 279 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 282 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 280 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_EventScript_ScientistsFaceBattle::
-# 283 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 281 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	applymovement LOCALID_FACTORY_BATTLE_SCIENTIST_1, Common_Movement_WalkInPlaceFasterRight
-# 284 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 282 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	applymovement LOCALID_FACTORY_BATTLE_SCIENTIST_2, Common_Movement_WalkInPlaceFasterRight
-# 285 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 283 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	applymovement LOCALID_FACTORY_BATTLE_SCIENTIST_3, Common_Movement_WalkInPlaceFasterRight
-# 286 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 284 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	applymovement LOCALID_FACTORY_BATTLE_SCIENTIST_4, Common_Movement_WalkInPlaceFasterLeft
-# 287 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 285 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	applymovement LOCALID_FACTORY_BATTLE_SCIENTIST_5, Common_Movement_WalkInPlaceFasterLeft
-# 288 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 286 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	applymovement LOCALID_FACTORY_BATTLE_SCIENTIST_6, Common_Movement_WalkInPlaceFasterLeft
-# 289 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 287 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	waitmovement 0
-# 290 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 288 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	return
-# 291 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 289 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 292 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 290 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_GetAMoveOn:
-# 293 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 291 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Hey, hey!\n"
-# 294 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 292 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Get a move on!$"
-# 295 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 293 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 296 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 294 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_NolandImFactoryHead:
-# 297 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 295 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Hey, my name's NOLAND!\n"
-# 298 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 296 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "I'm basically in charge of this place,\l"
-# 299 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 297 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "which is why I'm the FACTORY HEAD!\p"
-# 300 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 298 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "I had a look at your Battle Swap data.\p"
-# 301 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 299 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "You seem to have the right idea,\n"
-# 302 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 300 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "but you're still square in your head!\p"
-# 303 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 301 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Listen up, okay? Knowledge isn't only\n"
-# 304 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 302 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "about reading books or doing desk work.\p"
-# 305 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 303 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Just doing that sort of thing…\n"
-# 306 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 304 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "It may as well be useless!\p"
-# 307 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 305 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "You have to experience things with\n"
-# 308 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 306 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "your heart and your body, understand?\p"
-# 309 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 307 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "I'll take you on under the same\n"
-# 310 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 308 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "conditions as you.\p"
-# 311 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 309 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "I'll be using rental POKéMON, too!$"
-# 312 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 310 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 313 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 311 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_ShakeOutKnowledgeBringItOn:
-# 314 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 312 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Shake out every last bit of your\n"
-# 315 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 313 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "knowledge and bring it on!$"
-# 316 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 314 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 317 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 315 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_NolandLetsSeeFrontierPass:
-# 318 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 316 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "NOLAND: Smart going!\n"
-# 319 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 317 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Let's see your FRONTIER PASS.$"
-# 320 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 318 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 321 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 319 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_ReceivedKnowledgeSymbol:
-# 322 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 320 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "The Knowledge Symbol was embossed\n"
-# 323 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 321 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "on the FRONTIER PASS!$"
-# 324 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 322 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 325 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 323 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_NextTimeNoHoldsBarred:
-# 326 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 324 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Heh…\n"
-# 327 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 325 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "You're a pretty bright spark…\p"
-# 328 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 326 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Next time, I'll come after you hard.\n"
-# 329 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 327 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "No holds barred, understand?\p"
-# 330 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 328 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "You keep up your studies!$"
-# 331 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 329 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 332 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 330 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_HarderLookThanLastTime:
-# 333 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 331 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "NOLAND: Hey, hey! How's it going?\n"
-# 334 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 332 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "You keeping up with your studies?\p"
-# 335 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 333 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "…Oh?\p"
-# 336 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 334 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "You've taken on a harder look than\n"
-# 337 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 335 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "the last time I saw you.\p"
-# 338 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 336 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Now, this should be fun!\n"
-# 339 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 337 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "I'm getting excited, hey!$"
-# 340 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 338 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 341 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 339 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_AllRightBringItOn:
-# 342 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 340 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "All right!\n"
-# 343 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 341 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Bring it on!$"
-# 344 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 342 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 345 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 343 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_OutOfMyLeagueLetsSeePass:
-# 346 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 344 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "NOLAND: What the…\n"
-# 347 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 345 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "You're getting out of my league!\p"
-# 348 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 346 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Sheesh!\n"
-# 349 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 347 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Let's see that FRONTIER PASS!$"
-# 350 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 348 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 351 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 349 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_KnowledgeSymbolTookGoldenShine:
-# 352 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 350 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "The Knowledge Symbol took on\n"
-# 353 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 351 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "a golden shine!$"
-# 354 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 352 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 
-# 355 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 353 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 BattleFrontier_BattleFactoryBattleRoom_Text_LastTimeILoseToYou:
-# 356 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 354 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "Pfft, man!\p"
-# 357 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 355 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "That's absolutely the last time\n"
-# 358 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 356 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "I lose to you!\p"
-# 359 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
+# 357 "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.pory"
 	.string "We have to do this again, hey?$"

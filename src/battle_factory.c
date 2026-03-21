@@ -289,7 +289,6 @@ static void InitFactoryChallenge(void) {
     sFactoryRunRewardChoiceCount = 0;
     ZeroMonData(&sFactoryRewardBuffer);
     VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
-    SetFactoryDebugStevenBossEnabled(FALSE);
 }
 
 static void GetBattleFactoryData(void) {
@@ -1060,7 +1059,6 @@ void DebugAction_TriggerNolandBattle(void)
     // Queue the run state so the next battle is Noland:
     // after this forced win, streak becomes 20 and battleNum becomes 6.
     FlagSet(FLAG_BATTLE_FACTORY_DEBUG_FORCE_NOLAND);
-    SetFactoryDebugStevenBossEnabled(FALSE);
     FlagClear(FLAG_BATTLE_FACTORY_RANDOM_BATTLES_MODE);
     VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_NONE);
     gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode] = 19;
@@ -1103,10 +1101,7 @@ void DebugAction_TriggerFactoryBoss(u8 bossId)
 
     // Queue the run state so the next battle is the Frontier Brain, then skin it as the selected boss.
     VarSet(VAR_FACTORY_ACTIVE_BOSS, bossId);
-    if (bossId == FACTORY_BOSS_STEVEN)
-        FlagSet(FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS);
-    else
-        FlagClear(FLAG_BATTLE_FACTORY_DEBUG_STEVEN_BOSS);
+
 
     gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode] = 19;
     gSaveBlock2Ptr->frontier.curChallengeBattleNum = 5;
