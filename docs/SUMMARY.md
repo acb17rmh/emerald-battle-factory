@@ -22,6 +22,8 @@
 - [Contributing](./CONTRIBUTING.md)
 - [Styleguide and Principles](./STYLEGUIDE.md)
 - [Credits](./CREDITS.md)
+- [Factory boss ownership map](./factory_boss_ownership_map.md)
+- [Factory boss pain points](./factory_boss_pain_points.md)
 - [Tutorials]()
   - [What are AI Flags?](tutorials/ai_flags.md)
     - [How to add new AI Flags](tutorials/ai_logic.md)
