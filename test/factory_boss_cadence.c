@@ -36,7 +36,7 @@ TEST("Factory boss cadence: does not schedule boss while progression is locked")
     EXPECT_EQ(VarGet(VAR_FACTORY_ACTIVE_BOSS), FACTORY_BOSS_NONE);
 }
 
-TEST("Factory boss cadence: schedules Steven on first post-unlock milestone")
+TEST("Factory boss cadence: schedules Roxanne on first post-unlock milestone")
 {
     InitFactoryBossCadenceContext();
 
@@ -45,17 +45,17 @@ TEST("Factory boss cadence: schedules Steven on first post-unlock milestone")
     gSaveBlock2Ptr->frontier.factoryWinStreaks[FRONTIER_MODE_SINGLES][FRONTIER_LVL_50] = 41;
 
     PrepareFactoryBossForNextBattle();
-    EXPECT_EQ(VarGet(VAR_FACTORY_ACTIVE_BOSS), FACTORY_BOSS_STEVEN);
+    EXPECT_EQ(VarGet(VAR_FACTORY_ACTIVE_BOSS), FACTORY_BOSS_ROXANNE);
 }
 
 TEST("Factory boss cadence: recording a boss defeat updates mask and rotation index")
 {
     InitFactoryBossCadenceContext();
 
-    VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_STEVEN);
+    VarSet(VAR_FACTORY_ACTIVE_BOSS, FACTORY_BOSS_ROXANNE);
     RecordFactoryBossDefeat();
 
-    EXPECT_EQ(VarGet(VAR_FACTORY_BOSS_CLEARED_MASK) & (1u << (FACTORY_BOSS_STEVEN - 1)), (1u << (FACTORY_BOSS_STEVEN - 1)));
+    EXPECT_EQ(VarGet(VAR_FACTORY_BOSS_CLEARED_MASK) & (1u << (FACTORY_BOSS_ROXANNE - 1)), (1u << (FACTORY_BOSS_ROXANNE - 1)));
     EXPECT_EQ(VarGet(VAR_FACTORY_BOSS_ROTATION_INDEX), 1);
 }
 
@@ -64,13 +64,13 @@ TEST("Factory boss cadence: schedules next uncleared boss in rotation")
     InitFactoryBossCadenceContext();
 
     VarSet(VAR_FACTORY_BOSS_UNLOCK_STATE, 1);
-    VarSet(VAR_FACTORY_BOSS_CLEARED_MASK, (1u << (FACTORY_BOSS_STEVEN - 1)));
+    VarSet(VAR_FACTORY_BOSS_CLEARED_MASK, (1u << (FACTORY_BOSS_ROXANNE - 1)));
     VarSet(VAR_FACTORY_BOSS_ROTATION_INDEX, 1);
     FlagSet(FLAG_SYS_TOWER_SILVER + FRONTIER_FACILITY_FACTORY * 2);
     gSaveBlock2Ptr->frontier.factoryWinStreaks[FRONTIER_MODE_SINGLES][FRONTIER_LVL_50] = 62;
 
     PrepareFactoryBossForNextBattle();
-    EXPECT_EQ(VarGet(VAR_FACTORY_ACTIVE_BOSS), FACTORY_BOSS_WALLY);
+    EXPECT_EQ(VarGet(VAR_FACTORY_ACTIVE_BOSS), FACTORY_BOSS_BRAWLY);
 }
 
 TEST("Factory boss cadence: one-symbol phase is gated to cadence milestones")
@@ -89,9 +89,15 @@ TEST("Factory boss cadence: after clearing tier-1 bosses, next milestone returns
     u16 allClearedMask = 0;
 
     InitFactoryBossCadenceContext();
-    allClearedMask |= (1u << (FACTORY_BOSS_STEVEN - 1));
-    allClearedMask |= (1u << (FACTORY_BOSS_WALLY - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_ROXANNE - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_BRAWLY - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_WATTSON - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_FLANNERY - 1));
     allClearedMask |= (1u << (FACTORY_BOSS_NORMAN - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_WINONA - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_JUAN - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_WALLY - 1));
+    allClearedMask |= (1u << (FACTORY_BOSS_STEVEN - 1));
     allClearedMask |= (1u << (FACTORY_BOSS_RED - 1));
 
     VarSet(VAR_FACTORY_BOSS_UNLOCK_STATE, 1);

@@ -1383,8 +1383,7 @@ static void CB2_GiveReward(void)
         }
     }
 
-    u8 result = GiveCapturedMonToPlayer(&sFactoryRewardBuffer);
-    DebugPrintf("GiveCapturedMonToPlayer: %d", result);
+    GiveCapturedMonToPlayer(&sFactoryRewardBuffer);
     sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
     sFactoryRunRewardChoiceCount = 0;
     VarSet(VAR_FACTORY_LAST_DEFEATED_BOSS, FACTORY_BOSS_NONE);
