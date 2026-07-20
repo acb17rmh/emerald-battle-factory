@@ -4,14 +4,14 @@ GAME_CODE    ?= BPEE
 BUILD_NAME   ?= emerald
 MAP_VERSION  ?= emerald
 
-ifeq (firered,$(MAKECMDGOALS))
+ifeq (firered, $(or $(BUILD), $(MAKECMDGOALS)))
   	GAME_VERSION 	:= FIRERED
 	TITLE       	:= POKEMON FIRE
 	GAME_CODE   	:= BPRE
 	BUILD_NAME  	:= firered
 	MAP_VERSION 	:= firered
 else
-ifeq (leafgreen,$(MAKECMDGOALS))
+ifeq (leafgreen, $(or $(BUILD), $(MAKECMDGOALS)))
 	GAME_VERSION 	:= LEAFGREEN
 	TITLE       	:= POKEMON LEAF
 	GAME_CODE   	:= BPGE
@@ -40,7 +40,7 @@ UNUSED_ERROR ?= 0
 # Count deprecated warnings as errors. Used by RH-Hideout's repo
 DEPRECATED_ERROR ?= 0
 # Adds -Og and -g flags, which optimize the build for debugging and include debug info respectively
-DEBUG        ?= 1
+DEBUG        ?= 0
 # Adds -flto flag, which increases link time but results in a more efficient binary (especially in audio processing)
 LTO          ?= 0
 # Makes an optimized build for release, also enabling NDEBUG macro and disabling other debugging features
@@ -101,11 +101,12 @@ OBJ_DIR_NAME := $(BUILD_DIR)/$(BUILD_NAME)
 OBJ_DIR_NAME_TEST := $(BUILD_DIR)/$(BUILD_NAME)-test
 OBJ_DIR_NAME_DEBUG := $(BUILD_DIR)/$(BUILD_NAME)-debug
 OBJ_DIR_NAME_RELEASE := $(BUILD_DIR)/$(BUILD_NAME)-release
+ASSETS_DIR_NAME := $(BUILD_DIR)/assets
 
 ELF_NAME := $(ROM_NAME:.gba=.elf)
 MAP_NAME := $(ROM_NAME:.gba=.map)
-TESTELF = $(ROM_NAME:.gba=-test.elf)
-HEADLESSELF = $(ROM_NAME:.gba=-test-headless.elf)
+TESTELF := $(ROM_NAME:.gba=-test.elf)
+HEADLESSELF := $(ROM_NAME:.gba=-test-headless.elf)
 
 # Pick our active variables
 ROM := $(ROM_NAME)
@@ -132,14 +133,12 @@ C_SUBDIR = src
 ASM_SUBDIR = asm
 DATA_SRC_SUBDIR = src/data
 DATA_ASM_SUBDIR = data
-SONG_SUBDIR = sound/songs
 MID_SUBDIR = sound/songs/midi
 TEST_SUBDIR = test
 
 C_BUILDDIR = $(OBJ_DIR)/$(C_SUBDIR)
 ASM_BUILDDIR = $(OBJ_DIR)/$(ASM_SUBDIR)
 DATA_ASM_BUILDDIR = $(OBJ_DIR)/$(DATA_ASM_SUBDIR)
-SONG_BUILDDIR = $(OBJ_DIR)/$(SONG_SUBDIR)
 MID_BUILDDIR = $(OBJ_DIR)/$(MID_SUBDIR)
 TEST_BUILDDIR = $(OBJ_DIR)/$(TEST_SUBDIR)
 
@@ -216,7 +215,6 @@ SMOLTM       := $(TOOLS_DIR)/compresSmol/compresSmolTilemap$(EXE)
 SMOL         := $(TOOLS_DIR)/compresSmol/compresSmol$(EXE)
 GFX          := $(TOOLS_DIR)/gbagfx/gbagfx$(EXE)
 WAV2AGB      := $(TOOLS_DIR)/wav2agb/wav2agb$(EXE)
-AIF          := $(shell command -v aif2pcm 2>/dev/null || echo $(TOOLS_DIR)/aif2pcm/aif2pcm$(EXE))
 MID          := $(TOOLS_DIR)/mid2agb/mid2agb$(EXE)
 SCANINC      := $(TOOLS_DIR)/scaninc/scaninc$(EXE)
 PREPROC      := $(TOOLS_DIR)/preproc/preproc$(EXE)
@@ -226,8 +224,6 @@ MAPJSON      := $(TOOLS_DIR)/mapjson/mapjson$(EXE)
 JSONPROC     := $(TOOLS_DIR)/jsonproc/jsonproc$(EXE)
 TRAINERPROC  := $(TOOLS_DIR)/trainerproc/trainerproc$(EXE)
 PATCHELF     := $(TOOLS_DIR)/patchelf/patchelf$(EXE)
-SCRIPT    := $(TOOLS_DIR)/poryscript/poryscript$(EXE)
-
 ifeq ($(shell uname),Darwin)
     ROMTEST ?= $(shell command -v mgba-rom-test-mac 2>/dev/null || echo $(TOOLS_DIR)/mgba/mgba-rom-test-mac)
     ROMTESTHYDRA := $(shell command -v mgba-rom-test-hydra 2>/dev/null || echo $(TOOLS_DIR)/mgba-rom-test-hydra/mgba-rom-test-hydra)
@@ -322,19 +318,13 @@ C_ASM_OBJS := $(patsubst $(C_SUBDIR)/%.s,$(C_BUILDDIR)/%.o,$(C_ASM_SRCS))
 ASM_SRCS := $(wildcard $(ASM_SUBDIR)/*.s)
 ASM_OBJS := $(patsubst $(ASM_SUBDIR)/%.s,$(ASM_BUILDDIR)/%.o,$(ASM_SRCS))
 
-# get all the data/*.s files EXCEPT the ones with specific rules
-REGULAR_DATA_ASM_SRCS := $(filter-out $(DATA_ASM_SUBDIR)/maps.s $(DATA_ASM_SUBDIR)/map_events.s, $(wildcard $(DATA_ASM_SUBDIR)/*.s))
-
 DATA_ASM_SRCS := $(wildcard $(DATA_ASM_SUBDIR)/*.s)
 DATA_ASM_OBJS := $(patsubst $(DATA_ASM_SUBDIR)/%.s,$(DATA_ASM_BUILDDIR)/%.o,$(DATA_ASM_SRCS))
-
-SONG_SRCS := $(wildcard $(SONG_SUBDIR)/*.s)
-SONG_OBJS := $(patsubst $(SONG_SUBDIR)/%.s,$(SONG_BUILDDIR)/%.o,$(SONG_SRCS))
 
 MID_SRCS := $(wildcard $(MID_SUBDIR)/*.mid)
 MID_OBJS := $(patsubst $(MID_SUBDIR)/%.mid,$(MID_BUILDDIR)/%.o,$(MID_SRCS))
 
-OBJS     := $(C_OBJS) $(C_ASM_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS) $(SONG_OBJS) $(MID_OBJS)
+OBJS     := $(C_OBJS) $(C_ASM_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS) $(MID_OBJS)
 OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJS))
 
 SUBDIRS  := $(sort $(dir $(OBJS) $(dir $(TEST_OBJS))))
@@ -386,8 +376,11 @@ clean: tidy clean-tools clean-check-tools clean-generated clean-assets
 	@$(MAKE) clean -C libagbsyscall
 
 clean-assets:
+	rm -rf $(ASSETS_DIR_NAME)
+	rm -f $(MID_SUBDIR)/*.s
 	rm -f $(DATA_ASM_SUBDIR)/layouts/layouts.inc $(DATA_ASM_SUBDIR)/layouts/layouts_table.inc
 	rm -f $(DATA_ASM_SUBDIR)/maps/connections.inc $(DATA_ASM_SUBDIR)/maps/events.inc $(DATA_ASM_SUBDIR)/maps/groups.inc $(DATA_ASM_SUBDIR)/maps/headers.inc $(DATA_SRC_SUBDIR)/map_group_count.h
+	rm -f .map_version
 	find sound -iname '*.bin' -exec rm {} +
 	find . \( -iname '*.1bpp' -o -iname '*.4bpp' -o -iname '*.8bpp' -o -iname '*.gbapal' -o -iname '*.lz' -o -iname '*.smol' -o -iname '*.fastSmol' -o -iname '*.smolTM' -o -iname '*.rl' -o -iname '*.latfont' -o -iname '*.hwjpnfont' -o -iname '*.fwjpnfont' \) -exec rm {} +
 	find $(DATA_ASM_SUBDIR)/maps \( -iname 'connections.inc' -o -iname 'events.inc' -o -iname 'header.inc' \) -exec rm {} +
@@ -421,8 +414,6 @@ include json_data_rules.mk
 include audio_rules.mk
 include trainer_rules.mk
 
-AUTO_GEN_TARGETS += $(patsubst %.pory,%.inc,$(shell find data/ -type f -name '*.pory'))
-
 # NOTE: Tools must have been built prior (FIXME)
 # so you can't really call this rule directly
 generated: $(AUTO_GEN_TARGETS)
@@ -432,8 +423,6 @@ generated: $(AUTO_GEN_TARGETS)
 %.s:   ;
 %.png: ;
 %.pal: ;
-%.aif: ;
-%.pory: ;
 %.wav: ;
 
 %.1bpp:     %.png  ; $(GFX) $< $@
@@ -446,8 +435,6 @@ generated: $(AUTO_GEN_TARGETS)
 %.fastSmol: %      ; $(SMOL) -w $< $@ false false false
 %.smol:     %      ; $(SMOL) -w $< $@
 %.rl:       %      ; $(GFX) $< $@
-
-data/%.inc: data/%.pory; $(SCRIPT) -i $< -o $@ -fc tools/poryscript/font_config.json -cc tools/poryscript/command_config.json
 
 clean-teachables_intermediates:
 	rm -f $(DATA_SRC_SUBDIR)/tutor_moves.h
@@ -466,15 +453,12 @@ clean-teachables: clean-teachables_intermediates
 $(C_BUILDDIR)/librfu_intr.o: CFLAGS := -mthumb-interwork -O2 -mabi=apcs-gnu -mtune=arm7tdmi -march=armv4t -fno-toplevel-reorder -Wno-pointer-to-int-cast
 $(C_BUILDDIR)/berry_crush.o: override CFLAGS += -Wno-address-of-packed-member
 $(C_BUILDDIR)/agb_flash.o: override CFLAGS += -fno-toplevel-reorder
-$(C_BUILDDIR)/generational_changes.o: override CFLAGS += -O2
 $(C_BUILDDIR)/pokedex_plus_hgss.o: CFLAGS := -mthumb -mthumb-interwork -O2 -mabi=apcs-gnu -mtune=arm7tdmi -march=armv4t -Wno-pointer-to-int-cast -std=gnu17 -Werror -Wall -Wno-strict-aliasing -Wno-attribute-alias -Woverride-init
 # Annoyingly we can't turn this on just for src/data/trainers.h
 $(C_BUILDDIR)/data.o: CFLAGS += -fno-show-column -fno-diagnostics-show-caret
 
 # Needed for parity with pret
 $(C_BUILDDIR)/graphics.o: override CFLAGS += -Wno-missing-braces
-
-$(TEST_BUILDDIR)/%.o: CFLAGS := -mthumb -mthumb-interwork -O2 -mabi=apcs-gnu -mtune=arm7tdmi -march=armv4t -Wno-pointer-to-int-cast -Werror -Wall -Wno-strict-aliasing -Wno-attribute-alias -Woverride-init
 
 # Dependency rules (for the *.c & *.s sources to .o files)
 # Have to be explicit or else missing files won't be reported.
@@ -487,16 +471,16 @@ $(C_BUILDDIR)/pokemon.o: $(C_SUBDIR)/pokemon.c $(DATA_SRC_SUBDIR)/pokemon/teacha
 $(C_BUILDDIR)/%.o: $(C_SUBDIR)/%.c
 ifneq ($(KEEP_TEMPS),1)
 	@echo "$(CC1) <flags> -o $@ $<"
-	@$(CPP) $(CPPFLAGS) $< | $(PREPROC) -i $< charmap.txt | $(CC1) $(CFLAGS) -o - - | cat - <(echo -e ".text\n\t.align\t2, 0") | $(AS) $(ASFLAGS) -o $@ -
+	@$(CPP) $(CPPFLAGS) $< | $(PREPROC) -i -g $(ASSETS_DIR_NAME) $< charmap.txt | $(CC1) $(CFLAGS) -o - - | cat - <(echo -e ".text\n\t.align\t2, 0") | $(AS) $(ASFLAGS) -o $@ -
 else
 	@$(CPP) $(CPPFLAGS) $< -o $(C_BUILDDIR)/$*.i
-	@$(PREPROC) $(C_BUILDDIR)/$*.i charmap.txt | $(CC1) $(CFLAGS) -o $(C_BUILDDIR)/$*.s
+	@$(PREPROC) -g $(ASSETS_DIR_NAME) $(C_BUILDDIR)/$*.i charmap.txt | $(CC1) $(CFLAGS) -o $(C_BUILDDIR)/$*.s
 	@echo -e ".text\n\t.align\t2, 0\n" >> $(C_BUILDDIR)/$*.s
 	$(AS) $(ASFLAGS) -o $@ $(C_BUILDDIR)/$*.s
 endif
 
 $(C_BUILDDIR)/%.d: $(C_SUBDIR)/%.c
-	$(SCANINC) -M $@ $(INCLUDE_SCANINC_ARGS) -I tools/agbcc/include $<
+	$(SCANINC) -M $@ -g $(ASSETS_DIR_NAME) $(INCLUDE_SCANINC_ARGS) -I tools/agbcc/include $<
 
 ifneq ($(NODEP),1)
 -include $(ALL_TUTORS_JSON), $(ALL_TEACHING_TYPES_JSON),
@@ -506,10 +490,10 @@ endif
 ifeq ($(TEST),1)
 $(TEST_BUILDDIR)/%.o: $(TEST_SUBDIR)/%.c
 	@echo "$(CC1) <flags> -o $@ $<"
-	@$(CPP) $(CPPFLAGS) $< | $(PREPROC) -i $< charmap.txt | $(CC1) $(CFLAGS) -o - - | cat - <(echo -e ".text\n\t.align\t2, 0") | $(AS) $(ASFLAGS) -o $@ -
+	@$(CPP) $(CPPFLAGS) $< | $(PREPROC) -i -g $(ASSETS_DIR_NAME) $< charmap.txt | $(CC1) $(CFLAGS) -o - - | cat - <(echo -e ".text\n\t.align\t2, 0") | $(AS) $(ASFLAGS) -o $@ -
 
 $(TEST_BUILDDIR)/%.d: $(TEST_SUBDIR)/%.c
-	$(SCANINC) -M $@ $(INCLUDE_SCANINC_ARGS) -I tools/agbcc/include $<
+	$(SCANINC) -M $@ -g $(ASSETS_DIR_NAME) $(INCLUDE_SCANINC_ARGS) -I tools/agbcc/include $<
 
 ifneq ($(NODEP),1)
 -include $(addprefix $(OBJ_DIR)/,$(TEST_SRCS:.c=.d))
@@ -520,7 +504,7 @@ $(ASM_BUILDDIR)/%.o: $(ASM_SUBDIR)/%.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(ASM_BUILDDIR)/%.d: $(ASM_SUBDIR)/%.s
-	$(SCANINC) -M $@ $(INCLUDE_SCANINC_ARGS) -I "" $<
+	$(SCANINC) -M $@ -g $(ASSETS_DIR_NAME) $(INCLUDE_SCANINC_ARGS) -I "" $<
 
 ifneq ($(NODEP),1)
 -include $(addprefix $(OBJ_DIR)/,$(ASM_SRCS:.s=.d))
@@ -530,26 +514,20 @@ $(C_BUILDDIR)/%.o: $(C_SUBDIR)/%.s
 	$(PREPROC) $< charmap.txt | $(CPP) $(CPPFLAGS) $(INCLUDE_SCANINC_ARGS) - | $(PREPROC) -ie $< charmap.txt | $(AS) $(ASFLAGS) -o $@
 
 $(C_BUILDDIR)/%.d: $(C_SUBDIR)/%.s
-	$(SCANINC) -M $@ $(INCLUDE_SCANINC_ARGS) -I "" $<
+	$(SCANINC) -M $@ -g $(ASSETS_DIR_NAME) $(INCLUDE_SCANINC_ARGS) -I "" $<
 
 ifneq ($(NODEP),1)
 -include $(addprefix $(OBJ_DIR)/,$(C_ASM_SRCS:.s=.d))
 endif
 
 $(DATA_ASM_BUILDDIR)/%.o: $(DATA_ASM_SUBDIR)/%.s
-	$(PREPROC) $< charmap.txt | $(CPP) $(CPPFLAGS) $(INCLUDE_SCANINC_ARGS) - | $(PREPROC) -ie $< charmap.txt | $(AS) $(ASFLAGS) -o $@
-
-# `data/map_events.s` includes many constants (notably `constants/event_objects.h` and
-# `constants/vars.h`) that can change without touching the `.s` itself (e.g. adding
-# new overworld gfx shifts `OBJ_EVENT_GFX_VAR_*`). Because we don't include dependency
-# files for `map_events.s`, ensure it still rebuilds when these change.
-$(DATA_ASM_BUILDDIR)/map_events.o: include/constants/event_objects.h include/constants/vars.h
+	$(PREPROC) -s $< charmap.txt | $(CPP) $(CPPFLAGS) $(INCLUDE_SCANINC_ARGS) - | $(PREPROC) -ie $< charmap.txt | $(AS) $(ASFLAGS) -o $@
 
 $(DATA_ASM_BUILDDIR)/%.d: $(DATA_ASM_SUBDIR)/%.s
-	$(SCANINC) -M $@ $(INCLUDE_SCANINC_ARGS) -I "" $<
+	$(SCANINC) -M $@ -g $(ASSETS_DIR_NAME) $(INCLUDE_SCANINC_ARGS) -I "" $<
 
 ifneq ($(NODEP),1)
--include $(addprefix $(OBJ_DIR)/,$(REGULAR_DATA_ASM_SRCS:.s=.d))
+-include $(addprefix $(OBJ_DIR)/,$(DATA_ASM_SRCS:.s=.d))
 endif
 
 $(OBJ_DIR)/sym_bss.ld: sym_bss.txt
@@ -566,7 +544,7 @@ TEACHABLE_DEPS := $(ALL_LEARNABLES_JSON) $(INCLUDE_DIRS)/constants/tms_hms.h $(I
 $(LEARNSET_HELPERS_BUILD_DIR):
 	@mkdir -p $@
 
-$(ALL_LEARNABLES_JSON):  | $(wildcard $(LEARNSET_HELPERS_DATA_DIR)/*.json)
+$(ALL_LEARNABLES_JSON):
 	python3 $(LEARNSET_HELPERS_DIR)/make_learnables.py $(LEARNSET_HELPERS_DATA_DIR) $@
 
 $(ALL_TUTORS_JSON): $(shell find data/ -type f -name '*.inc')  $(LEARNSET_HELPERS_DIR)/make_tutors.py | $(LEARNSET_HELPERS_BUILD_DIR)
