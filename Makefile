@@ -215,6 +215,7 @@ SMOLTM       := $(TOOLS_DIR)/compresSmol/compresSmolTilemap$(EXE)
 SMOL         := $(TOOLS_DIR)/compresSmol/compresSmol$(EXE)
 GFX          := $(TOOLS_DIR)/gbagfx/gbagfx$(EXE)
 WAV2AGB      := $(TOOLS_DIR)/wav2agb/wav2agb$(EXE)
+AIF          := $(shell command -v aif2pcm 2>/dev/null || echo $(TOOLS_DIR)/aif2pcm/aif2pcm$(EXE))
 MID          := $(TOOLS_DIR)/mid2agb/mid2agb$(EXE)
 SCANINC      := $(TOOLS_DIR)/scaninc/scaninc$(EXE)
 PREPROC      := $(TOOLS_DIR)/preproc/preproc$(EXE)
@@ -386,6 +387,8 @@ clean-assets:
 	find $(DATA_ASM_SUBDIR)/maps \( -iname 'connections.inc' -o -iname 'events.inc' -o -iname 'header.inc' \) -exec rm {} +
 
 tidy: tidymodern tidycheck tidydebug tidyrelease
+	# Remove build outputs from previous BUILD_NAME/flag combinations as well.
+	rm -rf $(BUILD_DIR)
 
 tidymodern:
 	rm -f poke*.gba poke*.elf poke*.map
