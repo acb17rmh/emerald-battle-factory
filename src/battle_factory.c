@@ -464,10 +464,10 @@ static void SetRentalsToOpponentParty(void)
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
     {
         gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].monId = gFrontierTempParty[i];
-        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].ivs = GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ATK_IV);
-        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].personality = GetMonData(&gEnemyParty[i], MON_DATA_PERSONALITY);
-        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].abilityNum = GetBoxMonData(&gEnemyParty[i].box, MON_DATA_ABILITY_NUM);
-        SetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM, &gFacilityTrainerMons[gFrontierTempParty[i]].heldItem);
+        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].ivs = GetBoxMonData(&gParties[B_TRAINER_OPPONENT_A][i].box, MON_DATA_ATK_IV);
+        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].personality = GetMonData(&gParties[B_TRAINER_OPPONENT_A][i], MON_DATA_PERSONALITY);
+        gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].abilityNum = GetBoxMonData(&gParties[B_TRAINER_OPPONENT_A][i].box, MON_DATA_ABILITY_NUM);
+        SetMonData(&gParties[B_TRAINER_OPPONENT_A][i], MON_DATA_HELD_ITEM, &gFacilityTrainerMons[gFrontierTempParty[i]].heldItem);
     }
 }
 
@@ -494,7 +494,7 @@ static void SetPlayerAndOpponentParties(void)
             monId = gSaveBlock2Ptr->frontier.rentalMons[i].monId;
             ivs = gSaveBlock2Ptr->frontier.rentalMons[i].ivs;
 
-            CreateFacilityMon(&gFacilityTrainerMons[monId], GetBattleFactoryMonLevel(monId), ivs, READ_OTID_FROM_SAVE, FLAG_FRONTIER_MON_FACTORY, &gPlayerParty[i]);
+            CreateFacilityMon(&gFacilityTrainerMons[monId], GetBattleFactoryMonLevel(monId), ivs, READ_OTID_FROM_SAVE, FLAG_FRONTIER_MON_FACTORY, &gParties[B_TRAINER_PLAYER][i]);
         }
     }
 
@@ -506,7 +506,7 @@ static void SetPlayerAndOpponentParties(void)
         {
             monId = gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].monId;
             ivs = gSaveBlock2Ptr->frontier.rentalMons[i + FRONTIER_PARTY_SIZE].ivs;
-            CreateFacilityMon(&gFacilityTrainerMons[monId], GetBattleFactoryMonLevel(monId), ivs, READ_OTID_FROM_SAVE, FLAG_FRONTIER_MON_FACTORY, &gEnemyParty[i]);
+            CreateFacilityMon(&gFacilityTrainerMons[monId], GetBattleFactoryMonLevel(monId), ivs, READ_OTID_FROM_SAVE, FLAG_FRONTIER_MON_FACTORY, &gParties[B_TRAINER_OPPONENT_A][i]);
         }
         break;
     }
@@ -721,7 +721,7 @@ static enum FactoryStyle GetMoveBattleStyle(enum Move move)
     }
     // Bad secondary effects for the user
     if (MoveHasAdditionalEffectSelf(move, MOVE_EFFECT_RECHARGE)
-     || MoveHasAdditionalEffectSelf(move, MOVE_EFFECT_SP_ATK_MINUS_2))
+     || MoveHasAdditionalEffectSelf(move, MOVE_EFFECT_STAT_MINUS))
         return FACTORY_STYLE_HIGH_RISK;
 
     // Non-volatile effects
@@ -751,7 +751,7 @@ static void RestorePlayerPartyHeldItems(void)
 
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
     {
-        SetMonData(&gPlayerParty[i],
+        SetMonData(&gParties[B_TRAINER_PLAYER][i],
                    MON_DATA_HELD_ITEM,
                    &gFacilityTrainerMons[gSaveBlock2Ptr->frontier.rentalMons[i].monId].heldItem);
     }
@@ -861,7 +861,7 @@ void FillFactoryBrainParty(void)
         heldItems[i] = gFacilityTrainerMons[monId].heldItem;
         CreateFacilityMon(&gFacilityTrainerMons[monId],
                 GetBattleFactoryMonLevel(monId), fixedIV, otId, FLAG_FRONTIER_MON_FACTORY,
-                &gEnemyParty[i]);
+                &gParties[B_TRAINER_OPPONENT_A][i]);
         i++;
     }
 
@@ -874,10 +874,10 @@ void FillFactoryBrainParty(void)
             : FRONTIER_PARTY_SIZE - 1;
 
         // In standard singles mode, prefer a boss's reward build as its ace template.
-        if (isSingles && BuildFactoryBossRewardMon(sLastGeneratedFactoryBossId, lvlMode, &gEnemyParty[aceSlot]))
+        if (isSingles && BuildFactoryBossRewardMon(sLastGeneratedFactoryBossId, lvlMode, &gParties[B_TRAINER_OPPONENT_A][aceSlot]))
         {
-            species[aceSlot] = GetMonData(&gEnemyParty[aceSlot], MON_DATA_SPECIES);
-            heldItems[aceSlot] = GetMonData(&gEnemyParty[aceSlot], MON_DATA_HELD_ITEM);
+            species[aceSlot] = GetMonData(&gParties[B_TRAINER_OPPONENT_A][aceSlot], MON_DATA_SPECIES);
+            heldItems[aceSlot] = GetMonData(&gParties[B_TRAINER_OPPONENT_A][aceSlot], MON_DATA_HELD_ITEM);
             return;
         }
 
@@ -889,15 +889,15 @@ void FillFactoryBrainParty(void)
                                               heldItems))
             return;
 
-        if (!BuildFactoryBossAceMon(sLastGeneratedFactoryBossId, GetBattleFactoryMonLevel(bossAceMonId), fixedIV, &gEnemyParty[aceSlot]))
+        if (!BuildFactoryBossAceMon(sLastGeneratedFactoryBossId, GetBattleFactoryMonLevel(bossAceMonId), fixedIV, &gParties[B_TRAINER_OPPONENT_A][aceSlot]))
         {
             CreateFacilityMon(&gFacilityTrainerMons[bossAceMonId],
                     GetBattleFactoryMonLevel(bossAceMonId), fixedIV, otId, FLAG_FRONTIER_MON_FACTORY,
-                    &gEnemyParty[aceSlot]);
+                    &gParties[B_TRAINER_OPPONENT_A][aceSlot]);
         }
 
-        species[aceSlot] = GetMonData(&gEnemyParty[aceSlot], MON_DATA_SPECIES);
-        heldItems[aceSlot] = GetMonData(&gEnemyParty[aceSlot], MON_DATA_HELD_ITEM);
+        species[aceSlot] = GetMonData(&gParties[B_TRAINER_OPPONENT_A][aceSlot], MON_DATA_SPECIES);
+        heldItems[aceSlot] = GetMonData(&gParties[B_TRAINER_OPPONENT_A][aceSlot], MON_DATA_HELD_ITEM);
     }
 }
 
@@ -1162,10 +1162,10 @@ static bool8 TryUseBossPartyFallbackReward(u8 bossId, struct Pokemon *outMon)
     {
         u16 species;
 
-        if (!IsRewardCandidateUsable(&gEnemyParty[i]))
+        if (!IsRewardCandidateUsable(&gParties[B_TRAINER_OPPONENT_A][i]))
             continue;
 
-        species = GetMonData(&gEnemyParty[i], MON_DATA_SPECIES);
+        species = GetMonData(&gParties[B_TRAINER_OPPONENT_A][i], MON_DATA_SPECIES);
         if (firstValidIndex < 0)
             firstValidIndex = i;
         if (preferredSpecies != SPECIES_NONE && species == preferredSpecies)
@@ -1176,9 +1176,9 @@ static bool8 TryUseBossPartyFallbackReward(u8 bossId, struct Pokemon *outMon)
     }
 
     if (preferredIndex >= 0)
-        *outMon = gEnemyParty[(u8)preferredIndex];
+        *outMon = gParties[B_TRAINER_OPPONENT_A][(u8)preferredIndex];
     else if (firstValidIndex >= 0)
-        *outMon = gEnemyParty[(u8)firstValidIndex];
+        *outMon = gParties[B_TRAINER_OPPONENT_A][(u8)firstValidIndex];
     else
         return FALSE;
 
@@ -1233,7 +1233,7 @@ static void SelectRewardMonFromParty(void)
 
         DebugPrintf("No boss reward for bossId=%d; opening run reward selection", resolvedBossId);
         for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
-            sFactoryRunRewardChoices[i] = gPlayerParty[i];
+            sFactoryRunRewardChoices[i] = gParties[B_TRAINER_PLAYER][i];
         sFactoryRunRewardChoiceCount = FRONTIER_PARTY_SIZE;
 
         sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
@@ -1256,7 +1256,7 @@ static void SelectRewardMonFromParty(void)
 
             DebugPrintfLevel(MGBA_LOG_WARN, "No valid fallback reward for bossId=%d; using run reward selection", resolvedBossId);
             for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
-                sFactoryRunRewardChoices[i] = gPlayerParty[i];
+                sFactoryRunRewardChoices[i] = gParties[B_TRAINER_PLAYER][i];
             sFactoryRunRewardChoiceCount = FRONTIER_PARTY_SIZE;
 
             sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
@@ -1279,7 +1279,7 @@ static void SelectRewardMonFromParty(void)
 
             DebugPrintfLevel(MGBA_LOG_WARN, "Built invalid reward for bossId=%d; using run reward selection", resolvedBossId);
             for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
-                sFactoryRunRewardChoices[i] = gPlayerParty[i];
+                sFactoryRunRewardChoices[i] = gParties[B_TRAINER_PLAYER][i];
             sFactoryRunRewardChoiceCount = FRONTIER_PARTY_SIZE;
 
             sPendingFactoryRewardBossId = FACTORY_BOSS_NONE;
@@ -1429,7 +1429,7 @@ static void FillFactoryFrontierTrainerParty(u16 trainerId, u8 firstMonId)
     {
     #if FREE_BATTLE_TOWER_E_READER == FALSE
         for (i = firstMonId; i < firstMonId + FRONTIER_PARTY_SIZE; i++)
-            CreateBattleTowerMon(&gEnemyParty[i], &gSaveBlock2Ptr->frontier.ereaderTrainer.party[i - firstMonId]);
+            CreateBattleTowerMon(&gParties[B_TRAINER_OPPONENT_A][i], &gSaveBlock2Ptr->frontier.ereaderTrainer.party[i - firstMonId]);
     #endif //FREE_BATTLE_TOWER_E_READER
         return;
     }
@@ -1450,7 +1450,7 @@ static void FillFactoryFrontierTrainerParty(u16 trainerId, u8 firstMonId)
         u16 monId = gFrontierTempParty[i];
         CreateFacilityMon(&gFacilityTrainerMons[monId],
                 level, fixedIV, otID, FLAG_FRONTIER_MON_FACTORY,
-                &gEnemyParty[firstMonId + i]);
+                &gParties[B_TRAINER_OPPONENT_A][firstMonId + i]);
     }
 }
 
@@ -1466,7 +1466,7 @@ static void FillFactoryTentTrainerParty(u16 trainerId, u8 firstMonId)
         u16 monId = gFrontierTempParty[i];
         CreateFacilityMon(&gFacilityTrainerMons[monId],
                 level, fixedIV, otID, 0,
-                &gEnemyParty[firstMonId + i]);
+                &gParties[B_TRAINER_OPPONENT_A][firstMonId + i]);
     }
 }
 

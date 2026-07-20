@@ -423,9 +423,7 @@ const u32 gObjectEventPic_MoonBall[] = INCBIN_U32("graphics/object_events/pics/m
 const u32 gObjectEventPic_SportBall[] = INCBIN_U32("graphics/object_events/pics/misc/ball_sport.4bpp");
 const u32 gObjectEventPic_DreamBall[] = INCBIN_U32("graphics/object_events/pics/misc/ball_dream.4bpp");
 const u32 gObjectEventPic_BeastBall[] = INCBIN_U32("graphics/object_events/pics/misc/ball_beast.4bpp");
-#ifdef ITEM_STRANGE_BALL
 const u32 gObjectEventPic_StrangeBall[] = INCBIN_U32("graphics/object_events/pics/misc/ball_strange.4bpp");
-#endif //ITEM_STRANGE_BALL
 #endif //OW_FOLLOWERS_POKEBALLS
 
 #if OW_FOLLOWERS_POKEBALLS
@@ -462,12 +460,11 @@ const u16 gObjectEventPal_DreamBall[] = INCBIN_U16("graphics/object_events/pics/
 // Gen VII
 const u16 gObjectEventPal_BeastBall[] = INCBIN_U16("graphics/object_events/pics/misc/ball_beast.gbapal");
 // Gen VIII
-#ifdef ITEM_STRANGE_BALL
 const u16 gObjectEventPal_StrangeBall[] = INCBIN_U16("graphics/object_events/pics/misc/ball_strange.gbapal");
-#endif //ITEM_STRANGE_BALL
 #endif //OW_FOLLOWERS_POKEBALLS
 
 const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/pics/cave_dust.4bpp");
+const u32 gFieldEffectObjectPic_ShinySparkle[] = INCBIN_U32("graphics/field_effects/pics/shiny_sparkle.4bpp");
 const u16 gFieldEffectObjectPalette_CaveDust[] = INCBIN_U16("graphics/field_effects/palettes/cave_dust.gbapal");
 
 const u32 gObjectEventPic_ApricornTree[] = INCBIN_U32("graphics/object_events/pics/misc/apricorn_tree.4bpp");

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "clock.h"
 #include "new_game.h"
 #include "random.h"
 #include "pokemon.h"
@@ -50,19 +51,15 @@
 #include "constants/items.h"
 #include "difficulty.h"
 #include "follower_npc.h"
-#include "battle_factory.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_ResetAllMapFlagsFrlg[];
 
 static void ClearFrontierRecord(void);
-static void WarpToBattleFactory(void);
-
+static void WarpToTruck(void);
 static void ResetMiniGamesRecords(void);
 static void ResetItemFlags(void);
 static void ResetDexNav(void);
-static void SetUsefulFlags(void);
-static void AddDummyPokemonToParty(void);
 
 EWRAM_DATA bool8 gDifferentSaveFile = FALSE;
 EWRAM_DATA bool8 gEnableContestDebugging = FALSE;
@@ -73,30 +70,35 @@ static const struct ContestWinner sContestWinnerPicDummy =
     .trainerName = _("")
 };
 
-void SetTrainerId(u32 trainerId, u8 *dst) {
+void SetTrainerId(u32 trainerId, u8 *dst)
+{
     dst[0] = trainerId;
     dst[1] = trainerId >> 8;
     dst[2] = trainerId >> 16;
     dst[3] = trainerId >> 24;
 }
 
-u32 GetTrainerId(u8 *trainerId) {
+u32 GetTrainerId(u8 *trainerId)
+{
     return (trainerId[3] << 24) | (trainerId[2] << 16) | (trainerId[1] << 8) | (trainerId[0]);
 }
 
-void CopyTrainerId(u8 *dst, u8 *src) {
+void CopyTrainerId(u8 *dst, u8 *src)
+{
     s32 i;
     for (i = 0; i < TRAINER_ID_LENGTH; i++)
         dst[i] = src[i];
 }
 
-static void InitPlayerTrainerId(void) {
+static void InitPlayerTrainerId(void)
+{
     u32 trainerId = (Random() << 16) | GetGeneratedTrainerIdLower();
     SetTrainerId(trainerId, gSaveBlock2Ptr->playerTrainerId);
 }
 
 // L=A isnt set here for some reason.
-static void SetDefaultOptions(void) {
+static void SetDefaultOptions(void)
+{
     gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
     gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
@@ -105,13 +107,15 @@ static void SetDefaultOptions(void) {
     gSaveBlock2Ptr->regionMapZoom = FALSE;
 }
 
-static void ClearPokedexFlags(void) {
+static void ClearPokedexFlags(void)
+{
     gUnusedPokedexU8 = 0;
     memset(&gSaveBlock1Ptr->dexCaught, 0, sizeof(gSaveBlock1Ptr->dexCaught));
     memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
 }
 
-void ClearAllContestWinnerPics(void) {
+void ClearAllContestWinnerPics(void)
+{
     s32 i;
 
     ClearContestWinnerPicsInContestHall();
@@ -121,20 +125,14 @@ void ClearAllContestWinnerPics(void) {
         gSaveBlock1Ptr->contestWinners[i] = sContestWinnerPicDummy;
 }
 
-static void ClearFrontierRecord(void) {
+static void ClearFrontierRecord(void)
+{
     CpuFill32(0, &gSaveBlock2Ptr->frontier, sizeof(gSaveBlock2Ptr->frontier));
 
     gSaveBlock2Ptr->frontier.opponentNames[0][0] = EOS;
     gSaveBlock2Ptr->frontier.opponentNames[1][0] = EOS;
 }
 
-static void WarpToBattleFactory(void)
-{
-    SetWarpDestination(MAP_GROUP(MAP_BATTLE_FRONTIER_OUTSIDE_WEST), MAP_NUM(MAP_BATTLE_FRONTIER_OUTSIDE_WEST), WARP_ID_NONE, 11, 39);
-    WarpIntoMap();
-}
-
-#if IS_FRLG
 static void WarpToTruck(void)
 {
     if (IS_FRLG)
@@ -143,14 +141,15 @@ static void WarpToTruck(void)
         SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
     WarpIntoMap();
 }
-#endif
 
-void Sav2_ClearSetDefault(void) {
+void Sav2_ClearSetDefault(void)
+{
     ClearSav2();
     SetDefaultOptions();
 }
 
-void ResetMenuAndMonGlobals(void) {
+void ResetMenuAndMonGlobals(void)
+{
     gDifferentSaveFile = FALSE;
     ResetPokedexScrollPositions();
     ZeroPlayerPartyMons();
@@ -197,7 +196,7 @@ void NewGameInitData(void)
     ClearPlayerLinkBattleRecords();
     InitSeedotSizeRecord();
     InitLotadSizeRecord();
-    gPlayerPartyCount = 0;
+    gPartiesCount[B_TRAINER_PLAYER] = 0;
     ZeroPlayerPartyMons();
     ResetPokemonStorageSystem();
     DeactivateAllRoamers();
@@ -211,13 +210,14 @@ void NewGameInitData(void)
     InitDewfordTrend();
     ResetFanClub();
     ResetLotteryCorner();
-#if IS_FRLG
+    UpdateDailySeed();
     WarpToTruck();
-    RunScriptImmediately(EventScript_ResetAllMapFlagsFrlg);
-    StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
-#else
-    WarpToBattleFactory();
-    RunScriptImmediately(EventScript_ResetAllMapFlags);
+    if (IS_FRLG)
+        RunScriptImmediately(EventScript_ResetAllMapFlagsFrlg);
+    else
+        RunScriptImmediately(EventScript_ResetAllMapFlags);
+#if IS_FRLG
+        StringCopy(gSaveBlock1Ptr->rivalName, rivalName);
 #endif
     ResetMiniGamesRecords();
     InitUnionRoomChatRegisteredTexts();
@@ -234,62 +234,27 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
-    AddBattleKeyItemsToBag();
-    SetUsefulFlags();
-    AddDummyPokemonToParty();
-    MarkAllFactorySpeciesAsSeen();
-    EnableNationalPokedex();
 }
 
-static void ResetMiniGamesRecords(void) {
+static void ResetMiniGamesRecords(void)
+{
     CpuFill16(0, &gSaveBlock2Ptr->berryCrush, sizeof(struct BerryCrush));
     SetBerryPowder(&gSaveBlock2Ptr->berryCrush.berryPowderAmount, 0);
     ResetPokemonJumpRecords();
     CpuFill16(0, &gSaveBlock2Ptr->berryPick, sizeof(struct BerryPickingResults));
 }
 
-static void ResetItemFlags(void) {
+static void ResetItemFlags(void)
+{
 #if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_FIRST_TIME
     memset(&gSaveBlock3Ptr->itemFlags, 0, sizeof(gSaveBlock3Ptr->itemFlags));
 #endif
 }
 
-static void ResetDexNav(void) {
+static void ResetDexNav(void)
+{
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
     memset(gSaveBlock3Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock3Ptr->dexNavSearchLevels));
 #endif
     gSaveBlock3Ptr->dexNavChain = 0;
-}
-
-static void SetUsefulFlags(void) {
-    // Running shoes
-    FlagSet(FLAG_RECEIVED_RUNNING_SHOES);
-    FlagSet(FLAG_SYS_B_DASH);
-
-    // Bike
-    FlagSet(FLAG_RECEIVED_BIKE);
-    AddBagItem(ITEM_ACRO_BIKE, 1);
-    AddBagItem(ITEM_MACH_BIKE, 1);
-
-    // Enable sleep clause globally
-    FlagSet(B_SLEEP_CLAUSE);
-
-    // Pokedex
-    FlagSet(FLAG_SYS_POKEDEX_GET);
-    FlagSet(FLAG_RECEIVED_POKEDEX_FROM_BIRCH);
-
-    // Frontier Pass
-    FlagSet(FLAG_SYS_FRONTIER_PASS);
-
-    // Pokemon
-    FlagSet(FLAG_SYS_POKEMON_GET);
-
-    // Enable terastallisation
-    FlagSet(B_FLAG_TERA_ORB_NO_COST);
-    FlagSet(B_FLAG_TERA_ORB_CHARGED);
-}
-
-static void AddDummyPokemonToParty(void) {
-    CreateRandomMonWithIVs(&gPlayerParty[0], SPECIES_BULBASAUR, 5, USE_RANDOM_IVS);
-    gPlayerPartyCount = 1;
 }
