@@ -60,6 +60,7 @@ static void WarpToBattleFrontier(void);
 static void ResetMiniGamesRecords(void);
 static void ResetItemFlags(void);
 static void ResetDexNav(void);
+static void SetUsefulFlags(void);
 
 EWRAM_DATA bool8 gDifferentSaveFile = FALSE;
 EWRAM_DATA bool8 gEnableContestDebugging = FALSE;
@@ -234,6 +235,8 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
+    AddBattleKeyItemsToBag();
+    SetUsefulFlags();
 }
 
 static void ResetMiniGamesRecords(void)
@@ -257,4 +260,13 @@ static void ResetDexNav(void)
     memset(gSaveBlock3Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock3Ptr->dexNavSearchLevels));
 #endif
     gSaveBlock3Ptr->dexNavChain = 0;
+}
+
+static void SetUsefulFlags(void)
+{
+    FlagSet(FLAG_RECEIVED_RUNNING_SHOES);
+    FlagSet(FLAG_SYS_B_DASH);
+    FlagSet(FLAG_RECEIVED_BIKE);
+    AddBagItem(ITEM_ACRO_BIKE, 1);
+    AddBagItem(ITEM_MACH_BIKE, 1);
 }
