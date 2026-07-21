@@ -269,7 +269,7 @@ static u8 sActiveList[32];
 extern u8 *gFieldEffectScriptPointers[];
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[];
 
-static const u32 sNewGameBirch_Gfx[] = INCGFX_U32("graphics/birch_speech/birch.png", ".4bpp");
+static const u32 sNewGameBirch_Gfx[] = INCGFX_U32("graphics/trainers/front_pics/factory_head_noland.png", ".4bpp");
 static const u32 sUnusedBirchBeauty[] = INCGFX_U32("graphics/birch_speech/unused_beauty.png", ".4bpp", "-num_tiles 822 -Wnum_tiles");
 static const u16 sNewGameBirch_Pal[16] = INCGFX_U16("graphics/birch_speech/birch.png", ".gbapal");
 
